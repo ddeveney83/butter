@@ -1510,7 +1510,7 @@ select:focus-visible {
 }
 @media (max-width: 1100px) {
   .nav {
-    gap: 24px;
+    gap: 18px;
   }
   .page-hero.with-aside {
     grid-template-columns: minmax(0, 1fr) 240px;

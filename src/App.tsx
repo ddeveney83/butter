@@ -26,15 +26,25 @@ import Contact from "./pages/Contact";
 import Project from "./pages/Project";
 import NotFound from "./pages/NotFound";
 import Brand from "./pages/Brand";
+import Butterlearn, { ButterlearnLogin } from "./pages/Butterlearn";
 
 const links = [
   ["/about", "About"],
   ["/services", "Services"],
   ["/work", "Work"],
+  ["/butterlearn", "butterlearn"],
   ["/pricing", "Pricing"],
   ["/contact", "Contact"],
 ];
 const meta: Record<string, [string, string]> = {
+  "/butterlearn": [
+    "Meet Butterlearn.",
+    "Explore Butterlearn, Butter’s upcoming LMS: learning pathways, course libraries, team reporting and a thoughtful learner experience.",
+  ],
+  "/butterlearn/login": [
+    "Butterlearn login.",
+    "Butterlearn account access is coming soon. Explore the upcoming learning platform or talk to Butter about your team.",
+  ],
   "/brand": [
     "The Butter way.",
     "Explore Butter’s brand guide: colours, DM Sans typography, tone of voice, illustration, spacing, components and motion.",
@@ -228,6 +238,8 @@ const router = createBrowserRouter([
       { path: "/services", element: <Services /> },
       { path: "/work", element: <Work /> },
       { path: "/work/:slug", element: <Project /> },
+      { path: "/butterlearn", element: <Butterlearn /> },
+      { path: "/butterlearn/login", element: <ButterlearnLogin /> },
       { path: "/pricing", element: <Pricing /> },
       { path: "/contact", element: <Contact /> },
       { path: "/brand", element: <Brand /> },

@@ -27,6 +27,8 @@ test("all pages and eight project routes load directly without errors or overflo
     "/pricing",
     "/contact",
     "/brand",
+    "/butterlearn",
+    "/butterlearn/login",
     ...projects.map(([slug]) => `/work/${slug}`),
   ]) {
     await page.goto(path);
@@ -515,8 +517,8 @@ test("page crossfades complete and interrupted navigation settles on the final p
   ).toMatchObject({ animation: "page-arrive", duration: "0.42s" });
   await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   await page.locator(".footer-nav a").evaluateAll((links) => {
-    (links[2] as HTMLAnchorElement).click();
-    (links[3] as HTMLAnchorElement).click();
+    links.find((link) => link.getAttribute("href") === "/work")!.click();
+    links.find((link) => link.getAttribute("href") === "/pricing")!.click();
   });
   await expect(page).toHaveURL(/\/pricing$/);
   await expect

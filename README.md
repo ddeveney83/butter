@@ -4,13 +4,15 @@ A minimal creative learning studio website, built with React, React Router, Type
 
 ## Pages
 
-Home, About, Services, Work, Pricing, and Contact each have a dedicated URL. The Work page includes eight sourced projects: six digital learning experiences (including one blended programme) and two LMS/LXP projects, with shareable case study pages and interactive samples. The About and Services pages include keyboard-accessible tabs; service details and pricing FAQs expand in place.
+Home, About, Services, Work, Butterlearn, Pricing, and Contact each have a dedicated URL. The Work page includes eight sourced projects: six digital learning experiences (including one blended programme) and two LMS/LXP projects, with shareable case study pages and interactive samples. The About and Services pages include keyboard-accessible tabs; service details and pricing FAQs expand in place.
 
 The footer links to the Brand guide at `/brand`: brand principles, copyable colour swatches, a DM Sans typography playground, tone-of-voice examples, illustration guidance, spacing, live components and a replayable motion example. Shared colours, font roles and spacing live in `src/tokens.css`; the guide reads the colour, spacing and motion values directly from the live CSS. The page is in `src/pages/Brand.tsx` and `src/pages/Brand.css`.
 
 Each eLearning project has a three-screen course preview with desktop/mobile views, a distinct activity and reveal cards. The two platform projects have their own samples: an enterprise library with search, filters and saved resources, and an academy with level-based pathways and sample module completion. All previews are clearly labelled recreations with illustrative content; state stays on the page.
 
 Cards combine original course/platform screens with Butter’s pastel canvases, outlined and tilted windows, offset shadows and playful illustrations. The same card component is used on Home and Work; its presentation and screen selection live in `src/components/ProjectCardArtwork.tsx` and its stylesheet. Cards and galleries use original project imagery, downloaded as optimised WebP files under `public/work/`. Three source screens per project open in a keyboard-accessible gallery with arrow-key navigation, Escape and focus restoration. Six case studies include original project videos from the source site, embedded from YouTube’s privacy-enhanced host only after the visitor presses Play. Your Learning Platform remains image-led because the source reuses a video from another case study. Project facts and source attribution live in `src/data/projects.ts`, the original asset URLs and video IDs in `src/data/projectMedia.json`, and the recreated course content in `src/data/coursePreviews.ts`. See `docs/portfolio-content.md` for the selection and provenance.
+
+Butterlearn at `/butterlearn` introduces the planned LMS and includes an interactive learner, manager and admin concept. Sample completion updates the manager report; filters, assignment rules and audience selection work locally on the page. `/butterlearn/login` is a coming-soon entry, with no credential collection or account access yet. Product enquiries carry a Butterlearn brief into Contact. See `docs/butterlearn.md` for the proposed product scope.
 
 The Pricing page includes illustrative GBP project and support budgets, plus an interactive calculator. Choose a learning format, number of pieces, branching scenarios, and bespoke motion to update the estimate live. The enquiry link carries the estimate into the Contact page. These figures are guides, not fixed quotes or a claim of a universal market rate.
 
@@ -39,7 +41,7 @@ npm run build
 npm test
 ```
 
-The browser tests use Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` to another Chromium executable when needed. They cover desktop and mobile rendering of all fifteen canonical page/project routes and six legacy project redirects, direct page loads, navigation and browser history, filter persistence, learning samples, keyboard tabs and accordions, stable tab and sample layouts from 320px to 1440px, maximum calculator totals and handoff, contact validation, expanded FAQ layouts, live reduced-motion changes, interrupted page transitions, browser fallbacks, and unknown URLs. `npm run preview` serves the production build.
+The browser tests use Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` to another Chromium executable when needed. They cover desktop and mobile rendering of all seventeen canonical page/project routes and six legacy project redirects, direct page loads, navigation and browser history, filter persistence, learning samples, keyboard tabs and accordions, stable tab and sample layouts from 320px to 1440px, maximum calculator totals and handoff, contact validation, expanded FAQ layouts, live reduced-motion changes, interrupted page transitions, browser fallbacks, and unknown URLs. `npm run preview` serves the production build.
 
 ## Contact and portfolio content
 
