@@ -1,0 +1,189 @@
+.projects > .reveal,
+.project-caption > div {
+  min-width: 0;
+}
+.project-caption {
+  gap: 12px;
+}
+.project-caption > .arrow {
+  flex-shrink: 0;
+}
+
+.portfolio-card-art {
+  --card-paper: var(--butter);
+  --card-shadow: #bda94e;
+  --card-orbit: #baa34d;
+  --card-tilt: -6deg;
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  min-height: 230px;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--ink);
+  background: var(--card-paper);
+}
+.portfolio-card-art[data-theme="lilac"] {
+  --card-paper: #ddd8eb;
+  --card-shadow: #b8aecb;
+  --card-orbit: #bdb3cf;
+  --card-tilt: 5deg;
+}
+.portfolio-card-art[data-theme="mint"] {
+  --card-paper: #dce7da;
+  --card-shadow: #afc2aa;
+  --card-orbit: #b2c5ad;
+  --card-tilt: -4deg;
+}
+.portfolio-card-art[data-theme="peach"] {
+  --card-paper: #f0d7c7;
+  --card-shadow: #ceaf97;
+  --card-orbit: #d0b69f;
+  --card-tilt: 5deg;
+}
+.portfolio-card-art[data-theme="garden"] {
+  --card-paper: #e6e5c5;
+  --card-shadow: #babc93;
+  --card-orbit: #c0c19e;
+  --card-tilt: -5deg;
+}
+.portfolio-card-art[data-theme="ink"] {
+  --card-paper: #272723;
+  --card-shadow: #11110f;
+  --card-orbit: #565649;
+  --card-tilt: 4deg;
+}
+.portfolio-card-art[data-format="LMS"] {
+  --card-tilt: -2deg;
+}
+.portfolio-card-orbits,
+.portfolio-card-orbits::after {
+  position: absolute;
+  width: 115%;
+  aspect-ratio: 1;
+  border: 1px solid var(--card-orbit);
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-28deg) scaleY(0.55);
+  pointer-events: none;
+}
+.portfolio-card-orbits::after {
+  content: "";
+  width: 100%;
+  transform: translate(-50%, -50%) rotate(60deg);
+}
+.portfolio-card-window {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 13%;
+  width: 74%;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: var(--paper);
+  overflow: hidden;
+  box-shadow: 9px 11px 0 var(--card-shadow);
+  transform: translateY(-50%) rotate(var(--card-tilt));
+  transition:
+    transform var(--motion-slow) var(--ease-butter),
+    box-shadow var(--motion-slow) var(--ease-butter);
+}
+.portfolio-card-art[data-format="LMS"] .portfolio-card-window {
+  width: 80%;
+  left: 10%;
+}
+.portfolio-card-window-top {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ink);
+}
+.portfolio-card-wordmark {
+  display: flex;
+  gap: 2px;
+  font-size: 20px;
+  font-weight: 850;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.portfolio-card-wordmark > svg {
+  width: 10px;
+  height: 10px;
+  align-self: flex-start;
+  margin-top: -3px;
+}
+.portfolio-card-window-dots {
+  display: flex;
+  gap: 5px;
+}
+.portfolio-card-window-dots i {
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+}
+.portfolio-card-screen {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: var(--paper);
+}
+.portfolio-card-art[data-format="LMS"] .portfolio-card-screen {
+  object-fit: cover;
+  object-position: top;
+}
+.portfolio-card-illustration {
+  position: absolute;
+  z-index: 2;
+  width: 21%;
+  left: 3%;
+  bottom: 6%;
+  transform: rotate(-9deg);
+  pointer-events: none;
+  transition: transform var(--motion-slow) var(--ease-butter);
+}
+.portfolio-card-illustration > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(2px 3px 0 var(--card-paper));
+}
+.portfolio-card-spark {
+  position: absolute;
+  width: 7%;
+  right: 7%;
+  bottom: 8%;
+  color: var(--ink);
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+.portfolio-card-art[data-theme="ink"] .portfolio-card-spark {
+  color: var(--butter);
+}
+.project:is(:hover, :focus-visible) .portfolio-card-window {
+  transform: translateY(calc(-50% - 4px)) rotate(0deg);
+  box-shadow: 6px 9px 0 var(--card-shadow);
+}
+.project:is(:hover, :focus-visible) .portfolio-card-illustration {
+  transform: rotate(-3deg) translateY(-3px);
+}
+@container (max-width: 420px) {
+  .portfolio-card-window-top {
+    padding: 8px 12px;
+  }
+  .portfolio-card-wordmark {
+    font-size: 16px;
+  }
+  .portfolio-card-wordmark > svg {
+    width: 8px;
+    height: 8px;
+  }
+  .portfolio-card-window {
+    box-shadow: 6px 8px 0 var(--card-shadow);
+  }
+}

@@ -10,6 +10,7 @@ import { MotionLink as Link, useReducedMotion } from "./Motion";
 import { Arrow, Spark } from "./Artwork";
 import type { Project } from "../data/projects";
 import "./Portfolio.css";
+import ProjectCardArtwork from "./ProjectCardArtwork";
 
 export function Reveal({
   children,
@@ -72,12 +73,7 @@ export function ProjectCard({ project }: { project: Project }) {
       aria-label={`Explore ${project.title}`}
     >
       <div className="project-image">
-        <img
-          className="project-cover"
-          src={project.hero.path}
-          alt={project.hero.alt}
-          loading="lazy"
-        />
+        <ProjectCardArtwork project={project} />
         <span className="project-open">
           <Arrow diagonal />
         </span>

@@ -1,3 +1,5 @@
+import type { CoursePreview } from "../data/coursePreviews";
+
 export function Arrow({
   diagonal = false,
   className = "",
@@ -413,6 +415,55 @@ export function Doodle({
               fill="#f8e477"
             />
             <path d="M39 45v8m22-8v8m-21 8q10 9 20 0" />
+          </>
+        )}
+      </g>
+    </svg>
+  );
+}
+
+export function LearningIllustration({
+  kind,
+}: {
+  kind: CoursePreview["illustration"];
+}) {
+  if (kind === "butter") return <ButterCharacter />;
+  if (kind === "heart" || kind === "idea") return <Doodle kind={kind} />;
+  return (
+    <svg viewBox="0 0 240 240" fill="none" aria-hidden="true">
+      <g
+        stroke="currentColor"
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {kind === "cloud" && (
+          <>
+            <path
+              d="M54 156c-43 0-46-61-5-70 0-46 67-65 91-20 37-15 69 13 64 46 31 24 10 55-19 55H64Z"
+              fill="#fff9d8"
+            />
+            <path d="m89 118 8 5 8-5m32 0 8 5 8-5m-39 16q12 10 24 0M54 190h33m18 0h65" />
+          </>
+        )}
+        {kind === "shield" && (
+          <>
+            <path
+              d="m120 32 72 29v57c0 43-36 72-72 91-36-19-72-48-72-91V61Z"
+              fill="#f8e477"
+            />
+            <path d="m83 115 25 25 50-55" strokeWidth="9" />
+            <path d="M25 82 13 76m202 6 12-6M120 10V2" />
+          </>
+        )}
+        {kind === "plant" && (
+          <>
+            <path
+              d="M120 143V77m0 32c-51 1-68-27-66-52 37-3 66 17 66 52Zm0-17c46 0 67-28 65-54-39-3-65 22-65 54Z"
+              fill="#d4e3ce"
+            />
+            <path d="m71 143 13 69h73l13-69Z" fill="#f8e477" />
+            <path d="M70 143h101m-67 24v6m33-6v6m-33 12q16 13 33 0M38 199l-13 8m168-10 15 7" />
           </>
         )}
       </g>
