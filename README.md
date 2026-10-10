@@ -6,6 +6,8 @@ A minimal creative learning studio website, built with React, React Router, Type
 
 Home, About, Services, Work, Pricing, and Contact each have a dedicated URL. The Work page includes six filterable concepts, each with its own shareable project page and interactive learning sample. The About and Services pages include keyboard-accessible tabs; service details and pricing FAQs expand in place.
 
+The footer links to the Brand guide at `/brand`: brand principles, copyable colour swatches, a DM Sans typography playground, tone-of-voice examples, illustration guidance, spacing, live components and a replayable motion example. Shared colours, font roles and spacing live in `src/tokens.css`; the guide reads the colour, spacing and motion values directly from the live CSS. The page is in `src/pages/Brand.tsx` and `src/pages/Brand.css`.
+
 Each project has a three-screen course preview with desktop/mobile views, project-specific hotspots and reveal cards, plus the original decision-making sample. Three illustrated course image placeholders open in a keyboard-accessible gallery with previous/next controls, arrow-key navigation, Escape to close and focus restored to the opening image. Content and optional screenshot paths live in `src/data/coursePreviews.ts`; set a project's `images` tuple to three paths such as `/course-images/onboarding-welcome.webp`, `/course-images/onboarding-explore.webp`, and `/course-images/onboarding-takeaway.webp`, and add those files under `public/course-images/`. The gallery then displays real images and removes the placeholder note. Interactive preview artwork and layouts live in `src/components/CourseShowcase.tsx` and its stylesheet.
 
 The Pricing page includes illustrative GBP project and support budgets, plus an interactive calculator. Choose a learning format, number of pieces, branching scenarios, and bespoke motion to update the estimate live. The enquiry link carries the estimate into the Contact page. These figures are guides, not fixed quotes or a claim of a universal market rate.
@@ -35,7 +37,7 @@ npm run build
 npm test
 ```
 
-The browser tests use Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` to another Chromium executable when needed. They cover desktop and mobile rendering of all twelve page/project routes, direct page loads, navigation and browser history, filter persistence, learning samples, keyboard tabs and accordions, stable tab and sample layouts from 320px to 1440px, maximum calculator totals and handoff, contact validation, expanded FAQ layouts, live reduced-motion changes, interrupted page transitions, browser fallbacks, and unknown URLs. `npm run preview` serves the production build.
+The browser tests use Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` to another Chromium executable when needed. They cover desktop and mobile rendering of all thirteen page/project routes, direct page loads, navigation and browser history, filter persistence, learning samples, keyboard tabs and accordions, stable tab and sample layouts from 320px to 1440px, maximum calculator totals and handoff, contact validation, expanded FAQ layouts, live reduced-motion changes, interrupted page transitions, browser fallbacks, and unknown URLs. `npm run preview` serves the production build.
 
 ## Contact and portfolio content
 

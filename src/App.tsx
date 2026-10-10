@@ -25,6 +25,7 @@ import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
 import Project from "./pages/Project";
 import NotFound from "./pages/NotFound";
+import Brand from "./pages/Brand";
 
 const links = [
   ["/about", "About"],
@@ -34,6 +35,10 @@ const links = [
   ["/contact", "Contact"],
 ];
 const meta: Record<string, [string, string]> = {
+  "/brand": [
+    "The Butter way.",
+    "Explore Butter’s brand guide: colours, DM Sans typography, tone of voice, illustration, spacing, components and motion.",
+  ],
   "/": [
     "Learning with feeling.",
     "Butter is a creative learning studio. We turn complex things into learning experiences people feel, remember, and use.",
@@ -198,6 +203,7 @@ function Site() {
                 {label}
               </Link>
             ))}
+            <Link to="/brand">Brand guide</Link>
           </nav>
           <div className="footer-bottom">
             <span>
@@ -226,6 +232,7 @@ const router = createBrowserRouter([
       { path: "/work/:slug", element: <Project /> },
       { path: "/pricing", element: <Pricing /> },
       { path: "/contact", element: <Contact /> },
+      { path: "/brand", element: <Brand /> },
       { path: "*", element: <NotFound /> },
     ],
   },

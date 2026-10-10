@@ -29,6 +29,7 @@ test("all pages and six project routes load directly without errors or overflow"
     "/work",
     "/pricing",
     "/contact",
+    "/brand",
     ...projects.map(([slug]) => `/work/${slug}`),
   ]) {
     await page.goto(path);

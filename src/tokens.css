@@ -1,0 +1,21 @@
+/* Butter's shared foundations. The brand guide reads these values directly. */
+:root {
+  --font-sans: "DM Sans Variable", sans-serif;
+  --weight-body: 400;
+  --weight-interface: 500;
+  --weight-heading: 800;
+  --weight-section: 750;
+  --butter: #f8e477;
+  --ink: #20201d;
+  --paper: #fdfcf8;
+  --line: #d9d9cf;
+  --muted: #55554e;
+  --focus: #8b6918;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-12: 96px;
+}

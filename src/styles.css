@@ -1,13 +1,9 @@
 :root {
-  font-family: "DM Sans Variable", sans-serif;
-  color: #20201d;
-  background: #fdfcf8;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--paper);
   font-synthesis: none;
-  font-weight: 400;
-  --butter: #f8e477;
-  --ink: #20201d;
-  --paper: #fdfcf8;
-  --line: #d9d9cf;
+  font-weight: var(--weight-body);
 }
 * {
   box-sizing: border-box;
@@ -46,7 +42,7 @@ button {
 }
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid #8b6918;
+  outline: 3px solid var(--focus);
   outline-offset: 6px;
 }
 ::selection {
@@ -129,7 +125,7 @@ a:focus-visible {
 }
 .hero h1 {
   font-size: clamp(68px, 7.35vw, 110px);
-  font-weight: 800;
+  font-weight: var(--weight-heading);
   letter-spacing: -6px;
   line-height: 1.01;
   margin: 0 0 35px;
@@ -284,7 +280,7 @@ a:focus-visible {
 }
 h2 {
   font-size: clamp(45px, 4.45vw, 66px);
-  font-weight: 750;
+  font-weight: var(--weight-section);
   line-height: 1.07;
   letter-spacing: -3px;
   margin: 0;
