@@ -60,7 +60,7 @@ BUTTERLEARN_LOCAL_DATA=/tmp/butterlearn-browser-tests npm test
 npm run build
 ```
 
-Server tests cover package validation, permissions, session verification/renewal, concurrent writes, tracking and content isolation. Browser tests upload real ZIPs, publish them, play HTML and both SCORM versions, resume a checkpoint, sign back in, inspect persisted reports, assign due dates, switch admin/manager/learner views, refresh the selected view and reject forged view cookies on desktop/mobile. `npm run preview` serves only static build output; use Vite development or Netlify to exercise the API.
+Server tests disable newer Node `require(ESM)` support to catch dependency failures on Netlify's function runtime. The sanitizer is pinned to its compatible CommonJS release. Tests cover package validation, permissions, session verification/renewal, concurrent writes, tracking and content isolation. Browser tests upload real ZIPs, publish them, play HTML and both SCORM versions, resume a checkpoint, sign back in, inspect persisted reports, assign due dates, switch admin/manager/learner views, refresh the selected view and reject forged view cookies on desktop/mobile. `npm run preview` serves only static build output; use Vite development or Netlify to exercise the API.
 
 ## Scope of this release
 
