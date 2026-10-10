@@ -1,5 +1,5 @@
 import {
-  useEffect,
+  useLayoutEffect,
   useId,
   useRef,
   useState,
@@ -20,11 +20,13 @@ export function Reveal({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const node = ref.current!;
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (media.matches || !("IntersectionObserver" in window)) return;
     node.dataset.reveal = "pending";
+    // Commit the starting opacity before an immediately visible item is revealed.
+    void window.getComputedStyle(node).opacity;
     function show() {
       node.dataset.reveal = "ready";
       node.classList.add("is-visible");

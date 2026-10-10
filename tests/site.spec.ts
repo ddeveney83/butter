@@ -582,3 +582,74 @@ test("motion preferences update live and browsers without view transitions retai
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("visible sections establish a hidden frame and then actually fade into view", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1200 });
+  await page.addInitScript(() => {
+    const NativeObserver = window.IntersectionObserver;
+    const samples: { start: number; during: number; duration: number }[] = [];
+    (window as typeof window & { revealFrames: typeof samples }).revealFrames =
+      samples;
+    window.IntersectionObserver = class extends NativeObserver {
+      constructor(
+        callback: IntersectionObserverCallback,
+        options?: IntersectionObserverInit,
+      ) {
+        super((entries, observer) => {
+          const visibleCards = entries.filter(
+            (entry) =>
+              entry.isIntersecting &&
+              entry.target.classList.contains("pricing-card"),
+          );
+          const starts = visibleCards.map((entry) =>
+            Number(getComputedStyle(entry.target).opacity),
+          );
+          callback(entries, observer);
+          requestAnimationFrame(() => {
+            visibleCards.forEach((entry, index) => {
+              const during = Number(getComputedStyle(entry.target).opacity);
+              const fade = entry.target
+                .getAnimations()
+                .find(
+                  (animation) =>
+                    (animation as CSSTransition).transitionProperty ===
+                    "opacity",
+                );
+              samples.push({
+                start: starts[index],
+                during,
+                duration: Number(fade?.effect?.getTiming().duration || 0),
+              });
+            });
+          });
+        }, options);
+      }
+    };
+  });
+  await page.goto("/pricing");
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () =>
+          (window as typeof window & { revealFrames: unknown[] }).revealFrames
+            .length,
+      ),
+    )
+    .toBeGreaterThan(0);
+  const frames = await page.evaluate(
+    () =>
+      (
+        window as typeof window & {
+          revealFrames: { start: number; during: number; duration: number }[];
+        }
+      ).revealFrames,
+  );
+  for (const frame of frames) {
+    expect(frame.start).toBe(0);
+    expect(frame.during).toBeLessThan(1);
+    expect(frame.duration).toBe(520);
+  }
+  await expect(page.locator(".pricing-card").first()).toHaveCSS("opacity", "1");
+});
