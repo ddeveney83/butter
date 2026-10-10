@@ -23,6 +23,32 @@ export function Arrow({
   );
 }
 
+export function ControlIcon({ kind }: { kind: "reset" | "copy" | "check" }) {
+  return (
+    <svg
+      className="control-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {kind === "reset" ? (
+        <path d="M4 10a8 8 0 1 1 1 8M4 4v6h6" />
+      ) : kind === "check" ? (
+        <path d="m5 12 4 4L19 6" />
+      ) : (
+        <>
+          <rect x="8" y="8" width="12" height="12" rx="2" />
+          <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 export function Spark({ className = "" }: { className?: string }) {
   return (
     <svg

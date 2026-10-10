@@ -1,5 +1,12 @@
 import { Arrow, Doodle } from "../components/Artwork";
-import { ContactCTA, PageHero, Reveal, Tabs, TextLink } from "../components/UI";
+import {
+  Accordion,
+  ContactCTA,
+  PageHero,
+  Reveal,
+  Tabs,
+  TextLink,
+} from "../components/UI";
 
 const services = [
   {
@@ -101,14 +108,12 @@ export default function Services() {
       <section className="service-list container" aria-label="Our services">
         {services.map((service, index) => (
           <Reveal key={service.title}>
-            <details className="service-detail" open={index === 0}>
-              <summary>
-                <span className="service-number">0{index + 1}</span>
-                <h2>{service.title}</h2>
-                <span className="detail-toggle" aria-hidden="true">
-                  +
-                </span>
-              </summary>
+            <Accordion
+              variant="service"
+              title={service.title}
+              number={`0${index + 1}`}
+              defaultOpen={index === 0}
+            >
               <div className="service-content">
                 <Doodle kind={service.icon} />
                 <div>
@@ -125,7 +130,7 @@ export default function Services() {
                   </TextLink>
                 </div>
               </div>
-            </details>
+            </Accordion>
           </Reveal>
         ))}
       </section>

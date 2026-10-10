@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Arrow, Doodle, ProjectArt } from "../components/Artwork";
+import { Arrow, ControlIcon, Doodle, ProjectArt } from "../components/Artwork";
 import { ContactCTA, Reveal, TextLink } from "../components/UI";
 import { projects } from "../data/projects";
 import NotFound from "./NotFound";
@@ -9,6 +9,7 @@ export default function ProjectPage() {
   const { slug } = useParams();
   const project = projects.find((item) => item.id === slug);
   const [choice, setChoice] = useState<number | null>(null);
+  const firstChoice = useRef<HTMLButtonElement>(null);
   if (!project) return <NotFound />;
   const next = projects[(projects.indexOf(project) + 1) % projects.length];
   return (
@@ -74,6 +75,7 @@ export default function ProjectPage() {
               {project.choices.map((item, index) => (
                 <button
                   key={item.label}
+                  ref={index === 0 ? firstChoice : undefined}
                   aria-pressed={choice === index}
                   onClick={() => setChoice(index)}
                 >
@@ -83,20 +85,35 @@ export default function ProjectPage() {
                 </button>
               ))}
             </div>
-            <div className="scenario-feedback" role="status">
-              {choice === null ? (
-                <p>There’s space to explore. Try any response.</p>
-              ) : (
-                <>
-                  <p>{project.choices[choice].feedback}</p>
-                  <button
-                    className="reset-link"
-                    onClick={() => setChoice(null)}
-                  >
-                    Try a different response <span aria-hidden="true">↺</span>
-                  </button>
-                </>
-              )}
+            <div className="scenario-feedback">
+              <div className="feedback-messages">
+                <p role="status" aria-atomic="true" aria-hidden="false">
+                  {choice === null
+                    ? "There’s space to explore. Try any response."
+                    : project.choices[choice].feedback}
+                </p>
+                {project.choices.map((item) => (
+                  <p key={item.feedback} aria-hidden="true">
+                    {item.feedback}
+                  </p>
+                ))}
+              </div>
+              <div
+                className="feedback-reset"
+                aria-hidden={choice === null}
+                inert={choice === null}
+              >
+                <button
+                  type="button"
+                  className="reset-link"
+                  onClick={() => {
+                    setChoice(null);
+                    firstChoice.current?.focus();
+                  }}
+                >
+                  Try a different response <ControlIcon kind="reset" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -149,8 +149,7 @@ test("values and process tabs work with pointer and keyboard; services expand", 
   );
   await page.goto("/services");
   await page
-    .locator("summary")
-    .filter({ hasText: "Digital experiences" })
+    .getByRole("button", { name: "Digital experiences", exact: true })
     .click();
   await expect(
     page.getByText("Mobile-first microlearning", { exact: true }),
@@ -267,8 +266,7 @@ test("FAQ, reduced motion and unknown routes behave correctly", async ({
 }) => {
   await page.goto("/pricing");
   await page
-    .locator("summary")
-    .filter({ hasText: "Can we start small?" })
+    .getByRole("button", { name: "Can we start small?", exact: true })
     .click();
   await expect(page.getByText(/Absolutely\. A focused workshop/)).toBeVisible();
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -284,4 +282,180 @@ test("FAQ, reduced motion and unknown routes behave correctly", async ({
   );
   await page.getByRole("link", { name: "Back to Butter" }).click();
   await expect(page).toHaveURL(/\/$/);
+});
+
+test("tabs preserve layout across screen sizes and keep every panel correctly linked", async ({
+  page,
+}) => {
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ["/about", "/services"]) {
+      await page.goto(path);
+      await page.evaluate(() => document.fonts.ready);
+      const tabs = page.getByRole("tab");
+      const panels = page.locator(".tab-panels");
+      const initial = (await panels.boundingBox())!;
+      for (const tab of await tabs.all()) {
+        await tab.click();
+        const bounds = (await panels.boundingBox())!;
+        expect(Math.abs(bounds.height - initial.height)).toBeLessThan(1);
+        const controlledId = await tab.getAttribute("aria-controls");
+        await expect(page.getByRole("tabpanel")).toHaveAttribute(
+          "id",
+          controlledId!,
+        );
+        await expect(page.getByRole("tabpanel")).toHaveAttribute(
+          "aria-labelledby",
+          (await tab.getAttribute("id"))!,
+        );
+        expect(
+          await page
+            .locator('.tab-panel[aria-hidden="true"]')
+            .evaluateAll((nodes) =>
+              nodes.every((node) => node.hasAttribute("inert")),
+            ),
+        ).toBe(true);
+      }
+      await page.keyboard.press("Home");
+      await expect(tabs.first()).toBeFocused();
+      await page.keyboard.press("ArrowLeft");
+      await expect(tabs.last()).toBeFocused();
+      await page.keyboard.press("ArrowRight");
+      await expect(tabs.first()).toBeFocused();
+      await page.keyboard.press("End");
+      await expect(tabs.last()).toBeFocused();
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
+    }
+  }
+});
+
+test("accordions support keyboard activation, complete collapse and rapid toggling", async ({
+  page,
+}) => {
+  for (const [path, title] of [
+    ["/services", "Digital experiences"],
+    ["/pricing", "Can we start small?"],
+  ]) {
+    await page.goto(path);
+    const trigger = page.getByRole("button", { name: title, exact: true });
+    const accordion = trigger.locator(
+      'xpath=ancestor::div[contains(@class,"accordion")][1]',
+    );
+    const panel = accordion.locator(".accordion-panel");
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await expect(panel).toHaveAttribute("aria-hidden", "false");
+    await expect
+      .poll(async () => (await panel.boundingBox())!.height)
+      .toBeGreaterThan(50);
+    await page.keyboard.press("Space");
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await expect(panel).toHaveAttribute("inert", "");
+    await expect
+      .poll(async () => (await panel.boundingBox())!.height)
+      .toBeLessThan(1);
+    await trigger.evaluate((button: HTMLButtonElement) => {
+      button.click();
+      button.click();
+      button.click();
+    });
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await expect
+      .poll(async () => (await panel.boundingBox())!.height)
+      .toBeGreaterThan(50);
+    await trigger.evaluate((button: HTMLButtonElement) => {
+      button.click();
+      button.click();
+    });
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await trigger.click();
+    expect(
+      await panel.evaluate((node) =>
+        getComputedStyle(node)
+          .transitionDuration.split(",")
+          .every((value) => parseFloat(value) <= 0.001),
+      ),
+    ).toBe(true);
+    await expect(trigger).toBeFocused();
+  }
+});
+
+test("expanded controls and maximum estimates fit on narrow screens without shifting sample feedback", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/pricing");
+  await page.getByLabel("What are we making?").selectOption("15000");
+  await page.getByRole("slider").fill("6");
+  await page.getByLabel("Branching scenarios").check();
+  await page.getByLabel("Bespoke motion").check();
+  await expect(
+    page.getByLabel("Illustrative project budget", { exact: true }),
+  ).toHaveText("£122,400");
+  await page
+    .getByRole("button", { name: "Ongoing support", exact: true })
+    .click();
+  for (const button of await page.locator(".faq-list .accordion-trigger").all())
+    await button.click();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.goto("/services");
+  for (const button of await page
+    .locator(".service-detail .accordion-trigger")
+    .all()) {
+    if ((await button.getAttribute("aria-expanded")) === "false")
+      await button.click();
+  }
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.goto(
+    "/contact?service=" +
+      encodeURIComponent(
+        "An exceptionally long bespoke learning programme and ongoing production support",
+      ),
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  for (const [slug] of projects) {
+    await page.goto(`/work/${slug}`);
+    await page.evaluate(() => document.fonts.ready);
+    const sample = page.locator(".scenario-card");
+    const height = (await sample.boundingBox())!.height;
+    for (const button of await page
+      .getByRole("group", { name: "Choose a response" })
+      .getByRole("button")
+      .all()) {
+      await button.click();
+      expect(
+        Math.abs((await sample.boundingBox())!.height - height),
+      ).toBeLessThan(1);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
+    }
+    await page
+      .getByRole("button", { name: "Try a different response" })
+      .click();
+    expect(
+      Math.abs((await sample.boundingBox())!.height - height),
+    ).toBeLessThan(1);
+  }
 });

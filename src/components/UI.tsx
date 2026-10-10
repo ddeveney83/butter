@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Arrow, ProjectArt, Spark } from "./Artwork";
 import type { Project } from "../data/projects";
@@ -128,6 +128,7 @@ export function Tabs({
   items: { id: string; label: string; content: ReactNode }[];
 }) {
   const [active, setActive] = useState(0);
+  const instance = useId();
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   return (
     <div className="interactive-tabs">
@@ -138,10 +139,12 @@ export function Tabs({
             ref={(node) => {
               buttons.current[index] = node;
             }}
-            id={`tab-${item.id}`}
+            type="button"
+            id={`${instance}-tab-${item.id}`}
             role="tab"
+            aria-label={item.label}
             aria-selected={active === index}
-            aria-controls={`panel-${item.id}`}
+            aria-controls={`${instance}-panel-${item.id}`}
             tabIndex={active === index ? 0 : -1}
             onClick={() => setActive(index)}
             onKeyDown={(event) => {
@@ -158,19 +161,106 @@ export function Tabs({
               buttons.current[next]?.focus();
             }}
           >
-            {item.label}
+            {/^\d{2} \/ /.test(item.label) ? (
+              <>
+                <span className="tab-number" aria-hidden="true">
+                  {item.label.slice(0, 2)}
+                </span>
+                <span>{item.label.slice(5)}</span>
+              </>
+            ) : (
+              item.label
+            )}
           </button>
         ))}
       </div>
+      <div className="tab-panels">
+        {items.map((item, index) => (
+          <div
+            key={item.id}
+            className="tab-panel"
+            role="tabpanel"
+            id={`${instance}-panel-${item.id}`}
+            aria-labelledby={`${instance}-tab-${item.id}`}
+            aria-hidden={active !== index}
+            inert={active !== index}
+            tabIndex={active === index ? 0 : -1}
+          >
+            {item.content}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function Accordion({
+  title,
+  children,
+  variant = "faq",
+  number,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: ReactNode;
+  variant?: "service" | "faq";
+  number?: string;
+  defaultOpen?: boolean;
+}) {
+  const [expanded, setExpanded] = useState(defaultOpen);
+  const id = useId();
+  const Heading = variant === "service" ? "h2" : "h3";
+  return (
+    <div
+      className={`accordion ${variant === "service" ? "service-detail" : "faq-detail"}`}
+      data-expanded={expanded}
+    >
+      <Heading className="accordion-heading">
+        <button
+          className="accordion-trigger"
+          type="button"
+          id={`${id}-trigger`}
+          aria-expanded={expanded}
+          aria-controls={`${id}-content`}
+          onClick={() => setExpanded((current) => !current)}
+        >
+          {number && (
+            <span className="service-number" aria-hidden="true">
+              {number}
+            </span>
+          )}
+          <span className="accordion-title">{title}</span>
+          <svg
+            className="disclosure-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 12h14"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+            />
+            <path
+              className="disclosure-vertical"
+              d="M12 5v14"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      </Heading>
       <div
-        key={items[active].id}
-        className="tab-panel"
-        role="tabpanel"
-        id={`panel-${items[active].id}`}
-        aria-labelledby={`tab-${items[active].id}`}
-        tabIndex={0}
+        id={`${id}-content`}
+        className="accordion-panel"
+        role="region"
+        aria-labelledby={`${id}-trigger`}
+        aria-hidden={!expanded}
+        inert={!expanded}
       >
-        {items[active].content}
+        <div className="accordion-body">{children}</div>
       </div>
     </div>
   );

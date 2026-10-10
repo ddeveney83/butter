@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { Arrow, Doodle, Spark } from "../components/Artwork";
-import { ContactCTA, PageHero, Reveal } from "../components/UI";
+import { Accordion, ContactCTA, PageHero, Reveal } from "../components/UI";
 
 const money = (amount: number) =>
   new Intl.NumberFormat("en-GB", {
@@ -105,6 +105,7 @@ export default function Pricing() {
             className="segmented-control"
             role="group"
             aria-label="Pricing model"
+            data-active={monthly ? "support" : "project"}
           >
             <button aria-pressed={!monthly} onClick={() => setMonthly(false)}>
               One-off project
@@ -192,6 +193,13 @@ export default function Pricing() {
               How many pieces?<span>{modules.toString().padStart(2, "0")}</span>
               <input
                 type="range"
+                aria-label="Number of learning pieces"
+                aria-valuetext={`${modules} learning ${modules === 1 ? "piece" : "pieces"}`}
+                style={
+                  {
+                    "--range-progress": `${((modules - 1) / 5) * 100}%`,
+                  } as CSSProperties
+                }
                 min="1"
                 max="6"
                 value={modules}
@@ -275,13 +283,9 @@ export default function Pricing() {
               "We can scope delivery around your platform’s requirements. Tell us what you use, and we’ll confirm the formats, testing, and handover your project needs.",
             ],
           ].map(([question, answer]) => (
-            <details key={question}>
-              <summary>
-                {question}
-                <span aria-hidden="true">+</span>
-              </summary>
+            <Accordion key={question} title={question}>
               <p>{answer}</p>
-            </details>
+            </Accordion>
           ))}
         </div>
       </section>

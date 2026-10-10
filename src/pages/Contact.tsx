@@ -1,6 +1,11 @@
 import { useState, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Arrow, ButterCharacter, Doodle } from "../components/Artwork";
+import {
+  Arrow,
+  ButterCharacter,
+  ControlIcon,
+  Doodle,
+} from "../components/Artwork";
 import { PageHero } from "../components/UI";
 
 const interests = [
@@ -197,7 +202,7 @@ export default function Contact() {
                   onClick={copyBrief}
                 >
                   {copied ? "Copied!" : "Copy project brief"}
-                  <span aria-hidden="true">{copied ? "✓" : "↗"}</span>
+                  <ControlIcon kind={copied ? "check" : "copy"} />
                 </button>
               </>
             ) : (

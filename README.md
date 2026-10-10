@@ -25,7 +25,7 @@ npm run build
 npm test
 ```
 
-The browser tests use Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` to another Chromium executable when needed. They cover desktop and mobile rendering of all twelve page/project routes, direct page loads, navigation and browser history, filter persistence, learning samples, keyboard tabs, calculator totals and handoff, contact validation, FAQs, reduced motion, and unknown URLs. `npm run preview` serves the production build.
+The browser tests use Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` to another Chromium executable when needed. They cover desktop and mobile rendering of all twelve page/project routes, direct page loads, navigation and browser history, filter persistence, learning samples, keyboard tabs and accordions, stable tab and sample layouts from 320px to 1440px, maximum calculator totals and handoff, contact validation, expanded FAQ layouts, reduced motion, and unknown URLs. `npm run preview` serves the production build.
 
 ## Contact and portfolio content
 
