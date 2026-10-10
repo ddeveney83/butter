@@ -95,7 +95,7 @@ a:focus-visible {
   left: 0;
   width: 0;
   background: var(--ink);
-  transition: width 0.2s;
+  transition: width var(--motion-fast);
 }
 .nav > a:hover:after {
   width: 100%;
@@ -169,9 +169,9 @@ a:focus-visible {
   font-size: 15px;
   font-weight: 500;
   transition:
-    background 0.2s,
-    color 0.2s,
-    transform 0.2s;
+    background var(--motion-fast),
+    color var(--motion-fast),
+    transform var(--motion-fast);
 }
 .pill-button:hover {
   background: var(--butter);
@@ -360,7 +360,7 @@ h2 {
   border: 2px solid var(--ink);
   border-radius: 10px;
   transform: rotate(-7deg);
-  transition: transform 0.4s;
+  transition: transform var(--motion-slow);
 }
 .window-top {
   display: flex;
@@ -466,8 +466,8 @@ h2 {
   display: grid;
   place-items: center;
   transition:
-    background 0.2s,
-    transform 0.2s;
+    background var(--motion-fast),
+    transform var(--motion-fast);
 }
 .project:hover .project-open {
   background: var(--ink);
@@ -497,7 +497,7 @@ h2 {
   border-radius: 10px;
   transform: rotate(6deg);
   box-shadow: 9px 10px 0 #b8aecb;
-  transition: transform 0.4s;
+  transition: transform var(--motion-slow);
 }
 .leadership-top {
   display: flex;

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ControlIcon, Doodle, ProjectArt } from "../components/Artwork";
 import { ContactCTA, Reveal, TextLink } from "../components/UI";
 import { projects } from "../data/projects";

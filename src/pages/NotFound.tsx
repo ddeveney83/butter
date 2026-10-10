@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { MotionLink as Link } from "../components/Motion";
 import { ButterCharacter, Arrow } from "../components/Artwork";
 import { PageHero } from "../components/UI";
 

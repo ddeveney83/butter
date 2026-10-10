@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from "react";
-import { Link } from "react-router-dom";
+import { MotionLink as Link } from "../components/Motion";
 import { Arrow, Doodle, Spark } from "../components/Artwork";
 import { Accordion, ContactCTA, PageHero, Reveal } from "../components/UI";
 
@@ -124,21 +124,28 @@ export default function Pricing() {
           {packages.map((item, index) => (
             <Reveal
               key={item.name}
+              delay={index * 60}
               className={`pricing-card ${index === 1 ? "featured" : ""}`}
             >
               <Doodle kind={item.icon} />
               <h2>{item.name}</h2>
-              <p className="package-description">
+              <p
+                className="package-description"
+                key={monthly ? "support-description" : "project-description"}
+              >
                 {monthly ? item.monthlyDescription : item.description}
               </p>
-              <div className="package-price">
+              <div
+                className="package-price"
+                key={monthly ? "support-price" : "project-price"}
+              >
                 <span>Indicative from</span>
                 <strong>
                   {money(monthly ? item.monthly : item.project)}
                   <small>{monthly ? " / month" : ""}</small>
                 </strong>
               </div>
-              <ul>
+              <ul key={monthly ? "support-features" : "project-features"}>
                 {(monthly ? item.monthlyFeatures : item.features).map(
                   (feature) => (
                     <li key={feature}>
@@ -239,7 +246,9 @@ export default function Pricing() {
                   aria-live="polite"
                   aria-label="Illustrative project budget"
                 >
-                  {money(estimate)}
+                  <span className="estimate-value" key={estimate}>
+                    {money(estimate)}
+                  </span>
                 </output>
               </div>
               <Link

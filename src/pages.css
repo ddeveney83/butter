@@ -11,7 +11,7 @@ h1:focus {
   animation: page-arrive 0.45s ease-out both;
 }
 .reveal.is-visible {
-  animation: reveal 0.65s cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  animation: reveal 0.65s var(--ease-butter) both;
 }
 @keyframes page-arrive {
   from {
@@ -88,7 +88,7 @@ h1:focus {
   font-weight: 500;
   padding: 10px 0;
   border-bottom: 1px solid var(--ink);
-  transition: gap 0.2s;
+  transition: gap var(--motion-fast);
 }
 .text-link:hover {
   gap: 32px;
@@ -103,7 +103,7 @@ h1:focus {
   gap: 21px;
   border-top: 1px solid #ccccc0;
   padding: 21px 0;
-  transition: padding 0.2s;
+  transition: padding var(--motion-fast);
 }
 .services > a:last-child {
   border-bottom: 1px solid #ccccc0;
@@ -231,7 +231,7 @@ h1:focus {
   background: var(--ink);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.2s;
+  transition: transform var(--motion-fast);
 }
 .tab-list button[aria-selected="true"]:after {
   transform: scaleX(1);
@@ -409,7 +409,7 @@ h1:focus {
 }
 .disclosure-vertical {
   transform-origin: 12px 12px;
-  transition: transform 240ms cubic-bezier(0.2, 0.65, 0.3, 1);
+  transition: transform 240ms var(--ease-butter);
 }
 .accordion[data-expanded="true"] .disclosure-vertical {
   transform: scaleY(0);
@@ -420,7 +420,7 @@ h1:focus {
   opacity: 0;
   visibility: hidden;
   transition:
-    grid-template-rows 240ms cubic-bezier(0.2, 0.65, 0.3, 1),
+    grid-template-rows 240ms var(--ease-butter),
     opacity 160ms ease,
     visibility 0s 240ms;
 }
@@ -548,8 +548,8 @@ h1:focus {
   border-radius: 30px;
   font-size: 13px;
   transition:
-    background 0.2s,
-    border-color 0.2s;
+    background var(--motion-fast),
+    border-color var(--motion-fast);
 }
 .filter-list button:hover,
 .interest-chips button:hover {
@@ -601,7 +601,7 @@ h1:focus {
   transform: rotate(-6deg);
   box-shadow: 9px 10px 0 #b0c0ad;
   text-align: center;
-  transition: transform 0.4s;
+  transition: transform var(--motion-slow);
 }
 .phone-notch {
   background: var(--ink);
@@ -679,7 +679,7 @@ h1:focus {
   padding: 24px;
   color: var(--paper);
   transform: rotate(5deg);
-  transition: transform 0.4s;
+  transition: transform var(--motion-slow);
   background: #34342c;
   box-shadow: 10px 10px 0 #181816;
 }
@@ -738,7 +738,7 @@ h1:focus {
   border-radius: 8px;
   transform: rotate(-5deg);
   box-shadow: 9px 10px 0 #bebc8f;
-  transition: transform 0.4s;
+  transition: transform var(--motion-slow);
 }
 .garden-top {
   display: flex;
@@ -812,7 +812,7 @@ h1:focus {
   box-shadow: 9px 10px 0 #cda993;
   padding: 23px;
   transform: rotate(6deg);
-  transition: transform 0.4s;
+  transition: transform var(--motion-slow);
 }
 .skills-top {
   display: flex;
@@ -1039,8 +1039,8 @@ h1:focus {
   text-align: left;
   line-height: 1.5;
   transition:
-    background 0.2s,
-    border-color 0.2s;
+    background var(--motion-fast),
+    border-color var(--motion-fast);
 }
 .scenario-choices button > span {
   width: 25px;
@@ -1111,7 +1111,7 @@ h1:focus {
 .next-project .arrow {
   width: 48px;
   height: 48px;
-  transition: transform 0.2s;
+  transition: transform var(--motion-fast);
 }
 .next-project > a:hover .arrow {
   transform: translate(5px, -5px);
@@ -1144,8 +1144,8 @@ h1:focus {
   padding: 13px 20px;
   color: #66665d;
   transition:
-    background 0.2s,
-    color 0.2s;
+    background var(--motion-fast),
+    color var(--motion-fast);
 }
 .segmented-control button[aria-pressed="true"] {
   background: var(--ink);
@@ -1366,7 +1366,7 @@ select:focus-visible {
   width: 55px;
   height: 55px;
   border-radius: 50%;
-  transition: background 0.2s;
+  transition: background var(--motion-fast);
 }
 .round-link:hover {
   background: var(--ink);
@@ -2280,7 +2280,7 @@ select:focus-visible {
   background: var(--ink);
   border-radius: 40px;
   z-index: -1;
-  transition: transform 220ms cubic-bezier(0.2, 0.65, 0.3, 1);
+  transition: transform 220ms var(--ease-butter);
 }
 .segmented-control[data-active="support"]:before {
   transform: translateX(100%);

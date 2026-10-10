@@ -1,37 +1,62 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
+import { MotionLink as Link } from "./Motion";
 import { Arrow, ProjectArt, Spark } from "./Artwork";
 import type { Project } from "../data/projects";
 
 export function Reveal({
   children,
   className = "",
+  delay = 0,
 }: {
   children: ReactNode;
   className?: string;
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const node = ref.current!;
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      !("IntersectionObserver" in window)
-    )
-      return;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (media.matches || !("IntersectionObserver" in window)) return;
+    node.dataset.reveal = "pending";
+    function show() {
+      node.dataset.reveal = "ready";
+      node.classList.add("is-visible");
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          node.classList.add("is-visible");
+          show();
           observer.disconnect();
         }
       },
-      { threshold: 0.08 },
+      { threshold: 0.06 },
     );
     observer.observe(node);
-    return () => observer.disconnect();
+    function changed() {
+      if (media.matches) {
+        show();
+        observer.disconnect();
+      }
+    }
+    media.addEventListener("change", changed);
+    return () => {
+      observer.disconnect();
+      media.removeEventListener("change", changed);
+    };
   }, []);
   return (
-    <div className={`reveal ${className}`} ref={ref}>
+    <div
+      className={`reveal ${className}`}
+      ref={ref}
+      style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
+    >
       {children}
     </div>
   );
@@ -132,7 +157,17 @@ export function Tabs({
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   return (
     <div className="interactive-tabs">
-      <div className="tab-list" role="tablist" aria-label={label}>
+      <div
+        className="tab-list"
+        role="tablist"
+        aria-label={label}
+        style={
+          {
+            "--tab-count": items.length,
+            "--tab-active": active,
+          } as CSSProperties
+        }
+      >
         {items.map((item, index) => (
           <button
             key={item.id}

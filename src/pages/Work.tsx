@@ -2,8 +2,10 @@ import { useSearchParams } from "react-router-dom";
 import { ContactCTA, PageHero, ProjectCard, Reveal } from "../components/UI";
 import { projects, workFilters, type WorkFilter } from "../data/projects";
 import { Spark } from "../components/Artwork";
+import { useReducedMotion } from "../components/Motion";
 
 export default function Work() {
+  const reducedMotion = useReducedMotion();
   const [params, setParams] = useSearchParams();
   const requested = params.get("type");
   const active: WorkFilter = workFilters.includes(requested as WorkFilter)
@@ -43,6 +45,9 @@ export default function Work() {
                 onClick={() =>
                   setParams(filter === "All work" ? {} : { type: filter }, {
                     preventScrollReset: true,
+                    viewTransition:
+                      !reducedMotion &&
+                      typeof document.startViewTransition === "function",
                   })
                 }
               >
@@ -55,8 +60,8 @@ export default function Work() {
           </span>
         </div>
         <div className="projects" key={active}>
-          {visible.map((project) => (
-            <Reveal key={project.id}>
+          {visible.map((project, index) => (
+            <Reveal key={project.id} delay={(index % 2) * 70}>
               <ProjectCard project={project} />
             </Reveal>
           ))}

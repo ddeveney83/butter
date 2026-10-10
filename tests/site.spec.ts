@@ -459,3 +459,126 @@ test("expanded controls and maximum estimates fit on narrow screens without shif
     ).toBeLessThan(1);
   }
 });
+
+test("page crossfades complete and interrupted navigation settles on the final page", async ({
+  page,
+}, testInfo) => {
+  await page.addInitScript(() => {
+    const start = document.startViewTransition.bind(document);
+    const metrics = { started: 0, finished: 0, animation: "", duration: "" };
+    (
+      window as typeof window & { motionMetrics: typeof metrics }
+    ).motionMetrics = metrics;
+    document.startViewTransition = (...args) => {
+      metrics.started++;
+      const transition = start(...args);
+      transition.ready
+        .then(() => {
+          const style = getComputedStyle(
+            document.documentElement,
+            "::view-transition-new(butter-page)",
+          );
+          metrics.animation = style.animationName;
+          metrics.duration = style.animationDuration;
+        })
+        .catch(() => {});
+      transition.finished
+        .then(() => {
+          metrics.finished++;
+        })
+        .catch(() => {});
+      return transition;
+    };
+  });
+  await page.goto("/");
+  await openMenuIfMobile(page, testInfo.project.name);
+  await page
+    .getByRole("navigation", { name: "Main navigation" })
+    .getByRole("link", { name: "Services", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/services$/);
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () =>
+          (window as typeof window & { motionMetrics: { finished: number } })
+            .motionMetrics.finished,
+      ),
+    )
+    .toBe(1);
+  expect(
+    await page.evaluate(
+      () =>
+        (
+          window as typeof window & {
+            motionMetrics: { animation: string; duration: string };
+          }
+        ).motionMetrics,
+    ),
+  ).toMatchObject({ animation: "page-arrive", duration: "0.42s" });
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
+  await page.locator(".footer-nav a").evaluateAll((links) => {
+    (links[2] as HTMLAnchorElement).click();
+    (links[3] as HTMLAnchorElement).click();
+  });
+  await expect(page).toHaveURL(/\/pricing$/);
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        document.documentElement.matches(":active-view-transition"),
+      ),
+    )
+    .toBe(false);
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
+  await expect(page.locator("main")).toHaveCSS("opacity", "1");
+  await expect(page.locator("main")).toHaveCSS("animation-name", "none");
+  await page.goBack();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+});
+
+test("motion preferences update live and browsers without view transitions retain navigation", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/work");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator(".work-gallery .reveal").last()).toHaveCSS(
+    "opacity",
+    "1",
+  );
+  await expect(page.locator(".work-gallery .reveal").last()).toHaveCSS(
+    "translate",
+    "none",
+  );
+  await expect(page.locator("main")).toHaveCSS("animation-name", "none");
+  await page.evaluate(() => {
+    document.startViewTransition = () => {
+      throw new Error("Reduced motion must bypass page transitions");
+    };
+  });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await openMenuIfMobile(page, testInfo.project.name);
+  await page
+    .getByRole("navigation", { name: "Main navigation" })
+    .getByRole("link", { name: "About", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/about$/);
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
+  expect(errors).toEqual([]);
+  await page.evaluate(() =>
+    Object.defineProperty(document, "startViewTransition", {
+      value: undefined,
+      configurable: true,
+    }),
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await openMenuIfMobile(page, testInfo.project.name);
+  await page
+    .getByRole("navigation", { name: "Main navigation" })
+    .getByRole("link", { name: "Services", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/services$/);
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  expect(errors).toEqual([]);
+});

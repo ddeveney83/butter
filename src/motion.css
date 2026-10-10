@@ -1,0 +1,276 @@
+/* One restrained rhythm for navigation and interaction. */
+:root {
+  --ease-butter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-fast: 180ms;
+  --motion-base: 320ms;
+  --motion-slow: 520ms;
+}
+
+.page-enter {
+  animation: page-arrive var(--motion-slow) var(--ease-butter) both;
+  view-transition-name: butter-page;
+}
+.header {
+  view-transition-name: butter-header;
+  position: relative;
+  z-index: 10;
+}
+.footer {
+  view-transition-name: butter-footer;
+}
+.page-enter.native-entry {
+  animation: none;
+}
+html:active-view-transition .page-enter * {
+  animation-duration: 1ms;
+}
+::view-transition-group(*) {
+  animation-timing-function: var(--ease-butter);
+}
+::view-transition-group(butter-header),
+::view-transition-group(butter-footer) {
+  animation: none;
+}
+::view-transition-group(butter-header) {
+  z-index: 2;
+}
+::view-transition-old(butter-header),
+::view-transition-old(butter-footer) {
+  display: none;
+}
+::view-transition-old(root),
+::view-transition-new(root),
+::view-transition-old(butter-header),
+::view-transition-new(butter-header),
+::view-transition-old(butter-footer),
+::view-transition-new(butter-footer) {
+  animation: none;
+}
+::view-transition-old(butter-page) {
+  animation: page-leave 160ms ease-out both;
+  mix-blend-mode: normal;
+}
+::view-transition-new(butter-page) {
+  animation: page-arrive 420ms var(--ease-butter) both;
+  mix-blend-mode: normal;
+}
+@keyframes page-leave {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Reveals use transitions so a preference change can reveal content immediately. */
+.reveal,
+.reveal.is-visible {
+  animation: none;
+}
+.reveal[data-reveal] {
+  transition:
+    opacity var(--motion-slow) var(--ease-butter),
+    translate var(--motion-slow) var(--ease-butter);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-reveal="pending"] {
+  opacity: 0;
+  translate: 0 12px;
+}
+.reveal[data-reveal="ready"],
+.reveal:focus-within {
+  opacity: 1;
+  translate: 0;
+}
+.reveal:focus-within {
+  transition-delay: 0ms;
+}
+html:active-view-transition .reveal[data-reveal] {
+  opacity: 1;
+  translate: none;
+  transition: none;
+}
+
+/* The underline travels as one piece while the content keeps its reserved height. */
+.tab-list {
+  position: relative;
+}
+.tab-list:after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: calc(100% / var(--tab-count));
+  height: 3px;
+  background: var(--ink);
+  transform: translateX(calc(var(--tab-active) * 100%));
+  transition: transform var(--motion-base) var(--ease-butter);
+  pointer-events: none;
+}
+.tab-list button:after {
+  content: none;
+}
+.tab-list button {
+  transition:
+    color var(--motion-fast) var(--ease-butter),
+    background var(--motion-fast) var(--ease-butter);
+}
+.tab-panel[aria-hidden="false"] {
+  animation: content-arrive var(--motion-base) var(--ease-butter);
+}
+@keyframes content-arrive {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+  to {
+    opacity: 1;
+    translate: 0;
+  }
+}
+.estimate-result output .estimate-value {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  animation: content-arrive var(--motion-fast) var(--ease-butter);
+}
+.accordion-panel {
+  transition:
+    grid-template-rows var(--motion-base) var(--ease-butter),
+    opacity 220ms ease-out,
+    visibility 0s var(--motion-base);
+}
+.accordion[data-expanded="true"] > .accordion-panel {
+  transition-delay: 0s;
+}
+.disclosure-vertical {
+  transition: transform var(--motion-base) var(--ease-butter);
+}
+.disclosure-icon {
+  transition: color var(--motion-fast) var(--ease-butter);
+}
+.segmented-control:before {
+  transition: transform var(--motion-base) var(--ease-butter);
+}
+.package-description,
+.package-price,
+.pricing-card ul,
+.contact-actions > *,
+.feedback-messages p[aria-hidden="false"] {
+  animation: content-arrive var(--motion-base) var(--ease-butter);
+}
+
+.pill-button,
+.round-link,
+.nav-contact,
+.project-open {
+  transition:
+    background var(--motion-base) var(--ease-butter),
+    color var(--motion-base) var(--ease-butter),
+    border-color var(--motion-base) var(--ease-butter),
+    transform var(--motion-base) var(--ease-butter);
+}
+.pill-button .arrow,
+.round-link .arrow,
+.text-link .arrow,
+.project-caption > .arrow,
+.scenario-choices .arrow,
+.nav-contact .arrow,
+.back-top span,
+.brand-dot {
+  transition: transform var(--motion-base) var(--ease-butter);
+}
+.filter-list button,
+.interest-chips button,
+.scenario-choices button {
+  transition:
+    background var(--motion-base) var(--ease-butter),
+    color var(--motion-base) var(--ease-butter),
+    border-color var(--motion-base) var(--ease-butter),
+    transform var(--motion-fast) var(--ease-butter);
+}
+.contact-form input,
+.contact-form textarea,
+select {
+  transition:
+    border-color var(--motion-fast) var(--ease-butter),
+    background var(--motion-fast) var(--ease-butter);
+}
+.pill-button:active,
+.round-link:active,
+.filter-list button:active,
+.interest-chips button:active {
+  transform: scale(0.98);
+}
+.scenario-choices button:active {
+  transform: translateY(1px);
+}
+.hero-character {
+  animation-duration: 8s;
+  animation-timing-function: var(--ease-in-out);
+}
+.back-top span {
+  display: inline-block;
+}
+
+@media (hover: hover) {
+  .pill-button:hover .arrow,
+  .round-link:hover .arrow,
+  .text-link:hover .arrow,
+  .project:hover .project-caption > .arrow,
+  .nav-contact:hover .arrow {
+    transform: translate(2px, -2px);
+  }
+  .scenario-choices button:hover .arrow {
+    transform: translateX(3px);
+  }
+  .back-top:hover span {
+    display: inline-block;
+    transform: translateY(-3px);
+  }
+  .wordmark:hover .brand-dot {
+    transform: rotate(45deg);
+  }
+}
+@media (max-width: 760px) {
+  .nav {
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition:
+      opacity 220ms ease-out,
+      transform var(--motion-base) var(--ease-butter),
+      visibility 0s 220ms;
+  }
+  .nav.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *:before,
+  *:after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal[data-reveal] {
+    opacity: 1;
+    translate: none;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

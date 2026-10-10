@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ButterCharacter, Spark } from "../components/Artwork";
 import { ContactCTA, ProjectCard, Reveal, TextLink } from "../components/UI";
 import { projects } from "../data/projects";

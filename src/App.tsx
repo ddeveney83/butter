@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  BrowserRouter,
-  Link,
-  NavLink,
-  Route,
-  Routes,
+  createBrowserRouter,
+  Outlet,
+  RouterProvider,
   useLocation,
+  useViewTransitionState,
 } from "react-router-dom";
+import {
+  MotionLink as Link,
+  MotionNavLink as NavLink,
+  useMediaQuery,
+} from "./components/Motion";
 import { Arrow, Spark } from "./components/Artwork";
 import { projects } from "./data/projects";
 import Home from "./pages/Home";
@@ -52,8 +56,24 @@ const meta: Record<string, [string, string]> = {
   ],
 };
 
+function PageContent() {
+  const location = useLocation();
+  const transitioning = useViewTransitionState(location.pathname);
+  // Remember how this page entered, so the fallback cannot replay after a crossfade.
+  const [nativeEntry] = useState(transitioning);
+  return (
+    <main
+      id="main"
+      className={`page-enter${nativeEntry ? " native-entry" : ""}`}
+    >
+      <Outlet />
+    </main>
+  );
+}
+
 function Site() {
   const location = useLocation();
+  const compactNavigation = useMediaQuery("(max-width: 760px)");
   const [menuOpen, setMenuOpen] = useState(false);
   const firstRender = useRef(true);
   const menuButton = useRef<HTMLButtonElement>(null);
@@ -122,6 +142,7 @@ function Site() {
           id="navigation"
           className={`nav ${menuOpen ? "open" : ""}`}
           aria-label="Main navigation"
+          inert={compactNavigation && !menuOpen}
         >
           {links.map(([to, label]) => (
             <NavLink
@@ -136,18 +157,7 @@ function Site() {
           ))}
         </nav>
       </header>
-      <main id="main" key={location.pathname} className="page-enter">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/work/:slug" element={<Project />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+      <PageContent key={location.pathname} />
       <footer className="footer">
         <div className="container">
           <div className="footer-top">
@@ -199,10 +209,22 @@ function Site() {
   );
 }
 
+const router = createBrowserRouter([
+  {
+    element: <Site />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "/about", element: <About /> },
+      { path: "/services", element: <Services /> },
+      { path: "/work", element: <Work /> },
+      { path: "/work/:slug", element: <Project /> },
+      { path: "/pricing", element: <Pricing /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "*", element: <NotFound /> },
+    ],
+  },
+]);
+
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Site />
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
