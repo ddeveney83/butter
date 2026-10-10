@@ -7,8 +7,9 @@ import {
   type ReactNode,
 } from "react";
 import { MotionLink as Link, useReducedMotion } from "./Motion";
-import { Arrow, ProjectArt, Spark } from "./Artwork";
+import { Arrow, Spark } from "./Artwork";
 import type { Project } from "../data/projects";
+import "./Portfolio.css";
 
 export function Reveal({
   children,
@@ -71,16 +72,22 @@ export function ProjectCard({ project }: { project: Project }) {
       aria-label={`Explore ${project.title}`}
     >
       <div className="project-image">
-        <ProjectArt kind={project.theme} />
+        <img
+          className="project-cover"
+          src={project.hero.path}
+          alt={project.hero.alt}
+          loading="lazy"
+        />
         <span className="project-open">
           <Arrow diagonal />
         </span>
-        <span className="concept-label">Concept project</span>
       </div>
       <div className="project-caption">
         <div>
           <h3>{project.title}</h3>
-          <p>{project.category}</p>
+          <p>
+            {project.client} · {project.category}
+          </p>
         </div>
         <Arrow diagonal />
       </div>

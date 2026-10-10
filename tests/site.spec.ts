@@ -1,13 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-const projects = [
-  ["onboarding", "A fresh start."],
-  ["leadership", "People, not processes."],
-  ["wellbeing", "Room to breathe."],
-  ["compliance", "Do the right thing."],
-  ["sustainability", "Little by little."],
-  ["product-skills", "Know it. Show it."],
-];
+import { projects as catalogue, projectAliases } from "../src/data/projects";
+const projects = catalogue.map((project) => [project.id, project.title]);
+const learningProjects = catalogue
+  .filter((project) => project.filter === "eLearning")
+  .map((project) => [project.id, project.title]);
 
 async function openMenuIfMobile(
   page: import("@playwright/test").Page,
@@ -17,7 +14,7 @@ async function openMenuIfMobile(
     await page.getByRole("button", { name: "Menu", exact: true }).click();
 }
 
-test("all pages and six project routes load directly without errors or overflow", async ({
+test("all pages and eight project routes load directly without errors or overflow", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -79,37 +76,35 @@ test("navigation supports separate pages, active links, browser history and mobi
   }
 });
 
-test("work has six pieces and shareable filters that persist on reload and Back", async ({
+test("work has eight pieces and shareable filters that persist on reload and Back", async ({
   page,
 }) => {
   await page.goto("/work");
-  await expect(page.locator(".work-gallery .project")).toHaveCount(6);
-  await expect(page.getByRole("status")).toHaveText("06 projects");
-  await page.getByRole("button", { name: "Storytelling", exact: true }).click();
+  await expect(page.locator(".work-gallery .project")).toHaveCount(8);
+  await expect(page.getByRole("status")).toHaveText("08 projects");
+  await page.getByRole("button", { name: "LMS", exact: true }).click();
   await expect(page.locator(".work-gallery .project")).toHaveCount(2);
   await expect(page.getByRole("status")).toHaveText("02 projects");
   await page.reload();
   await expect(
-    page.getByRole("button", { name: "Storytelling", exact: true }),
+    page.getByRole("button", { name: "LMS", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
   await page
-    .getByRole("link", { name: "Explore People, not processes." })
+    .getByRole("link", { name: "Explore Nansen Learning Academy" })
     .click();
-  await expect(page).toHaveURL(/\/work\/leadership$/);
+  await expect(page).toHaveURL(/\/work\/nansen-learning-academy$/);
   await page.goBack();
   await expect(page.locator(".work-gallery .project")).toHaveCount(2);
-  for (const filter of ["Digital learning", "Microlearning"]) {
-    await page.getByRole("button", { name: filter, exact: true }).click();
-    await expect(page.locator(".work-gallery .project")).toHaveCount(2);
-  }
-  await page.getByRole("button", { name: "All work", exact: true }).click();
+  await page.getByRole("button", { name: "eLearning", exact: true }).click();
   await expect(page.locator(".work-gallery .project")).toHaveCount(6);
+  await page.getByRole("button", { name: "All work", exact: true }).click();
+  await expect(page.locator(".work-gallery .project")).toHaveCount(8);
 });
 
 test("every project has a working learning sample and next-project navigation", async ({
   page,
 }) => {
-  for (const [slug, title] of projects) {
+  for (const [slug, title] of learningProjects) {
     await page.goto(`/work/${slug}`);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
     const choice = page
@@ -130,7 +125,7 @@ test("every project has a working learning sample and next-project navigation", 
     );
   }
   await page.locator(".next-project a").click();
-  await expect(page).toHaveURL(/\/work\/onboarding$/);
+  await expect(page).toHaveURL(/\/work\/your-learning-platform$/);
   await expect(
     page.getByRole("button", { name: "Try a different response" }),
   ).toHaveCount(0);
@@ -434,7 +429,7 @@ test("expanded controls and maximum estimates fit on narrow screens without shif
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  for (const [slug] of projects) {
+  for (const [slug] of learningProjects) {
     await page.goto(`/work/${slug}`);
     await page.evaluate(() => document.fonts.ready);
     const sample = page.locator(".scenario-card");
@@ -654,4 +649,16 @@ test("visible sections establish a hidden frame and then actually fade into view
     expect(frame.duration).toBe(520);
   }
   await expect(page.locator(".pricing-card").first()).toHaveCSS("opacity", "1");
+});
+
+test("previous portfolio URLs resolve to the matching sourced work", async ({
+  page,
+}) => {
+  for (const [oldSlug, slug] of Object.entries(projectAliases)) {
+    await page.goto(`/work/${oldSlug}?view=sample`);
+    await expect(page).toHaveURL(new RegExp(`/work/${slug}\\?view=sample$`));
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      catalogue.find((project) => project.id === slug)!.title,
+    );
+  }
 });

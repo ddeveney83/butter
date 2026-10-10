@@ -91,7 +91,7 @@ export default function Home() {
           ))}
         </div>
         <div className="section-tail">
-          <TextLink to="/work">Explore all six projects</TextLink>
+          <TextLink to="/work">Explore all eight projects</TextLink>
         </div>
       </section>
       <section className="about section">

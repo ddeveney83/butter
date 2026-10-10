@@ -104,7 +104,9 @@ test("all six course previews support distinct interactions, screen navigation, 
   await page.emulateMedia({ reducedMotion: "reduce" });
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  for (const project of projects) {
+  for (const project of projects.filter(
+    (item) => item.filter === "eLearning",
+  )) {
     await page.goto(`/work/${project.id}`);
     const preview = page.locator(".course-showcase");
     const active = preview.locator('.course-screen[aria-hidden="false"]');
@@ -178,7 +180,7 @@ test("all project image galleries expand, navigate, trap focus and restore it on
     const images = gallery.locator(".course-gallery-grid .course-image-open");
     await expect(images).toHaveCount(3);
     await expect(gallery.locator(".course-gallery-note")).toContainText(
-      "placeholders",
+      "Original project screens",
     );
     await images.first().click();
     const dialog = page.getByRole("dialog", {
@@ -187,26 +189,33 @@ test("all project image galleries expand, navigate, trap focus and restore it on
     });
     await expect(dialog).toBeVisible();
     await expect(dialog.getByRole("img")).toHaveAccessibleName(
-      /Welcome course image placeholder/,
+      `${project.title} — ${project.gallery[0].alt}`,
     );
+    await expect
+      .poll(() =>
+        dialog
+          .getByRole("img")
+          .evaluate((image: HTMLImageElement) => image.naturalWidth),
+      )
+      .toBeGreaterThan(0);
     expect(
       await page.evaluate(() => getComputedStyle(document.body).overflow),
     ).toBe("hidden");
     await dialog.getByRole("button", { name: "Next course image" }).click();
     await expect(dialog.locator("figcaption > span")).toHaveText(
-      "Explore — 2 of 3",
+      `${project.gallery[1].alt} — 2 of 3`,
     );
     await page.keyboard.press("ArrowRight");
     await expect(dialog.locator("figcaption > span")).toHaveText(
-      "Take away — 3 of 3",
+      `${project.gallery[2].alt} — 3 of 3`,
     );
     await page.keyboard.press("ArrowRight");
     await expect(dialog.locator("figcaption > span")).toHaveText(
-      "Welcome — 1 of 3",
+      `${project.gallery[0].alt} — 1 of 3`,
     );
     await dialog.getByRole("button", { name: "Previous course image" }).click();
     await expect(dialog.locator("figcaption > span")).toHaveText(
-      "Take away — 3 of 3",
+      `${project.gallery[2].alt} — 3 of 3`,
     );
     for (let i = 0; i < 4; i++) {
       await page.keyboard.press("Tab");
@@ -222,7 +231,7 @@ test("all project image galleries expand, navigate, trap focus and restore it on
     ).toBe("visible");
     await images.last().click();
     await expect(dialog.locator("figcaption > span")).toHaveText(
-      "Take away — 3 of 3",
+      `${project.gallery[2].alt} — 3 of 3`,
     );
     await dialog
       .getByRole("button", { name: "Close course image preview" })
@@ -237,7 +246,9 @@ test("course screens, hotspots and cards hold their layout at narrow and wide si
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const width of [320, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
-    for (const project of projects) {
+    for (const project of projects.filter(
+      (item) => item.filter === "eLearning",
+    )) {
       await page.goto(`/work/${project.id}`);
       await page.evaluate(() => document.fonts.ready);
       const preview = page.locator(".course-showcase");

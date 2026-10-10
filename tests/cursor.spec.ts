@@ -28,7 +28,7 @@ test("butter cursor gives accurate hover hints without blocking interaction", as
   if (testInfo.project.name === "mobile") {
     await expect(hint).toHaveCount(0);
     await expect(page.locator("html")).not.toHaveClass(/butter-cursor-enabled/);
-    await page.getByRole("button", { name: "Storytelling", exact: true }).tap();
+    await page.getByRole("button", { name: "LMS", exact: true }).tap();
     await expect(page.locator(".work-gallery .project")).toHaveCount(2);
     return;
   }
@@ -41,7 +41,7 @@ test("butter cursor gives accurate hover hints without blocking interaction", as
   await expect(hint).toHaveCSS("pointer-events", "none");
   await expect(hint).toHaveAttribute("aria-hidden", "true");
   await project.click();
-  await expect(page).toHaveURL(/\/work\/onboarding$/);
+  await expect(page).toHaveURL(/\/work\/allergen-awareness$/);
   await page.goto("/services");
   const accordion = page.getByRole("button", {
     name: "Digital experiences",
@@ -90,14 +90,10 @@ test("native form cursors, touch and reduced motion remain usable", async ({
     input.disabled = false;
   });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page
-    .getByRole("button", { name: "Digital learning", exact: true })
-    .hover();
+  await page.getByRole("button", { name: "Digital learning", exact: true }).hover();
   await expect(hint).toHaveText("Choose");
   await expect(hint).toHaveCSS("transition-duration", "0s");
-  await page
-    .getByRole("button", { name: "Digital learning", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Digital learning", exact: true }).click();
   await expect(hint).toHaveText("Selected");
   await page.goto("/pricing");
   const checkbox = page.getByLabel("Branching scenarios");

@@ -285,67 +285,14 @@ export function CourseShowcase({ project }: { project: Project }) {
 }
 
 function CourseImage({ project, index }: { project: Project; index: number }) {
-  const preview = coursePreviews[project.id];
-  const source = preview.images?.[index];
-  const description = `${project.title} ${courseScreens[index]} course image`;
-  if (source)
-    return (
-      <img
-        className="course-image"
-        src={source}
-        alt={description}
-        loading="lazy"
-      />
-    );
+  const image = project.gallery[index];
   return (
-    <div
-      className={`course-image-placeholder course-placeholder-${index}`}
-      data-theme={project.theme}
-      role="img"
-      aria-label={`${description} placeholder`}
-    >
-      <div className="course-placeholder-bar" aria-hidden="true">
-        <span className="course-mini-brand">
-          butter
-          <Spark />
-        </span>
-        <span>0{index + 1} / 03</span>
-      </div>
-      <div className="course-placeholder-content" aria-hidden="true">
-        <div className="course-placeholder-copy">
-          <strong>
-            <CourseTitle
-              text={
-                index === 0
-                  ? preview.welcome
-                  : index === 1
-                    ? preview.exploration
-                    : "A small step. A little difference."
-              }
-            />
-          </strong>
-          {index === 1 ? (
-            <div className="course-placeholder-markers">
-              {preview.hotspots.map((item, i) => (
-                <span key={item.label}>
-                  <i>{i + 1}</i>
-                  {item.label}
-                </span>
-              ))}
-            </div>
-          ) : (
-            <>
-              <div className="course-placeholder-line" />
-              <div className="course-placeholder-line short" />
-            </>
-          )}
-        </div>
-        <div className="course-placeholder-art">
-          <CourseIllustration kind={preview.illustration} />
-          <Spark className="course-spark" />
-        </div>
-      </div>
-    </div>
+    <img
+      className="course-image"
+      src={image.path}
+      alt={`${project.title} — ${image.alt}`}
+      loading="lazy"
+    />
   );
 }
 
@@ -374,9 +321,9 @@ export function CourseGallery({ project }: { project: Project }) {
         <h2>A closer look.</h2>
       </Reveal>
       <div className="course-gallery-grid">
-        {courseScreens.map((name, index) => (
+        {project.gallery.map((image, index) => (
           <Reveal
-            key={name}
+            key={image.path}
             className={`course-gallery-item course-gallery-item-${index}`}
             delay={index * 60}
           >
@@ -384,7 +331,7 @@ export function CourseGallery({ project }: { project: Project }) {
               <button
                 type="button"
                 className="course-image-open"
-                aria-label={`Expand ${name} course image`}
+                aria-label={`Expand ${image.alt} project image`}
                 onClick={() => setSelected(index)}
                 data-cursor-label="View larger"
               >
@@ -394,19 +341,16 @@ export function CourseGallery({ project }: { project: Project }) {
                 </span>
               </button>
               <figcaption>
-                <span>{name}</span>
+                <span>{image.alt}</span>
                 <span>0{index + 1} / 03</span>
               </figcaption>
             </figure>
           </Reveal>
         ))}
       </div>
-      {!coursePreviews[project.id].images && (
-        <p className="course-gallery-note">
-          Course image placeholders for this concept. Select an image to
-          explore.
-        </p>
-      )}
+      <p className="course-gallery-note">
+        Original project screens · Daniel Deveney. Select an image to explore.
+      </p>
       <dialog
         ref={dialog}
         className="course-lightbox"
@@ -470,7 +414,7 @@ export function CourseGallery({ project }: { project: Project }) {
                 <Arrow />
               </button>
               <span aria-live="polite" aria-atomic="true">
-                {courseScreens[selected]} — {selected + 1} of 3
+                {project.gallery[selected].alt} — {selected + 1} of 3
               </span>
               <button
                 type="button"

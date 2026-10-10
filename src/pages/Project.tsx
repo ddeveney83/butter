@@ -1,17 +1,27 @@
 import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ControlIcon, Doodle } from "../components/Artwork";
 import { CourseGallery, CourseShowcase } from "../components/CourseShowcase";
 import { ContactCTA, Reveal, TextLink } from "../components/UI";
-import { projects } from "../data/projects";
+import { projects, projectAliases } from "../data/projects";
 import NotFound from "./NotFound";
+import PlatformShowcase from "../components/PlatformShowcase";
+import ProjectVideo from "../components/ProjectVideo";
 
 export default function ProjectPage() {
   const { slug } = useParams();
+  const location = useLocation();
   const project = projects.find((item) => item.id === slug);
   const [choice, setChoice] = useState<number | null>(null);
   const firstChoice = useRef<HTMLButtonElement>(null);
+  if (slug && projectAliases[slug])
+    return (
+      <Navigate
+        replace
+        to={`/work/${projectAliases[slug]}${location.search}${location.hash}`}
+      />
+    );
   if (!project) return <NotFound />;
   const next = projects[(projects.indexOf(project) + 1) % projects.length];
   return (
@@ -23,11 +33,25 @@ export default function ProjectPage() {
           <p>
             {project.category}
             <br />
-            <span>Concept project</span>
+            <span>{project.client}</span>
           </p>
         </div>
         <p className="project-intro">{project.intro}</p>
-        <CourseShowcase key={project.id} project={project} />
+        <dl className="project-facts">
+          <div>
+            <dt>Client</dt>
+            <dd>{project.client}</dd>
+          </div>
+          <div>
+            <dt>Year</dt>
+            <dd>{project.year}</dd>
+          </div>
+          <div>
+            <dt>Daniel’s role</dt>
+            <dd>{project.role}</dd>
+          </div>
+        </dl>
+        <ProjectVideo key={project.id} project={project} />
       </section>
       <section className="project-story section container">
         <Reveal>
@@ -46,81 +70,106 @@ export default function ProjectPage() {
           <p className="large-copy">{project.description}</p>
           <p>{project.approach}</p>
           <p className="project-intention">
-            <span>The intention</span>
-            {project.outcome}
+            <span>Reported outcome</span>
+            <strong>{project.metric.value}</strong>
+            {project.metric.label}
+          </p>
+          <p>{project.outcome}</p>
+          <p className="project-credit">
+            Project work by Daniel Deveney.{" "}
+            <a href={project.source} target="_blank" rel="noreferrer">
+              Read the original case study ↗
+            </a>
           </p>
         </Reveal>
       </section>
+      <section className="project-sample container">
+        <h2>Get a feel for it.</h2>
+        {project.filter === "LMS" ? (
+          <PlatformShowcase key={project.id} project={project} />
+        ) : (
+          <CourseShowcase key={project.id} project={project} />
+        )}
+        <p className="project-sample-note">
+          Recreated interactive sample inspired by the project.{" "}
+          {project.id === "matrix-reloaded"
+            ? "The original programme combined digital modules, live sessions and workplace practice. "
+            : ""}
+          Sample selections and notes stay on this page.
+        </p>
+      </section>
       <CourseGallery key={`gallery-${project.id}`} project={project} />
-      <section className={`project-demo demo-${project.theme}`}>
-        <div className="container demo-grid">
-          <Reveal>
-            <Doodle kind="play" />
-            <h2>
-              Try a little
-              <br />
-              of <span className="underlined">it.</span>
-            </h2>
-            <p>
-              A short sample of the thinking.
-              <br />
-              Pick a response. See what happens.
-            </p>
-          </Reveal>
-          <div className="scenario-card">
-            <span className="scenario-label">A moment to think</span>
-            <h3>{project.scenario}</h3>
-            <div
-              className="scenario-choices"
-              role="group"
-              aria-label="Choose a response"
-            >
-              {project.choices.map((item, index) => (
-                <button
-                  key={item.label}
-                  ref={index === 0 ? firstChoice : undefined}
-                  aria-pressed={choice === index}
-                  onClick={() => setChoice(index)}
-                >
-                  <span>{String.fromCharCode(65 + index)}</span>
-                  {item.label}
-                  <Arrow />
-                </button>
-              ))}
-            </div>
-            <div className="scenario-feedback">
-              <div className="feedback-messages">
-                <p role="status" aria-atomic="true" aria-hidden="false">
-                  {choice === null
-                    ? "There’s space to explore. Try any response."
-                    : project.choices[choice].feedback}
-                </p>
-                {project.choices.map((item) => (
-                  <p key={item.feedback} aria-hidden="true">
-                    {item.feedback}
-                  </p>
+      {project.filter === "eLearning" && (
+        <section className={`project-demo demo-${project.theme}`}>
+          <div className="container demo-grid">
+            <Reveal>
+              <Doodle kind="play" />
+              <h2>
+                Try a little
+                <br />
+                of <span className="underlined">it.</span>
+              </h2>
+              <p>
+                A short sample of the thinking.
+                <br />
+                Pick a response. See what happens.
+              </p>
+            </Reveal>
+            <div className="scenario-card">
+              <span className="scenario-label">A moment to think</span>
+              <h3>{project.scenario}</h3>
+              <div
+                className="scenario-choices"
+                role="group"
+                aria-label="Choose a response"
+              >
+                {project.choices.map((item, index) => (
+                  <button
+                    key={item.label}
+                    ref={index === 0 ? firstChoice : undefined}
+                    aria-pressed={choice === index}
+                    onClick={() => setChoice(index)}
+                  >
+                    <span>{String.fromCharCode(65 + index)}</span>
+                    {item.label}
+                    <Arrow />
+                  </button>
                 ))}
               </div>
-              <div
-                className="feedback-reset"
-                aria-hidden={choice === null}
-                inert={choice === null}
-              >
-                <button
-                  type="button"
-                  className="reset-link"
-                  onClick={() => {
-                    setChoice(null);
-                    firstChoice.current?.focus();
-                  }}
+              <div className="scenario-feedback">
+                <div className="feedback-messages">
+                  <p role="status" aria-atomic="true" aria-hidden="false">
+                    {choice === null
+                      ? "There’s space to explore. Try any response."
+                      : project.choices[choice].feedback}
+                  </p>
+                  {project.choices.map((item) => (
+                    <p key={item.feedback} aria-hidden="true">
+                      {item.feedback}
+                    </p>
+                  ))}
+                </div>
+                <div
+                  className="feedback-reset"
+                  aria-hidden={choice === null}
+                  inert={choice === null}
                 >
-                  Try a different response <ControlIcon kind="reset" />
-                </button>
+                  <button
+                    type="button"
+                    className="reset-link"
+                    onClick={() => {
+                      setChoice(null);
+                      firstChoice.current?.focus();
+                    }}
+                  >
+                    Try a different response <ControlIcon kind="reset" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
       <section className="next-project container">
         <span>Up next</span>
         <Link to={`/work/${next.id}`}>

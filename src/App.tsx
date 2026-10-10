@@ -53,7 +53,7 @@ const meta: Record<string, [string, string]> = {
   ],
   "/work": [
     "A taste of our work.",
-    "Explore six Butter learning concepts, from onboarding and leadership to wellbeing and sustainability.",
+    "Explore six digital learning experiences and two learning platforms, with original project imagery, video and interactive samples.",
   ],
   "/pricing": [
     "Find your starting point.",
@@ -206,9 +206,7 @@ function Site() {
             <Link to="/brand">Brand guide</Link>
           </nav>
           <div className="footer-bottom">
-            <span>
-              © {new Date().getFullYear()} Butter. Made with feeling.
-            </span>
+            <span>© {new Date().getFullYear()} Butter. Made with feeling.</span>
             <span>Good learning. No added nonsense.</span>
             <MotionSettings />
           </div>

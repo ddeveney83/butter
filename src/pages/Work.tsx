@@ -27,8 +27,8 @@ export default function Work() {
         aside={<Spark className="work-hero-spark" />}
       >
         <p>
-          Six little worlds. Six different ways to make learning stick. Explore
-          our concepts, and try a little of the thinking inside.
+          Six learning experiences. Two platforms. Explore the work, watch the
+          stories, and try a little of the thinking inside.
         </p>
       </PageHero>
       <section className="work-gallery container">
@@ -67,8 +67,8 @@ export default function Work() {
           ))}
         </div>
         <p className="work-footnote">
-          Concept projects, made to show what’s possible. No fictional clients.
-          Just real ideas.
+          Selected work by Daniel Deveney. Original imagery and project films,
+          with recreated interactions to explore.
         </p>
       </section>
       <ContactCTA
