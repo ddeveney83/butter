@@ -214,3 +214,73 @@ test("butter trail responds to motion preferences and viewport changes", async (
   await page.mouse.wheel(0, 300);
   await expect.poll(() => trailHasPaint(page)).toBe(false);
 });
+
+test("trail eases toward the cursor, tapers along its length and rounds turns", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "A mouse-only visual effect");
+  const time = new Date("2026-10-10T12:00:00Z");
+  await page.clock.install({ time });
+  await page.clock.pauseAt(time);
+  await page.goto("/?motion=full");
+  const trail = page.locator(".butter-cursor-trail");
+  await expect(trail).toHaveCount(1);
+  const move = async (x: number, y: number) => {
+    await page.evaluate(
+      ({ x, y }) =>
+        document.dispatchEvent(
+          new PointerEvent("pointermove", {
+            pointerType: "mouse",
+            clientX: x,
+            clientY: y,
+          }),
+        ),
+      { x, y },
+    );
+  };
+  const column = async (x: number) =>
+    trail.evaluate((canvas: HTMLCanvasElement, x) => {
+      const pixels = canvas
+        .getContext("2d")!
+        .getImageData(x, 0, 1, canvas.height).data;
+      let width = 0;
+      for (let i = 3; i < pixels.length; i += 4) if (pixels[i] >= 10) width++;
+      return width;
+    }, x);
+
+  await move(200, 400);
+  await move(800, 400);
+  await page.clock.runFor(32);
+  expect(await column(300)).toBeGreaterThan(0);
+  // The eased head is still travelling, rather than snapping to the pointer.
+  expect(await column(780)).toBe(0);
+  await page.clock.runFor(240);
+  expect(await column(800)).toBeGreaterThan(0);
+  const tailWidth = await column(250);
+  const headWidth = await column(740);
+  expect(tailWidth).toBeGreaterThan(0);
+  expect(headWidth).toBeGreaterThan(tailWidth * 2);
+
+  await page.evaluate(() =>
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" })),
+  );
+  await move(200, 400);
+  await move(600, 400);
+  await page.clock.runFor(64);
+  await move(600, 600);
+  await page.clock.runFor(192);
+  const bend = await trail.evaluate((canvas: HTMLCanvasElement) => {
+    const ctx = canvas.getContext("2d")!;
+    const corner = ctx.getImageData(600, 400, 12, 12).data;
+    const turn = ctx.getImageData(520, 420, 85, 140).data;
+    const visible = (pixels: Uint8ClampedArray) =>
+      pixels.some((value, i) => i % 4 === 3 && value >= 10);
+    return { sharpCorner: visible(corner), roundedTurn: visible(turn) };
+  });
+  expect(bend.sharpCorner).toBe(false);
+  expect(bend.roundedTurn).toBe(true);
+  await page.clock.runFor(800);
+  expect(await column(600)).toBeGreaterThan(0);
+  await page.clock.runFor(2000);
+  expect(await trailHasPaint(page)).toBe(false);
+});

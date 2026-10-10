@@ -16,7 +16,7 @@ The footer's Motion selector follows the device setting by default and offers Fu
 
 Mouse devices use a small SVG butter cursor with context labels for projects, links, tabs, accordions, and controls. Text entry and sliders retain their native cursors; touch devices use their usual controls. Edit the artwork in `public/butter-cursor.svg` and the hint behavior in `src/components/ButterCursor.tsx`. Link and button hints can be overridden with `data-cursor-label`.
 
-Mouse movement leaves a translucent, connected butter smear that fades over two seconds, including fast movement with large gaps between pointer events. The canvas effect in `src/components/ButterTrail.tsx` clears on navigation, scrolling and pointer exit, pauses while dragging, and stops drawing once it has faded. Mouse support also covers touch-enabled laptops with a mouse attached. Touch-only devices and reduced-motion preferences disable the trail.
+Mouse movement leaves a translucent butter ribbon with an eased head, rounded turns and a meteor-like taper from the fuller head to a fine tail. Frame-rate-independent easing and quadratic curves keep the movement smooth; the taper follows distance around the curve, and the smear gradually thins and fades over two seconds. Fast movements remain connected. The canvas effect in `src/components/ButterTrail.tsx` clears on navigation, scrolling and pointer exit, pauses while dragging, and stops drawing once it has faded. Mouse support also covers touch-enabled laptops with a mouse attached. Touch-only devices and reduced-motion preferences disable the trail.
 
 ## Develop
 
