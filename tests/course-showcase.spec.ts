@@ -1,7 +1,104 @@
-import { test, expect } from "@playwright/test";
-import { projects } from "../src/data/projects";
+import { test, expect, type Locator } from "@playwright/test";
+import { projects, type Project } from "../src/data/projects";
+import { coursePreviews } from "../src/data/coursePreviews";
 
-test("all six course previews support screen navigation, hotspots, reveal cards and device views", async ({
+async function exerciseInteraction(preview: Locator, project: Project) {
+  const config = coursePreviews[project.id];
+  await expect(preview.locator(".course-interaction")).toHaveAttribute(
+    "data-interaction",
+    config.interaction,
+  );
+  switch (config.interaction) {
+    case "journey": {
+      const steps = preview
+        .getByRole("group", { name: "Explore your journey" })
+        .getByRole("button");
+      await steps.last().click();
+      await expect(
+        preview.locator(".course-hotspot-details > div").first(),
+      ).toContainText(config.hotspots[2].detail);
+      return async () => {
+        await expect(steps.last()).toHaveAttribute("aria-pressed", "true");
+      };
+    }
+    case "conversation": {
+      const choices = preview
+        .getByRole("group", { name: "Choose a preview response" })
+        .getByRole("button");
+      await choices.nth(1).click();
+      return async () => {
+        await expect(
+          preview.locator(".course-activity-feedback [role=status]"),
+        ).toContainText(project.choices[1].feedback);
+      };
+    }
+    case "reflection": {
+      const range = preview.getByRole("slider", {
+        name: "Choose a reflection",
+      });
+      await range.focus();
+      await range.press("ArrowRight");
+      await preview.getByLabel("Your small step").fill("Take a small pause.");
+      await preview.getByRole("button", { name: "Show a suggestion" }).click();
+      return async () => {
+        await expect(range).toHaveAttribute(
+          "aria-valuetext",
+          config.hotspots[1].label,
+        );
+        await expect(preview.getByLabel("Your small step")).toHaveValue(
+          "Take a small pause.",
+        );
+        await expect(
+          preview.locator(".course-reflection-prompt [role=status]"),
+        ).toHaveText(config.cards[1].answer);
+      };
+    }
+    case "quiz": {
+      const check = preview.getByRole("button", { name: "Check my answer" });
+      await expect(check).toBeDisabled();
+      await preview.getByRole("radio").nth(1).check();
+      await check.click();
+      return async () => {
+        await expect(
+          preview.locator(".course-activity-feedback [role=status]"),
+        ).toContainText("A useful next step.");
+      };
+    }
+    case "sequence": {
+      await preview.getByRole("button", { name: "Check the order" }).click();
+      await expect(preview.locator(".course-sequence-status")).toContainText(
+        "Try another order.",
+      );
+      const move = preview.getByRole("button", {
+        name: `Move ${config.hotspots[2].label} down`,
+      });
+      await move.click();
+      await move.click();
+      await expect(move).toBeDisabled();
+      await preview.getByRole("button", { name: "Check the order" }).click();
+      return async () => {
+        await expect(preview.locator(".course-sequence-status")).toContainText(
+          "That’s it.",
+        );
+      };
+    }
+    case "hotspots": {
+      const spots = preview
+        .getByRole("group", { name: "Explore course hotspots" })
+        .getByRole("button");
+      await expect(spots).toHaveCount(3);
+      await spots.last().click();
+      return async () => {
+        await expect(spots.last()).toHaveAttribute("aria-pressed", "true");
+        await expect(
+          preview.locator(".course-hotspot-details > div").first(),
+        ).toContainText(config.hotspots[2].detail);
+      };
+    }
+  }
+}
+
+test("all six course previews support distinct interactions, screen navigation, reveal cards and device views", async ({
   page,
 }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -20,15 +117,8 @@ test("all six course previews support screen navigation, hotspots, reveal cards 
     await expect(
       preview.getByRole("tab", { name: "Explore", exact: true }),
     ).toBeFocused();
-    const details = active.locator(".course-hotspot-details > div").first();
-    const first = await details.textContent();
-    const spots = preview
-      .getByRole("group", { name: "Explore course hotspots" })
-      .getByRole("button");
-    await expect(spots).toHaveCount(3);
-    await spots.last().click();
-    await expect(spots.last()).toHaveAttribute("aria-pressed", "true");
-    expect(await details.textContent()).not.toBe(first);
+    const checkInteraction = await exerciseInteraction(preview, project);
+    await checkInteraction();
     const width = (await preview.locator(".course-player").boundingBox())!
       .width;
     await preview.getByRole("button", { name: "Mobile", exact: true }).click();
@@ -36,7 +126,7 @@ test("all six course previews support screen navigation, hotspots, reveal cards 
       .width;
     expect(mobileWidth).toBeLessThanOrEqual(420);
     expect(mobileWidth).toBeLessThanOrEqual(width);
-    await expect(spots.last()).toHaveAttribute("aria-pressed", "true");
+    await checkInteraction();
     await preview.getByRole("button", { name: "Desktop", exact: true }).click();
     if (testInfo.project.name === "desktop")
       expect(
@@ -166,15 +256,11 @@ test("course screens, hotspots and cards hold their layout at narrow and wide si
         ).toBeLessThan(1);
       }
       await preview.getByRole("tab", { name: "Explore", exact: true }).click();
-      for (const spot of await preview
-        .getByRole("group", { name: "Explore course hotspots" })
-        .getByRole("button")
-        .all()) {
-        await spot.click();
-        expect(
-          Math.abs((await frame.boundingBox())!.height - original),
-        ).toBeLessThan(1);
-      }
+      const checkInteraction = await exerciseInteraction(preview, project);
+      await checkInteraction();
+      expect(
+        Math.abs((await frame.boundingBox())!.height - original),
+      ).toBeLessThan(1);
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,

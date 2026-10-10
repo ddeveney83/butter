@@ -1,4 +1,12 @@
 export type CoursePreview = {
+  interaction:
+    | "journey"
+    | "conversation"
+    | "reflection"
+    | "quiz"
+    | "sequence"
+    | "hotspots";
+  correctChoice?: number;
   illustration: "butter" | "heart" | "cloud" | "shield" | "plant" | "idea";
   welcome: string;
   introduction: string;
@@ -13,6 +21,7 @@ export const courseScreens = ["Welcome", "Explore", "Take away"] as const;
 
 export const coursePreviews: Record<string, CoursePreview> = {
   onboarding: {
+    interaction: "journey",
     illustration: "butter",
     welcome: "Your first day. Your way.",
     introduction:
@@ -57,6 +66,7 @@ export const coursePreviews: Record<string, CoursePreview> = {
     ],
   },
   leadership: {
+    interaction: "conversation",
     illustration: "heart",
     welcome: "Lead with a little heart.",
     introduction:
@@ -101,6 +111,7 @@ export const coursePreviews: Record<string, CoursePreview> = {
     ],
   },
   wellbeing: {
+    interaction: "reflection",
     illustration: "cloud",
     welcome: "A little room to breathe.",
     introduction:
@@ -145,6 +156,8 @@ export const coursePreviews: Record<string, CoursePreview> = {
     ],
   },
   compliance: {
+    interaction: "quiz",
+    correctChoice: 1,
     illustration: "shield",
     welcome: "Good judgement. Practised.",
     introduction:
@@ -189,6 +202,7 @@ export const coursePreviews: Record<string, CoursePreview> = {
     ],
   },
   sustainability: {
+    interaction: "sequence",
     illustration: "plant",
     welcome: "Small actions. Room to grow.",
     introduction:
@@ -233,6 +247,7 @@ export const coursePreviews: Record<string, CoursePreview> = {
     ],
   },
   "product-skills": {
+    interaction: "hotspots",
     illustration: "idea",
     welcome: "Know it. Put it to work.",
     introduction:

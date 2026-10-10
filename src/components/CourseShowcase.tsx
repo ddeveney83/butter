@@ -8,6 +8,7 @@ import {
 import type { Project } from "../data/projects";
 import { Reveal } from "./UI";
 import "./CourseShowcase.css";
+import CourseInteraction from "./CourseInteraction";
 
 function CourseTitle({ text }: { text: string }) {
   const split = text.indexOf(". ");
@@ -73,7 +74,6 @@ export function CourseShowcase({ project }: { project: Project }) {
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const [screen, setScreen] = useState(0);
   const [device, setDevice] = useState("desktop");
-  const [hotspot, setHotspot] = useState(0);
   const [revealed, setRevealed] = useState<boolean[]>([false, false, false]);
   function selectScreen(index: number, focus = false) {
     setScreen(index);
@@ -158,51 +158,15 @@ export function CourseShowcase({ project }: { project: Project }) {
                   </div>
                 )}
                 {index === 1 && (
-                  <div className="course-explore">
-                    <div className="course-hotspot-scene">
+                  <CourseInteraction
+                    project={project}
+                    preview={preview}
+                    art={
                       <div className="course-illustration">
                         <CourseIllustration kind={preview.illustration} />
                       </div>
-                      <div role="group" aria-label="Explore course hotspots">
-                        {preview.hotspots.map((item, spot) => (
-                          <button
-                            type="button"
-                            key={item.label}
-                            className={`course-hotspot course-hotspot-${spot}`}
-                            aria-label={`Explore ${item.label}`}
-                            aria-pressed={hotspot === spot}
-                            onClick={() => setHotspot(spot)}
-                            data-cursor-label="Explore"
-                          >
-                            <span>{spot + 1}</span>
-                            <span>{item.label}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="course-explore-copy">
-                      <h2>{preview.exploration}</h2>
-                      <p className="course-instruction">
-                        Select a marker. Follow your curiosity.
-                      </p>
-                      <div className="course-hotspot-details">
-                        <div aria-live="polite" aria-atomic="true">
-                          <h3>{preview.hotspots[hotspot].heading}</h3>
-                          <p>{preview.hotspots[hotspot].detail}</p>
-                        </div>
-                        {preview.hotspots.map((item) => (
-                          <div
-                            key={item.label}
-                            aria-hidden="true"
-                            className="course-measure"
-                          >
-                            <h3>{item.heading}</h3>
-                            <p>{item.detail}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                    }
+                  />
                 )}
                 {index === 2 && (
                   <div className="course-takeaway">
