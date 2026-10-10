@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "./Motion";
+import ButterTrail from "./ButterTrail";
 
 function describeTarget(target: Element | null): string {
   if (!target) return "";
@@ -207,13 +208,16 @@ export default function ButterCursor() {
 
   if (!enabled) return null;
   return (
-    <div
-      ref={hint}
-      className="butter-cursor-hint"
-      data-visible="false"
-      aria-hidden="true"
-    >
-      <span>{label}</span>
-    </div>
+    <>
+      <ButterTrail />
+      <div
+        ref={hint}
+        className="butter-cursor-hint"
+        data-visible="false"
+        aria-hidden="true"
+      >
+        <span>{label}</span>
+      </div>
+    </>
   );
 }

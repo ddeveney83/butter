@@ -27,6 +27,15 @@
     cursor: not-allowed;
   }
 }
+.butter-cursor-trail {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 990;
+  pointer-events: none;
+  view-transition-name: butter-cursor-trail;
+}
 .butter-cursor-hint {
   position: fixed;
   top: 0;
@@ -59,18 +68,25 @@
 .butter-cursor-hint[data-visible="true"] span {
   scale: 1;
 }
-html:active-view-transition .butter-cursor-hint {
+html:active-view-transition .butter-cursor-hint,
+html:active-view-transition .butter-cursor-trail {
   opacity: 0;
   transition: none;
 }
-::view-transition-group(butter-cursor-hint) {
+::view-transition-group(butter-cursor-hint),
+::view-transition-group(butter-cursor-trail) {
   animation: none;
 }
 ::view-transition-old(butter-cursor-hint),
-::view-transition-new(butter-cursor-hint) {
+::view-transition-new(butter-cursor-hint),
+::view-transition-old(butter-cursor-trail),
+::view-transition-new(butter-cursor-trail) {
   display: none;
 }
 @media (prefers-reduced-motion: reduce) {
+  .butter-cursor-trail {
+    display: none;
+  }
   .butter-cursor-hint,
   .butter-cursor-hint span {
     transition: none;

@@ -12,6 +12,8 @@ Page navigation uses soft View Transition crossfades where supported, with a sim
 
 Mouse devices use a small SVG butter cursor with context labels for projects, links, tabs, accordions, and controls. Text entry and sliders retain their native cursors; touch devices use their usual controls. Edit the artwork in `public/butter-cursor.svg` and the hint behavior in `src/components/ButterCursor.tsx`. Link and button hints can be overridden with `data-cursor-label`.
 
+Mouse movement leaves a translucent, connected butter smear that fades over two seconds. The canvas effect in `src/components/ButterTrail.tsx` clears on navigation, scrolling and pointer exit, pauses while dragging, and stops drawing once it has faded. Touch devices and reduced-motion preferences disable the trail.
+
 ## Develop
 
 Use Node.js 22.12+ (validated on Node.js 24) and npm. Each cloud task is isolated; use this existing checkout without creating a worktree.

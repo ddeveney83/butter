@@ -1,4 +1,24 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+
+async function trailHasPaint(page: Page) {
+  return page
+    .locator(".butter-cursor-trail")
+    .evaluate((canvas: HTMLCanvasElement) => {
+      const pixels = canvas
+        .getContext("2d")!
+        .getImageData(0, 0, canvas.width, canvas.height).data;
+      for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] > 0) return true;
+      }
+      return false;
+    });
+}
+
+async function spreadButter(page: Page) {
+  await page.mouse.move(200, 300);
+  await page.mouse.move(650, 350, { steps: 30 });
+  await expect.poll(() => trailHasPaint(page)).toBe(true);
+}
 
 test("butter cursor gives accurate hover hints without blocking interaction", async ({
   page,
@@ -129,4 +149,65 @@ test("hover hints fit within screen edges and clear on pointer exit", async ({
   expect(bounds.y + bounds.height).toBeLessThanOrEqual(viewport.height);
   await page.mouse.move(-10, -10);
   await expect(hint).toHaveCSS("opacity", "0");
+});
+
+test("butter smear follows movement, fades gradually and leaves controls usable", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/");
+  const trail = page.locator(".butter-cursor-trail");
+  if (testInfo.project.name === "mobile") {
+    await expect(trail).toHaveCount(0);
+    return;
+  }
+  await expect(trail).toHaveCount(1);
+  await expect(trail).toHaveCSS("pointer-events", "none");
+  await expect(trail).toHaveAttribute("aria-hidden", "true");
+  await spreadButter(page);
+  await page.waitForTimeout(400);
+  expect(await trailHasPaint(page)).toBe(true);
+  await expect.poll(() => trailHasPaint(page), { timeout: 4000 }).toBe(false);
+  await spreadButter(page);
+  await page.getByRole("link", { name: "Work", exact: true }).first().click();
+  await expect(page).toHaveURL(/\/work$/);
+  await expect.poll(() => trailHasPaint(page)).toBe(false);
+  await spreadButter(page);
+  await page.mouse.move(-10, -10);
+  await expect.poll(() => trailHasPaint(page)).toBe(false);
+});
+
+test("butter trail responds to motion preferences and viewport changes", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/");
+  const trail = page.locator(".butter-cursor-trail");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(trail).toHaveCount(0);
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  if (testInfo.project.name === "mobile") {
+    await expect(trail).toHaveCount(0);
+    return;
+  }
+  await expect(trail).toHaveCount(1);
+  await spreadButter(page);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(trail).toHaveCount(0);
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await expect(trail).toHaveCount(1);
+  expect(await trailHasPaint(page)).toBe(false);
+  await page.setViewportSize({ width: 800, height: 600 });
+  await expect
+    .poll(() => trail.evaluate((canvas: HTMLCanvasElement) => canvas.width))
+    .toBe(800);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await spreadButter(page);
+  await page.keyboard.press("Tab");
+  await expect.poll(() => trailHasPaint(page)).toBe(false);
+  await spreadButter(page);
+  await page.mouse.wheel(0, 300);
+  await expect.poll(() => trailHasPaint(page)).toBe(false);
 });
