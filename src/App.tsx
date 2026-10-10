@@ -26,7 +26,16 @@ import Contact from "./pages/Contact";
 import Project from "./pages/Project";
 import NotFound from "./pages/NotFound";
 import Brand from "./pages/Brand";
-import Butterlearn, { ButterlearnLogin } from "./pages/Butterlearn";
+import Butterlearn from "./pages/Butterlearn";
+import { LMSProvider, LMSLayout, LMSLogin } from "./lms/Auth";
+import {
+  Dashboard,
+  Library,
+  ManageCourses,
+  People,
+  Reports,
+} from "./lms/Pages";
+import { CoursePlayer } from "./lms/Player";
 
 const links = [
   ["/about", "About"],
@@ -39,11 +48,11 @@ const links = [
 const meta: Record<string, [string, string]> = {
   "/butterlearn": [
     "Meet Butterlearn.",
-    "Explore Butterlearn, Butter’s upcoming LMS: learning pathways, course libraries, team reporting and a thoughtful learner experience.",
+    "Explore Butterlearn: HTML and SCORM courses, learner dashboards, assignments and team progress, with a thoughtful learner experience.",
   ],
   "/butterlearn/login": [
     "Butterlearn login.",
-    "Butterlearn account access is coming soon. Explore the upcoming learning platform or talk to Butter about your team.",
+    "Sign in to Butterlearn to find your courses and continue your learning.",
   ],
   "/brand": [
     "The Butter way.",
@@ -229,7 +238,34 @@ function Site() {
 // Resolve the motion setting before the router reads the URL or content paints.
 initializeMotion();
 
+// Identity email links arrive at the site root with a URL fragment.
+if (
+  /(?:^#|&)(confirmation_token|recovery_token|invite_token)=/.test(
+    location.hash,
+  )
+) {
+  history.replaceState(history.state, "", "/butterlearn/login" + location.hash);
+}
+
 const router = createBrowserRouter([
+  {
+    element: <LMSProvider />,
+    children: [
+      { path: "/butterlearn/login", element: <LMSLogin /> },
+      {
+        path: "/butterlearn/app",
+        element: <LMSLayout />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: "library", element: <Library /> },
+          { path: "courses/:courseId", element: <CoursePlayer /> },
+          { path: "manage", element: <ManageCourses /> },
+          { path: "people", element: <People /> },
+          { path: "reports", element: <Reports /> },
+        ],
+      },
+    ],
+  },
   {
     element: <Site />,
     children: [
@@ -239,7 +275,7 @@ const router = createBrowserRouter([
       { path: "/work", element: <Work /> },
       { path: "/work/:slug", element: <Project /> },
       { path: "/butterlearn", element: <Butterlearn /> },
-      { path: "/butterlearn/login", element: <ButterlearnLogin /> },
+
       { path: "/pricing", element: <Pricing /> },
       { path: "/contact", element: <Contact /> },
       { path: "/brand", element: <Brand /> },

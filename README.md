@@ -12,7 +12,7 @@ Each eLearning project has a three-screen course preview with desktop/mobile vie
 
 Cards combine original course/platform screens with Butter’s pastel canvases, outlined and tilted windows, offset shadows and playful illustrations. The same card component is used on Home and Work; its presentation and screen selection live in `src/components/ProjectCardArtwork.tsx` and its stylesheet. Cards and galleries use original project imagery, downloaded as optimised WebP files under `public/work/`. Three source screens per project open in a keyboard-accessible gallery with arrow-key navigation, Escape and focus restoration. Six case studies include original project videos from the source site, embedded from YouTube’s privacy-enhanced host only after the visitor presses Play. Your Learning Platform remains image-led because the source reuses a video from another case study. Project facts and source attribution live in `src/data/projects.ts`, the original asset URLs and video IDs in `src/data/projectMedia.json`, and the recreated course content in `src/data/coursePreviews.ts`. See `docs/portfolio-content.md` for the selection and provenance.
 
-Butterlearn at `/butterlearn` introduces the planned LMS and includes an interactive learner, manager and admin concept. Sample completion updates the manager report; filters, assignment rules and audience selection work locally on the page. `/butterlearn/login` is a coming-soon entry, with no credential collection or account access yet. Product enquiries carry a Butterlearn brief into Contact. See `docs/butterlearn.md` for the proposed product scope.
+Butterlearn at `/butterlearn` introduces the LMS and includes an interactive learner, manager and admin concept. The actual platform starts at `/butterlearn/login`, with learner dashboards, a course library, HTML/SCORM uploads and playback, persistent progress, publishing, assignments and reports. Production account access requires Netlify Identity to be enabled. See [the Butterlearn guide](docs/butterlearn.md) for activation, storage, limits and release scope.
 
 The Pricing page includes illustrative GBP project and support budgets, plus an interactive calculator. Choose a learning format, number of pieces, branching scenarios, and bespoke motion to update the estimate live. The enquiry link carries the estimate into the Contact page. These figures are guides, not fixed quotes or a claim of a universal market rate.
 
@@ -38,10 +38,11 @@ npm run dev -- --port 5173
 
 ```sh
 npm run build
+npm run test:server
 npm test
 ```
 
-The browser tests use Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` to another Chromium executable when needed. They cover desktop and mobile rendering of all seventeen canonical page/project routes and six legacy project redirects, direct page loads, navigation and browser history, filter persistence, learning samples, keyboard tabs and accordions, stable tab and sample layouts from 320px to 1440px, maximum calculator totals and handoff, contact validation, expanded FAQ layouts, live reduced-motion changes, interrupted page transitions, browser fallbacks, and unknown URLs. `npm run preview` serves the production build.
+The browser tests use Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` to another Chromium executable when needed. They cover desktop and mobile rendering of all seventeen canonical page/project routes and six legacy project redirects, direct page loads, navigation and browser history, filter persistence, learning samples, keyboard tabs and accordions, stable tab and sample layouts from 320px to 1440px, maximum calculator totals and handoff, contact validation, expanded FAQ layouts, live reduced-motion changes, interrupted page transitions, browser fallbacks, and unknown URLs. Use `BUTTERLEARN_LOCAL_DATA=/tmp/butterlearn-tests npm test` with a fresh Vite server to isolate LMS fixtures. Browser tests also cover real LMS upload/playback/tracking workflows. `npm run preview` serves static build output; it does not start LMS services.
 
 ## Contact and portfolio content
 
@@ -51,10 +52,10 @@ Portfolio work is credited to Daniel Deveney and linked to the original case stu
 
 ## Deploy
 
-Build with `npm run build` and deploy the `dist` directory to a static host. There are no backend services, database requirements, or runtime credentials. Fonts and images are served locally. Video players make external YouTube requests after the visitor chooses to play; no video credentials are required.
+Build with `npm run build`. The marketing site uses static assets; the LMS also requires the Netlify Functions in this repository, Netlify Blobs and enabled Netlify Identity. Fonts and images are served locally. Video players make external YouTube requests after the visitor chooses to play; no video credentials are required.
 
 ### Netlify
 
-Import `ddeveney83/butter` from GitHub in Netlify and select the `main` branch. The included `netlify.toml` configures Node.js 24, `npm run build`, the `dist` publish directory, and a client-side routing fallback so every page and project URL opens directly. The contact address is already included; no environment variables are required for the first deployment.
+Import `ddeveney83/butter` from GitHub in Netlify and select the `main` branch. The included `netlify.toml` configures Node.js 24, `npm run build`, the `dist` publish directory, and a client-side routing fallback so every page and project URL opens directly. Managed storage uses runtime credentials supplied by Netlify. Enable Identity and verify the owner email to activate LMS account access, as described in [docs/butterlearn.md](docs/butterlearn.md).
 
 For deployment from this cloud environment, supply `NETLIFY_AUTH_TOKEN` securely in environment settings with access to `api.netlify.com`. An existing site can be selected with the non-secret `NETLIFY_SITE_ID`; otherwise a new site can be created after account access is verified. Never commit authentication tokens or local Netlify state.

@@ -343,8 +343,8 @@ export default function Butterlearn() {
         }
       >
         <p>
-          Butterlearn is our upcoming LMS. One welcoming place for your courses,
-          your people and their progress.
+          Butterlearn is our LMS. One welcoming place for your courses, your
+          people and their progress.
         </p>
         <div className="butterlearn-hero-actions">
           <Link className="pill-button" to={butterlearnEnquiry}>
@@ -353,7 +353,7 @@ export default function Butterlearn() {
           <TextLink to="/butterlearn/login">Log in</TextLink>
         </div>
         <p className="butterlearn-development-note">
-          In development. Explore what we’re shaping below.
+          HTML and SCORM courses. Learning that stays with you.
         </p>
       </PageHero>
       <section
@@ -408,25 +408,26 @@ export default function Butterlearn() {
         <div className="faq-list">
           <Accordion title="Can we use Butterlearn yet?">
             <p>
-              Butterlearn is in development. This page shows the direction we’re
-              exploring, rather than a live learning platform. Login and account
-              access will follow when the LMS is ready. There’s no launch date
-              or subscription pricing confirmed yet.
+              The first release supports learner accounts, HTML course packages,
+              SCORM 1.2 and SCORM 2004 tracking, course assignments and team
+              reports. Sign in to explore your learning. Subscription pricing
+              has not been confirmed yet.
             </p>
           </Accordion>
           <Accordion title="Will we be able to bring our own learning?">
             <p>
-              That’s the plan. We’re designing around SCORM courses, video and
-              downloadable resources, alongside the learning Butter can create
-              with you. Tell us about your current content and platform so we
-              can shape the right support.
+              Yes. Admins can upload standalone HTML files, zipped HTML courses,
+              and SCORM packages with their assets. Preview a draft, then
+              publish it to the library and assign it to your people. Each
+              learner’s completion, score and resume point stay with their
+              account.
             </p>
           </Accordion>
           <Accordion title="How will people sign in?">
             <p>
-              The future LMS will require an account, with separate access for
-              learners, managers and admins. Organisation sign-in and single
-              sign-on are being considered as the platform takes shape.
+              Sign in with a verified email address and password. Learners have
+              their own dashboards, managers can view team progress, and admins
+              manage courses and assignments. Single sign-on is a future option.
             </p>
           </Accordion>
           <Accordion title="Can we help shape it?">
@@ -452,40 +453,5 @@ export default function Butterlearn() {
         </Link>
       </Reveal>
     </>
-  );
-}
-
-export function ButterlearnLogin() {
-  return (
-    <PageHero
-      title={
-        <>
-          Good things
-          <br />
-          are <span className="underlined">on the way.</span>
-        </>
-      }
-      aside={
-        <div className="butterlearn-hero-art">
-          <div className="butterlearn-hero-circle" />
-          <ButterCharacter />
-          <span className="butterlearn-logo">
-            butterlearn
-            <Spark />
-          </span>
-        </div>
-      }
-    >
-      <p>
-        Butterlearn login is coming soon. Account access will open when the
-        learning platform is ready.
-      </p>
-      <div className="butterlearn-hero-actions">
-        <Link className="pill-button" to={butterlearnEnquiry}>
-          Talk to us <Arrow diagonal />
-        </Link>
-        <TextLink to="/butterlearn">Explore Butterlearn</TextLink>
-      </div>
-    </PageHero>
   );
 }

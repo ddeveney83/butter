@@ -5,6 +5,22 @@
 [build.environment]
   NODE_VERSION = "24"
 
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/butterlearn/app"
+  [headers.values]
+    Cache-Control = "private, no-store"
+    X-Robots-Tag = "noindex"
+
+[[headers]]
+  for = "/butterlearn/app/*"
+  [headers.values]
+    Cache-Control = "private, no-store"
+    X-Robots-Tag = "noindex"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

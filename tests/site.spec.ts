@@ -33,7 +33,9 @@ test("all pages and eight project routes load directly without errors or overflo
   ]) {
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page).toHaveTitle(/^Butter — /);
+    await expect(page).toHaveTitle(
+      path === "/butterlearn/login" ? "Butterlearn — Sign in." : /^Butter — /,
+    );
     await page.evaluate(() => document.fonts.ready);
     expect(
       await page.evaluate(
