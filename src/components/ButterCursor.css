@@ -1,4 +1,4 @@
-@media (hover: hover) and (pointer: fine) {
+@media (any-hover: hover) and (any-pointer: fine) {
   html.butter-cursor-enabled,
   html.butter-cursor-enabled
     :where(a, button, input[type="checkbox"], input[type="radio"], label) {
@@ -83,12 +83,10 @@ html:active-view-transition .butter-cursor-trail {
 ::view-transition-new(butter-cursor-trail) {
   display: none;
 }
-@media (prefers-reduced-motion: reduce) {
-  .butter-cursor-trail {
-    display: none;
-  }
-  .butter-cursor-hint,
-  .butter-cursor-hint span {
-    transition: none;
-  }
+html[data-motion="reduced"] .butter-cursor-trail {
+  display: none;
+}
+html[data-motion="reduced"] .butter-cursor-hint,
+html[data-motion="reduced"] .butter-cursor-hint span {
+  transition: none;
 }

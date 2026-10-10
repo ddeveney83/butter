@@ -115,12 +115,9 @@ export default function ButterTrail() {
         ? Math.hypot(point.x - previous.x, point.y - previous.y)
         : 0;
       if (previous && distance < 2) return;
-      if (
-        !current ||
-        !previous ||
-        point.time - previous.time > 120 ||
-        distance > 160
-      ) {
+      // Fast movement can cover a large distance between browser pointer events.
+      // Only an idle pause starts a fresh stroke; distance must not erase it.
+      if (!current || !previous || point.time - previous.time > 250) {
         current = [];
         strokes.push(current);
         strokes = strokes.slice(-8);

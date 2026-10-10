@@ -71,7 +71,7 @@ function describeTarget(target: Element | null): string {
 }
 
 export default function ButterCursor() {
-  const enabled = useMediaQuery("(hover: hover) and (pointer: fine)");
+  const enabled = useMediaQuery("(any-hover: hover) and (any-pointer: fine)");
   const hint = useRef<HTMLDivElement>(null);
   const [label, setLabel] = useState("");
 

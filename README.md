@@ -10,9 +10,11 @@ The Pricing page includes illustrative GBP project and support budgets, plus an 
 
 Page navigation uses soft View Transition crossfades where supported, with a simple entrance fallback elsewhere. Shared timing and easing in `src/motion.css` also coordinate scroll reveals, the mobile menu, tab indicators, accordions, pricing updates, and hover states. Reduced-motion preferences disable movement and update immediately when changed.
 
+The footer's Motion selector follows the device setting by default and offers Full motion or Reduced motion for this site. The choice is saved locally and applies consistently to CSS, reveals, page transitions, smooth scrolling and the butter trail. Windows' Animation effects setting is reported as reduced motion by Chrome and Edge when switched off. To explicitly enable motion directly, open `https://buttertest.netlify.app/?motion=full`; use `?motion=system` or the footer selector to return to the device setting. This also works for the current visit when local storage is blocked.
+
 Mouse devices use a small SVG butter cursor with context labels for projects, links, tabs, accordions, and controls. Text entry and sliders retain their native cursors; touch devices use their usual controls. Edit the artwork in `public/butter-cursor.svg` and the hint behavior in `src/components/ButterCursor.tsx`. Link and button hints can be overridden with `data-cursor-label`.
 
-Mouse movement leaves a translucent, connected butter smear that fades over two seconds. The canvas effect in `src/components/ButterTrail.tsx` clears on navigation, scrolling and pointer exit, pauses while dragging, and stops drawing once it has faded. Touch devices and reduced-motion preferences disable the trail.
+Mouse movement leaves a translucent, connected butter smear that fades over two seconds, including fast movement with large gaps between pointer events. The canvas effect in `src/components/ButterTrail.tsx` clears on navigation, scrolling and pointer exit, pauses while dragging, and stops drawing once it has faded. Mouse support also covers touch-enabled laptops with a mouse attached. Touch-only devices and reduced-motion preferences disable the trail.
 
 ## Develop
 

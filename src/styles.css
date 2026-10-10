@@ -705,6 +705,9 @@ h2 {
   margin-top: 34px;
   font-size: 11px;
   color: #59533c;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .skip-link {
   position: fixed;
@@ -1182,7 +1185,12 @@ h2 {
     align-items: flex-start;
     margin-top: 25px;
   }
-  .footer-bottom span:last-child {
+  .footer-bottom > span:first-child {
+    flex: 1;
+    min-width: 0;
+  }
+  .footer-bottom > span:nth-child(2) {
+    flex: 0 1 115px;
     max-width: 115px;
     text-align: right;
   }
@@ -1259,16 +1267,5 @@ h2 {
   }
   .hero-squiggle {
     display: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *:before,
-  *:after {
-    animation: none !important;
-    transition: none !important;
   }
 }

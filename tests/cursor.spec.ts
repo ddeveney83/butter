@@ -163,6 +163,9 @@ test("butter smear follows movement, fades gradually and leaves controls usable"
   await expect(trail).toHaveCount(1);
   await expect(trail).toHaveCSS("pointer-events", "none");
   await expect(trail).toHaveAttribute("aria-hidden", "true");
+  await page.mouse.move(200, 300);
+  await page.mouse.move(800, 400);
+  await expect.poll(() => trailHasPaint(page)).toBe(true);
   await spreadButter(page);
   await page.waitForTimeout(400);
   expect(await trailHasPaint(page)).toBe(true);

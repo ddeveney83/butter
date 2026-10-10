@@ -255,23 +255,47 @@ select {
     transition-delay: 0s;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *:before,
-  *:after {
-    animation: none !important;
-    transition: none !important;
-  }
-  .reveal[data-reveal] {
-    opacity: 1;
-    translate: none;
-  }
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
+html[data-motion="reduced"] {
+  scroll-behavior: auto;
+}
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *:before,
+html[data-motion="reduced"] *:after {
+  animation: none !important;
+  transition: none !important;
+}
+html[data-motion="reduced"] .reveal[data-reveal] {
+  opacity: 1;
+  translate: none;
+}
+html[data-motion="reduced"]::view-transition-group(*),
+html[data-motion="reduced"]::view-transition-old(*),
+html[data-motion="reduced"]::view-transition-new(*) {
+  animation: none !important;
+}
+.motion-setting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.motion-setting select {
+  min-height: 32px;
+  max-width: 190px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 4px 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: default;
+}
+.motion-setting select:focus-visible {
+  outline: 3px solid #8b6918;
+  outline-offset: 4px;
+}
+@media (max-width: 760px) {
+  .motion-setting {
+    flex-basis: 100%;
+    justify-content: flex-end;
   }
 }

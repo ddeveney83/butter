@@ -6,7 +6,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
-import { MotionLink as Link } from "./Motion";
+import { MotionLink as Link, useReducedMotion } from "./Motion";
 import { Arrow, ProjectArt, Spark } from "./Artwork";
 import type { Project } from "../data/projects";
 
@@ -20,10 +20,17 @@ export function Reveal({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
   useLayoutEffect(() => {
     const node = ref.current!;
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (media.matches || !("IntersectionObserver" in window)) return;
+    if (
+      reduced ||
+      !("IntersectionObserver" in window) ||
+      node.classList.contains("is-visible")
+    ) {
+      node.dataset.reveal = "ready";
+      return;
+    }
     node.dataset.reveal = "pending";
     // Commit the starting opacity before an immediately visible item is revealed.
     void window.getComputedStyle(node).opacity;
@@ -41,18 +48,10 @@ export function Reveal({
       { threshold: 0.06 },
     );
     observer.observe(node);
-    function changed() {
-      if (media.matches) {
-        show();
-        observer.disconnect();
-      }
-    }
-    media.addEventListener("change", changed);
     return () => {
       observer.disconnect();
-      media.removeEventListener("change", changed);
     };
-  }, []);
+  }, [reduced]);
   return (
     <div
       className={`reveal ${className}`}

@@ -10,6 +10,9 @@ import {
   MotionLink as Link,
   MotionNavLink as NavLink,
   useMediaQuery,
+  useReducedMotion,
+  MotionSettings,
+  initializeMotion,
 } from "./components/Motion";
 import { Arrow, Spark } from "./components/Artwork";
 import { projects } from "./data/projects";
@@ -74,6 +77,7 @@ function PageContent() {
 
 function Site() {
   const location = useLocation();
+  const reduced = useReducedMotion();
   const compactNavigation = useMediaQuery("(max-width: 760px)");
   const [menuOpen, setMenuOpen] = useState(false);
   const firstRender = useRef(true);
@@ -178,11 +182,7 @@ function Site() {
               onClick={() => {
                 window.scrollTo({
                   top: 0,
-                  behavior: window.matchMedia(
-                    "(prefers-reduced-motion: reduce)",
-                  ).matches
-                    ? "instant"
-                    : "smooth",
+                  behavior: reduced ? "instant" : "smooth",
                 });
                 document
                   .querySelector<HTMLElement>("header a")
@@ -204,12 +204,16 @@ function Site() {
               © {new Date().getFullYear()} Butter. Made with feeling.
             </span>
             <span>Good learning. No added nonsense.</span>
+            <MotionSettings />
           </div>
         </div>
       </footer>
     </>
   );
 }
+
+// Resolve the motion setting before the router reads the URL or content paints.
+initializeMotion();
 
 const router = createBrowserRouter([
   {
