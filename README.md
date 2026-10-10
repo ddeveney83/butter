@@ -10,6 +10,8 @@ The Pricing page includes illustrative GBP project and support budgets, plus an 
 
 Page navigation uses soft View Transition crossfades where supported, with a simple entrance fallback elsewhere. Shared timing and easing in `src/motion.css` also coordinate scroll reveals, the mobile menu, tab indicators, accordions, pricing updates, and hover states. Reduced-motion preferences disable movement and update immediately when changed.
 
+Mouse devices use a small SVG butter cursor with context labels for projects, links, tabs, accordions, and controls. Text entry and sliders retain their native cursors; touch devices use their usual controls. Edit the artwork in `public/butter-cursor.svg` and the hint behavior in `src/components/ButterCursor.tsx`. Link and button hints can be overridden with `data-cursor-label`.
+
 ## Develop
 
 Use Node.js 22.12+ (validated on Node.js 24) and npm. Each cloud task is isolated; use this existing checkout without creating a worktree.

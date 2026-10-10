@@ -1,0 +1,78 @@
+@media (hover: hover) and (pointer: fine) {
+  html.butter-cursor-enabled,
+  html.butter-cursor-enabled
+    :where(a, button, input[type="checkbox"], input[type="radio"], label) {
+    cursor:
+      url("/butter-cursor.svg") 8 6,
+      auto;
+  }
+  .butter-cursor-enabled
+    :where(
+      input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+          [type="button"]
+        ):not([type="submit"]):not([type="reset"]),
+      textarea,
+      [contenteditable="true"]
+    ) {
+    cursor: text;
+  }
+  .butter-cursor-enabled select {
+    cursor: default;
+  }
+  .butter-cursor-enabled input[type="range"] {
+    cursor: ew-resize;
+  }
+  .butter-cursor-enabled :disabled,
+  .butter-cursor-enabled [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+.butter-cursor-hint {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  view-transition-name: butter-cursor-hint;
+  transition: opacity 140ms var(--ease-butter);
+}
+.butter-cursor-hint span {
+  display: block;
+  padding: 7px 11px;
+  border-radius: 20px;
+  border: 1px solid var(--butter);
+  background: var(--ink);
+  color: var(--butter);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  box-shadow: 0 3px 12px #20201d12;
+  scale: 0.96;
+  transition: scale 180ms var(--ease-butter);
+}
+.butter-cursor-hint[data-visible="true"] {
+  opacity: 1;
+}
+.butter-cursor-hint[data-visible="true"] span {
+  scale: 1;
+}
+html:active-view-transition .butter-cursor-hint {
+  opacity: 0;
+  transition: none;
+}
+::view-transition-group(butter-cursor-hint) {
+  animation: none;
+}
+::view-transition-old(butter-cursor-hint),
+::view-transition-new(butter-cursor-hint) {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .butter-cursor-hint,
+  .butter-cursor-hint span {
+    transition: none;
+  }
+}

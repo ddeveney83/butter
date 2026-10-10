@@ -62,6 +62,7 @@ test("navigation supports separate pages, active links, browser history and mobi
   await expect(page).toHaveURL(/\/about$/);
   await page.goBack();
   await expect(page).toHaveURL(/\/services$/);
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   if (testInfo.project.name === "mobile") {
     await page.getByRole("button", { name: "Menu", exact: true }).click();
     await expect(

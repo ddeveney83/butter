@@ -13,6 +13,7 @@ import {
 } from "./components/Motion";
 import { Arrow, Spark } from "./components/Artwork";
 import { projects } from "./data/projects";
+import ButterCursor from "./components/ButterCursor";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -118,6 +119,7 @@ function Site() {
   }, [location.pathname]);
   return (
     <>
+      <ButterCursor />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
