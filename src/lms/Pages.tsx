@@ -463,9 +463,7 @@ export function ManageCourses() {
     try {
       await post("admin/starters", {});
       reload();
-      setFeedback(
-        "Three Butter starter courses have been added to the library.",
-      );
+      setFeedback("Six Butter starter courses are ready in the library.");
     } catch (error) {
       setActionError((error as Error).message);
     } finally {
@@ -479,6 +477,12 @@ export function ManageCourses() {
         copy="Bring courses together. Publish them when they’re ready."
       />
       <UploadCourse onComplete={reload} />
+      <p className="lms-small">
+        Prefer to build here?{" "}
+        <Link to="/butterlearn/app/create">
+          Create a course shell <Arrow />
+        </Link>
+      </p>
       <div className="lms-section-heading">
         <h2>Your courses.</h2>
         <button
@@ -533,6 +537,11 @@ export function ManageCourses() {
                       <Link to={"/butterlearn/app/courses/" + course.id}>
                         Preview
                       </Link>
+                      {course.authored && (
+                        <Link to={"/butterlearn/app/create/" + course.id}>
+                          Edit content
+                        </Link>
+                      )}
                       <button
                         disabled={!!working}
                         onClick={async () => {
@@ -741,6 +750,7 @@ function PersonRow({
           >
             <option value="learner">Learner</option>
             <option value="manager">Manager</option>
+            <option value="creator">Content creator</option>
             <option value="admin">Admin</option>
           </select>
           <button

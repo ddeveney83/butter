@@ -39,7 +39,7 @@ export const publicUser = (user) => ({
 // stored role or learner identity, and is ignored for all other account roles.
 export function activeView(user, requested) {
   return user?.role === "admin" &&
-    ["admin", "manager", "learner"].includes(requested)
+    ["admin", "manager", "creator", "learner"].includes(requested)
     ? requested
     : user?.role || null;
 }
@@ -68,7 +68,9 @@ export async function profile(store, identity) {
           ? "admin"
           : identity.roles?.includes("manager")
             ? "manager"
-            : "learner"),
+            : identity.roles?.includes("creator")
+              ? "creator"
+              : "learner"),
     group: existing?.group || "Butter team",
     createdAt: existing?.createdAt || now(),
   }));
@@ -87,12 +89,27 @@ export function requireReporting(user) {
   if (!["admin", "manager"].includes(user.role))
     throw problem(403, "Your account does not have access to team reporting.");
 }
+export function requireCreator(user, course) {
+  if (
+    user.role !== "admin" &&
+    (user.role !== "creator" || (course && course.createdBy !== user.id))
+  )
+    throw problem(
+      403,
+      "Only an admin or the course's content creator can edit this draft.",
+    );
+}
 export const courseKey = (courseId) => `courses/${courseId}`;
 export const enrolmentKey = (userId, courseId) =>
   `enrolments/${userId}/${courseId}`;
 export async function findCourse(store, courseId, user) {
   const course = await store.get(courseKey(courseId), { type: "json" });
-  if (!course || (!course.published && user.role !== "admin"))
+  if (
+    !course ||
+    (!course.published &&
+      user.role !== "admin" &&
+      !(user.role === "creator" && course.createdBy === user.id))
+  )
     throw problem(404, "This course is not available.");
   return course;
 }
@@ -119,7 +136,12 @@ export async function catalogue(store, user) {
   const courses = await entries(store, "courses/");
   const enrolled = await entries(store, `enrolments/${user.id}/`);
   return courses
-    .filter((course) => course.published || user.role === "admin")
+    .filter(
+      (course) =>
+        course.published ||
+        user.role === "admin" ||
+        (user.role === "creator" && course.createdBy === user.id),
+    )
     .map((course) =>
       courseView(
         course,

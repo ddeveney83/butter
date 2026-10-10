@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
   createBrowserRouter,
   Outlet,
@@ -27,7 +27,7 @@ import Project from "./pages/Project";
 import NotFound from "./pages/NotFound";
 import Brand from "./pages/Brand";
 import Butterlearn from "./pages/Butterlearn";
-import { LMSProvider, LMSLayout, LMSLogin } from "./lms/Auth";
+import { LMSProvider, LMSLayout, LMSLogin, Loading } from "./lms/Auth";
 import {
   Dashboard,
   Library,
@@ -36,6 +36,7 @@ import {
   Reports,
 } from "./lms/Pages";
 import { CoursePlayer } from "./lms/Player";
+const CourseStudio = lazy(() => import("./lms/Authoring"));
 
 const links = [
   ["/about", "About"],
@@ -260,6 +261,22 @@ const router = createBrowserRouter([
           { path: "library", element: <Library /> },
           { path: "courses/:courseId", element: <CoursePlayer /> },
           { path: "manage", element: <ManageCourses /> },
+          {
+            path: "create",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <CourseStudio />
+              </Suspense>
+            ),
+          },
+          {
+            path: "create/:courseId",
+            element: (
+              <Suspense fallback={<Loading />}>
+                <CourseStudio />
+              </Suspense>
+            ),
+          },
           { path: "people", element: <People /> },
           { path: "reports", element: <Reports /> },
         ],

@@ -24,8 +24,10 @@ import {
   problem,
   OWNER_EMAIL,
   activeView,
+  requireCreator,
 } from "./domain.mjs";
-import { starterCourses } from "./starters.mjs";
+import { seedStarterCourses } from "./starters.mjs";
+import { validateDocument, compileDocument } from "./authoring.mjs";
 
 const json = (value, status = 200) =>
   Response.json(value, {
@@ -135,8 +137,11 @@ export function createHandler({
       if (path[0] === "session" && path[1] === "view" && method === "POST") {
         requireAdmin(actualUser);
         const input = await body(request);
-        if (!["admin", "manager", "learner"].includes(input.role))
-          throw problem(400, "Choose admin, manager or learner view.");
+        if (!["admin", "manager", "creator", "learner"].includes(input.role))
+          throw problem(
+            400,
+            "Choose admin, manager, content creator or learner view.",
+          );
         identity.setViewRole(input.role, request);
         return json({
           user: publicUser(actualUser),
@@ -148,6 +153,126 @@ export function createHandler({
         ...actualUser,
         role: activeView(actualUser, identity.getViewRole?.(request)),
       };
+      if (path[0] === "authoring") {
+        requireCreator(user);
+        if (path.length === 1 && method === "POST") {
+          const document = validateDocument(await body(request));
+          const courseId = id();
+          const assetPrefix = `packages/${courseId}/draft-1`;
+          const draft = {
+            document,
+            revision: 1,
+            assetPrefix,
+            updatedAt: now(),
+          };
+          const course = {
+            id: courseId,
+            title: document.title,
+            description: document.description,
+            minutes: document.minutes,
+            icon: document.icon,
+            format: document.format,
+            authored: true,
+            createdBy: user.id,
+            published: false,
+            draftRevision: 1,
+            publishedRevision: 0,
+            assetPrefix,
+            lessons: [
+              { id: "lesson-1", title: document.title, path: "index.html" },
+            ],
+            createdAt: now(),
+          };
+          await files.set(
+            `${assetPrefix}/index.html`,
+            compileDocument(document),
+            { metadata: { type: "text/html; charset=utf-8" } },
+          );
+          await store.setJSON(`authoring/${courseId}`, draft, {
+            onlyIfNew: true,
+          });
+          await store.setJSON(courseKey(courseId), course, { onlyIfNew: true });
+          return json({ course: courseView(course), draft }, 201);
+        }
+        if (path[1]) {
+          const course = await findCourse(store, identifier(path[1]), user);
+          requireCreator(user, course);
+          if (!course.authored)
+            throw problem(
+              400,
+              "Imported packages are edited in their original authoring tool.",
+            );
+          const key = `authoring/${course.id}`;
+          const draft = await store.get(key, { type: "json" });
+          if (!draft) throw problem(404, "This course draft is not available.");
+          if (path.length === 2 && method === "GET")
+            return json({ course: courseView(course), draft });
+          if (path[2] === "preview" && method === "POST") {
+            const document = validateDocument((await body(request)).document);
+            return json({ html: compileDocument(document) });
+          }
+          if (path.length === 2 && method === "PUT") {
+            const input = await body(request);
+            const document = validateDocument(input.document);
+            if (course.published && document.format !== course.format)
+              throw problem(
+                400,
+                "Unpublish the course before changing its format.",
+              );
+            if (input.revision !== draft.revision)
+              throw problem(
+                409,
+                "This draft changed in another tab. Reload it before saving.",
+              );
+            const assetPrefix = `packages/${course.id}/draft-${draft.revision + 1}-${id()}`;
+            await files.set(
+              `${assetPrefix}/index.html`,
+              compileDocument(document),
+              { metadata: { type: "text/html; charset=utf-8" } },
+            );
+            const next = await update(store, key, (current) => {
+              if (current?.revision !== input.revision)
+                throw problem(
+                  409,
+                  "This draft changed in another tab. Reload it before saving.",
+                );
+              return {
+                document,
+                revision: current.revision + 1,
+                assetPrefix,
+                updatedAt: now(),
+              };
+            });
+            const updated = await update(
+              store,
+              courseKey(course.id),
+              (current) => ({
+                ...current,
+                draftRevision: next.revision,
+                ...(!current.published
+                  ? {
+                      title: document.title,
+                      description: document.description,
+                      minutes: document.minutes,
+                      icon: document.icon,
+                      format: document.format,
+                      assetPrefix,
+                      lessons: [
+                        {
+                          id: "lesson-1",
+                          title: document.title,
+                          path: "index.html",
+                        },
+                      ],
+                    }
+                  : {}),
+                updatedAt: now(),
+              }),
+            );
+            return json({ course: courseView(updated), draft: next });
+          }
+        }
+      }
       if (path[0] === "dashboard" && method === "GET") {
         const courses = await catalogue(store, user);
         return json({ user: publicUser(user), courses, mode });
@@ -168,8 +293,36 @@ export function createHandler({
         if (path.length === 2 && method === "PATCH") {
           requireAdmin(user);
           const input = await body(request);
+          const draft =
+            course.authored && typeof input.published === "boolean"
+              ? await store.get(`authoring/${course.id}`, { type: "json" })
+              : null;
+          if (
+            input.published &&
+            course.authored &&
+            !draft?.document.blocks.length
+          )
+            throw problem(400, "Add content before publishing this course.");
           const next = await update(store, courseKey(course.id), (current) => ({
             ...current,
+            ...(draft
+              ? {
+                  title: draft.document.title,
+                  description: draft.document.description,
+                  minutes: draft.document.minutes,
+                  icon: draft.document.icon,
+                  format: draft.document.format,
+                  assetPrefix: draft.assetPrefix,
+                  publishedRevision: draft.revision,
+                  lessons: [
+                    {
+                      id: "lesson-1",
+                      title: draft.document.title,
+                      path: "index.html",
+                    },
+                  ],
+                }
+              : {}),
             ...(input.title !== undefined ? { title: text(input.title) } : {}),
             ...(input.description !== undefined
               ? { description: String(input.description).slice(0, 2000) }
@@ -359,7 +512,7 @@ export function createHandler({
           const userId = identifier(path[2]);
           if (
             input.role &&
-            !["learner", "manager", "admin"].includes(input.role)
+            !["learner", "manager", "creator", "admin"].includes(input.role)
           )
             throw problem(400, "Choose a valid role.");
           const next = await update(store, `people/${userId}`, (current) => {
@@ -379,21 +532,8 @@ export function createHandler({
           return json({ user: publicUser(next) });
         }
         if (path[1] === "starters" && method === "POST") {
-          for (const sample of starterCourses()) {
-            const key = courseKey(sample.course.id);
-            if (await store.get(key, { type: "json" })) continue;
-            await files.set(
-              `${sample.course.assetPrefix}/index.html`,
-              sample.html,
-              { metadata: { type: "text/html; charset=utf-8" } },
-            );
-            await store.setJSON(
-              key,
-              { ...sample.course, createdBy: user.id },
-              { onlyIfNew: true },
-            );
-          }
-          return json({ ok: true });
+          const added = await seedStarterCourses(store, files, user.id);
+          return json({ ok: true, added });
         }
       }
       throw problem(404, "This action is not available.");

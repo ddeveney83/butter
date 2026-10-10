@@ -1,4 +1,4 @@
-export type Role = "learner" | "manager" | "admin";
+export type Role = "learner" | "manager" | "creator" | "admin";
 export type User = {
   id: string;
   name: string;
@@ -30,6 +30,10 @@ export type Course = {
   minutes: number;
   icon: "heart" | "idea" | "spark";
   published: boolean;
+  authored?: boolean;
+  createdBy?: string;
+  draftRevision?: number;
+  publishedRevision?: number;
   lessons: Lesson[];
   createdAt: string;
   enrolment: Progress | null;

@@ -149,6 +149,11 @@ export function LMSLayout() {
     [switching, setSwitching] = useState(false),
     [viewError, setViewError] = useState("");
   async function switchView(role: Role) {
+    if (
+      document.querySelector('.studio-workspace[data-unsaved="true"]') &&
+      !window.confirm("Switch views? Unsaved course changes will be lost.")
+    )
+      return;
     setSwitching(true);
     setViewError("");
     try {
@@ -158,7 +163,9 @@ export function LMSLayout() {
           ? "/butterlearn/app/manage"
           : role === "manager"
             ? "/butterlearn/app/reports"
-            : "/butterlearn/app",
+            : role === "creator"
+              ? "/butterlearn/app/create"
+              : "/butterlearn/app",
         {
           replace: true,
           viewTransition:
@@ -221,6 +228,9 @@ export function LMSLayout() {
   const links = [
     ["/butterlearn/app", "My learning"],
     ["/butterlearn/app/library", "Course library"],
+    ...(["admin", "creator"].includes(role)
+      ? [["/butterlearn/app/create", "Create courses"]]
+      : []),
     ...(role === "admin"
       ? [
           ["/butterlearn/app/manage", "Manage courses"],
@@ -249,6 +259,7 @@ export function LMSLayout() {
             >
               <option value="admin">Admin</option>
               <option value="manager">Manager</option>
+              <option value="creator">Creator</option>
               <option value="learner">Learner</option>
             </select>
             {switching && <span role="status">Switching view…</span>}
@@ -277,12 +288,23 @@ export function LMSLayout() {
                 ? "Admin"
                 : user.role === "manager"
                   ? "Manager"
-                  : "Learner"}
+                  : user.role === "creator"
+                    ? "Content creator"
+                    : "Learner"}
             </span>
           </div>
           <button
             disabled={loggingOut}
             onClick={async () => {
+              if (
+                document.querySelector(
+                  '.studio-workspace[data-unsaved="true"]',
+                ) &&
+                !window.confirm(
+                  "Sign out? Unsaved course changes will be lost.",
+                )
+              )
+                return;
               setLoggingOut(true);
               setLogoutError("");
               try {
@@ -312,11 +334,18 @@ export function LMSLayout() {
           <div className="lms-view-note" role="status">
             <p>
               <strong>
-                {role === "manager" ? "Manager" : "Learner"} view.
+                {role === "manager"
+                  ? "Manager"
+                  : role === "creator"
+                    ? "Content creator"
+                    : "Learner"}{" "}
+                view.
               </strong>{" "}
               {role === "learner"
                 ? "Learning activity is saved to your account."
-                : "Explore your team's learning progress."}
+                : role === "creator"
+                  ? "Build your own drafts. Admins publish when they’re ready."
+                  : "Explore your team's learning progress."}
             </p>
             <button disabled={switching} onClick={() => switchView("admin")}>
               Return to admin <Arrow />

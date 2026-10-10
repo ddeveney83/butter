@@ -9,8 +9,10 @@ The public product page stays at `/butterlearn`. Account access starts at `/butt
 - HTML files and zipped HTML course packages, SCORM 1.2 and SCORM 2004 packages. The manifest selects launch files and learning objects.
 - An isolated course player with persistent completion, normalized scores, session time, lesson location and suspend data. HTML courses have a manual completion button. Multi-object SCORM courses have explicit part selection and aggregate completion.
 - Admin uploads, draft previews, publishing, learner roles/groups, individual or bulk course assignments and optional due dates.
-- Manager/admin reports with progress filters and CSV export. Three optional, original Butter starter courses exercise HTML and both SCORM formats.
-- Admin-only **View as** switching between admin, manager and learner without signing out. The active view persists through refreshes and changes server permissions as well as navigation. **Return to admin** restores management access immediately.
+- Manager/admin reports with progress filters and CSV export. Six original Butter example courses exercise HTML, SCORM 1.2 and SCORM 2004, including visual layouts and learning interactions.
+- Content creators build course shells and edit their own drafts in **Create courses**. Admins can edit any course and control publication. Learners and managers cannot access the editor.
+- A visual editor with rich text, heading hierarchy, lists, quotes, links, two/three-column layouts, images, videos/transcripts, flip cards, accordions, keyboard-accessible tabs, positioned image hotspots and multiple-choice knowledge checks.
+- Admin-only **View as** switching between admin, manager, content creator and learner without signing out. The active view persists through refreshes and changes server permissions as well as navigation. **Return to admin** restores management access immediately.
 
 The public interactive product preview remains a clearly labelled concept with fictional sample records. It is independent of the real LMS and never writes to learner accounts.
 
@@ -23,7 +25,21 @@ The public interactive product preview remains a clearly labelled concept with f
 
 Identity confirmation, invitation and recovery links arriving at the site root are routed to the LMS login page automatically. Tokens are exchanged on the server for Secure, HttpOnly session cookies. Every authenticated request verifies the provider's user response; expired access sessions renew using the refresh cookie. Never put authentication tokens in frontend environment variables.
 
-The sidebar's **View as** selector changes only the current browser's active role. It preserves the real admin account, user ID, enrolments and progress; learner activity is saved to that same account. It does not impersonate another person. Learner view sees published courses and personal progress; manager view additionally sees workspace reports. Admin-only operations remain blocked in both lower views. Signing out clears the selected view, and a new sign-in starts with the account's actual role. Non-admin accounts cannot use the switcher or gain permissions by changing its cookie.
+The sidebar's **View as** selector changes only the current browser's active role. It preserves the real admin account, user ID, enrolments and progress; learner activity is saved to that same account. It does not impersonate another person. Learner view sees published courses and personal progress; manager view additionally sees workspace reports. Content creator view includes the current account's own drafts and creation/editing access. Admin-only operations remain blocked in lower views. Signing out clears the selected view, and a new sign-in starts with the account's actual role. Non-admin accounts cannot use the switcher or gain permissions by changing its cookie.
+
+## Create learning in Butterlearn
+
+Admins assign **Content creator** to an account in People. That account can open **Create courses**, choose HTML or SCORM 2004 and create a draft shell. Add blocks from the palette, format text, edit interaction items, rearrange/duplicate/remove blocks and save the draft. **Preview** opens the current unsaved content in a sandboxed desktop/mobile learner view without recording progress. Unsaved changes trigger a warning when leaving the editor.
+
+Images use hosted HTTPS URLs, with alternative text and captions. Videos support HTTPS MP4/WebM URLs and YouTube/Vimeo links, plus a transcript. Columns support rich text, images and optional videos and stack on small screens. Hotspots support image-click positioning and numeric coordinate editing, with keyboard-accessible numbered buttons for learners. Media file uploads, a shared asset library and video caption uploads are future work.
+
+Creators save and preview their own drafts; admins publish from the editor or Manage courses. Saving changes to a published course keeps its live title, content and assets stable until the admin publishes the new version. Revision checks reject stale saves from another tab. Existing learner sessions retain their original content version. Imported packages continue to use their original authoring tool; their content cannot be edited in the native editor.
+
+Authored HTML courses use the LMS's manual completion control. Authored SCORM 2004 courses record completion and scores when **Finish course** is selected; all included knowledge checks must be answered correctly first. Checks allow retries and provide feedback. They are practice activities with client-visible answers, rather than secure exams. Draft content is validated and rich HTML is sanitized on the server before rendering.
+
+The six example courses are **A good place to begin.** (SCORM 1.2), **Make a good call.** (SCORM 2004), **Room to grow.** (HTML), **A moment to notice.** (HTML), **Feedback that lands.** (HTML) and **Spot the safer choice.** (SCORM 2004). They are illustrative placeholder learning. The nature video uses public CC0 example media. Admins can add missing examples with **Add Butter starter courses**; this preserves existing records and progress. The last three are editable native courses.
+
+For a one-time seed through the site owner's authenticated Netlify connection, run `node scripts/seed-lms.mjs` with `NETLIFY_SITE_ID`, `NETLIFY_AUTH_TOKEN` and `BUTTERLEARN_SEED_OWNER_ID` supplied securely. In a proxied cloud environment, Node may also require `--use-env-proxy`. Never commit the token. The script adds missing examples without replacing courses.
 
 ## Storage and deployment
 
@@ -50,4 +66,4 @@ Server tests cover package validation, permissions, session verification/renewal
 
 This is a single Butter workspace. Groups are labels, and managers can report on the whole workspace; there is no organisation isolation or manager-specific team boundary yet. SCORM support implements practical runtime tracking and manual multi-object navigation, rather than a certified full SCORM 2004 sequencing engine. Validate representative exports from the intended authoring tools before onboarding a live learning programme.
 
-Certificates, reminders, automatic assignment rules, SSO, multiple organisations, content versioning/deletion, large media uploads and billing remain future work. They are not implied by the concept preview. Identity is active. Completing the owner setup and production confirmation/recovery requires access to the account email; local tests do not prove inbox delivery.
+Certificates, reminders, automatic assignment rules, SSO, multiple organisations, full course version history/deletion, large media uploads and billing remain future work. They are not implied by the concept preview. Identity is active. Completing the owner setup and production confirmation/recovery requires access to the account email; local tests do not prove inbox delivery.
