@@ -13,25 +13,43 @@ export function createLocalServices(directory) {
   const files = new FileStore(resolve(directory, "files"));
   const accounts = new FileStore(resolve(directory, "accounts"));
   const cookieHeaders = new WeakMap();
-  const sessionKey = (request) =>
+  const appendCookie = (request, cookie) =>
+    cookieHeaders.set(request, [...(cookieHeaders.get(request) || []), cookie]);
+  const cookieValue = (request, name) =>
     (request.headers.get("cookie") || "")
       .split(";")
       .map((value) => value.trim())
-      .find((value) => value.startsWith("butterlearn_local="))
+      .find((value) => value.startsWith(name + "="))
       ?.split("=")[1];
+  const sessionKey = (request) => cookieValue(request, "butterlearn_local");
   async function signIn(account, request) {
     const secret = token();
     await accounts.setJSON(`sessions/${hash(secret)}`, {
       userId: account.id,
       expires: Date.now() + 86400000,
     });
-    cookieHeaders.set(
+    appendCookie(
       request,
       `butterlearn_local=${secret}; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400`,
     );
     return account;
   }
   const identity = {
+    getViewRole(request) {
+      return cookieValue(request, "butterlearn_view");
+    },
+    setViewRole(role, request) {
+      appendCookie(
+        request,
+        `butterlearn_view=${role}; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400`,
+      );
+    },
+    clearViewRole(request) {
+      appendCookie(
+        request,
+        "butterlearn_view=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0",
+      );
+    },
     async getUser(request) {
       const secret = sessionKey(request);
       if (!secret) return null;
@@ -86,10 +104,11 @@ export function createLocalServices(directory) {
     async logout(request) {
       const secret = sessionKey(request);
       if (secret) await accounts.delete(`sessions/${hash(secret)}`);
-      cookieHeaders.set(
+      appendCookie(
         request,
         "butterlearn_local=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0",
       );
+      identity.clearViewRole(request);
     },
     async requestPasswordRecovery() {
       throw problem(
@@ -121,8 +140,8 @@ export function createLocalServices(directory) {
       )
         ? content(request)
         : api(request));
-      const cookie = cookieHeaders.get(request);
-      if (cookie) response.headers.append("Set-Cookie", cookie);
+      for (const cookie of cookieHeaders.get(request) || [])
+        response.headers.append("Set-Cookie", cookie);
       return response;
     },
   };
@@ -162,7 +181,11 @@ export function butterlearnDevelopment() {
           });
           const response = await services.handle(request);
           res.statusCode = response.status;
-          response.headers.forEach((value, key) => res.setHeader(key, value));
+          response.headers.forEach((value, key) => {
+            if (key !== "set-cookie") res.setHeader(key, value);
+          });
+          const cookies = response.headers.getSetCookie();
+          if (cookies.length) res.setHeader("Set-Cookie", cookies);
           res.end(Buffer.from(await response.arrayBuffer()));
         } catch (error) {
           res.statusCode = error.status || 500;

@@ -23,6 +23,7 @@ import {
   now,
   problem,
   OWNER_EMAIL,
+  activeView,
 } from "./domain.mjs";
 import { starterCourses } from "./starters.mjs";
 
@@ -118,15 +119,35 @@ export function createHandler({
             );
           else throw problem(400, "This account link is not supported.");
         } else throw problem(404, "This account action is not available.");
+        identity.clearViewRole?.(request);
         return json({ user: publicUser(await profile(store, account)) });
       }
       const account = await identity.getUser(request);
-      if (path[0] === "session" && method === "GET")
+      if (path[0] === "session" && method === "GET") {
+        const user = account ? await profile(store, account) : null;
         return json({
-          user: account ? publicUser(await profile(store, account)) : null,
+          user: user ? publicUser(user) : null,
+          viewRole: activeView(user, identity.getViewRole?.(request)),
           mode,
         });
-      const user = await requireUser(store, account);
+      }
+      const actualUser = await requireUser(store, account);
+      if (path[0] === "session" && path[1] === "view" && method === "POST") {
+        requireAdmin(actualUser);
+        const input = await body(request);
+        if (!["admin", "manager", "learner"].includes(input.role))
+          throw problem(400, "Choose admin, manager or learner view.");
+        identity.setViewRole(input.role, request);
+        return json({
+          user: publicUser(actualUser),
+          viewRole: input.role,
+          mode,
+        });
+      }
+      const user = {
+        ...actualUser,
+        role: activeView(actualUser, identity.getViewRole?.(request)),
+      };
       if (path[0] === "dashboard" && method === "GET") {
         const courses = await catalogue(store, user);
         return json({ user: publicUser(user), courses, mode });

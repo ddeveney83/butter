@@ -448,14 +448,14 @@ function UploadCourse({ onComplete }: { onComplete: () => void }) {
 }
 
 export function ManageCourses() {
-  const { user } = useAuth();
+  const { viewRole } = useAuth();
   const { data, error, loading, reload } = useData<{ courses: Course[] }>(
     "courses",
   );
   const [actionError, setActionError] = useState(""),
     [working, setWorking] = useState(""),
     [feedback, setFeedback] = useState("");
-  if (user?.role !== "admin")
+  if (viewRole !== "admin")
     return <Notice error>Course management is available to admins.</Notice>;
   async function starters() {
     setWorking("starters");
@@ -583,13 +583,13 @@ export function ManageCourses() {
 }
 
 export function People() {
-  const { user } = useAuth();
+  const { viewRole } = useAuth();
   const { data, error, loading, reload } = useData<Report>("admin/report");
   const [selected, setSelected] = useState<string[]>([]),
     [working, setWorking] = useState(false),
     [feedback, setFeedback] = useState(""),
     [actionError, setActionError] = useState("");
-  if (user?.role !== "admin")
+  if (viewRole !== "admin")
     return <Notice error>People management is available to admins.</Notice>;
   if (loading || !data) return <LoadState error={error} reload={reload} />;
   async function assign(event: FormEvent<HTMLFormElement>) {
@@ -770,7 +770,7 @@ function PersonRow({
 }
 
 export function Reports() {
-  const { user } = useAuth();
+  const { viewRole } = useAuth();
   const { data, error, loading, reload } = useData<Report>("admin/report");
   const [courseId, setCourseId] = useState("all"),
     [status, setStatus] = useState("all"),
@@ -795,7 +795,7 @@ export function Reports() {
         ) || [],
     [data, courseId, status, search],
   );
-  if (!["admin", "manager"].includes(user!.role))
+  if (!viewRole || !["admin", "manager"].includes(viewRole))
     return (
       <Notice error>Team reporting is available to managers and admins.</Notice>
     );

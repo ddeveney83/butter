@@ -15,17 +15,22 @@ import {
   useNavigate,
   useViewTransitionState,
 } from "react-router-dom";
-import { MotionLink as Link } from "../components/Motion";
+import { MotionLink as Link, useReducedMotion } from "../components/Motion";
 import { Arrow, ButterCharacter, Spark } from "../components/Artwork";
 import { api, post } from "./api";
-import type { User } from "./types";
+import type { User, Role } from "./types";
 import "./LMS.css";
-type Session = { user: User | null; mode: "local" | "netlify" };
+type Session = {
+  user: User | null;
+  viewRole: Role | null;
+  mode: "local" | "netlify";
+};
 type AuthValue = Session & {
   loading: boolean;
   error: string;
   reload: () => void;
   setUser: (user: User | null) => void;
+  switchView: (role: Role) => Promise<void>;
 };
 const Auth = createContext<AuthValue | null>(null);
 export const useAuth = () => useContext(Auth)!;
@@ -33,6 +38,7 @@ export const useAuth = () => useContext(Auth)!;
 export function LMSProvider() {
   const [session, setSession] = useState<Session>({
       user: null,
+      viewRole: null,
       mode: "netlify",
     }),
     [loading, setLoading] = useState(true),
@@ -65,13 +71,24 @@ export function LMSProvider() {
     <Auth.Provider
       value={{
         ...session,
+        viewRole: session.viewRole ?? session.user?.role ?? null,
         loading,
         error,
         reload,
         setUser: (user) => {
           generation.current++;
           setLoading(false);
-          setSession((value) => ({ ...value, user }));
+          setSession((value) => ({
+            ...value,
+            user,
+            viewRole: user?.role || null,
+          }));
+        },
+        switchView: async (role) => {
+          const value = await post<Session>("session/view", { role });
+          generation.current++;
+          setSession(value);
+          setError("");
         },
       }}
     >
@@ -126,8 +143,34 @@ export function LMSLayout() {
   const auth = useAuth(),
     location = useLocation(),
     navigate = useNavigate();
+  const reduced = useReducedMotion();
   const [loggingOut, setLoggingOut] = useState(false),
-    [logoutError, setLogoutError] = useState("");
+    [logoutError, setLogoutError] = useState(""),
+    [switching, setSwitching] = useState(false),
+    [viewError, setViewError] = useState("");
+  async function switchView(role: Role) {
+    setSwitching(true);
+    setViewError("");
+    try {
+      await auth.switchView(role);
+      navigate(
+        role === "admin"
+          ? "/butterlearn/app/manage"
+          : role === "manager"
+            ? "/butterlearn/app/reports"
+            : "/butterlearn/app",
+        {
+          replace: true,
+          viewTransition:
+            !reduced && typeof document.startViewTransition === "function",
+        },
+      );
+    } catch (error) {
+      setViewError((error as Error).message);
+    } finally {
+      setSwitching(false);
+    }
+  }
   useEffect(() => {
     const main = document.querySelector(".lms-main");
     const focus = () => {
@@ -174,16 +217,17 @@ export function LMSLayout() {
       />
     );
   const user = auth.user;
+  const role = auth.viewRole || user.role;
   const links = [
     ["/butterlearn/app", "My learning"],
     ["/butterlearn/app/library", "Course library"],
-    ...(user.role === "admin"
+    ...(role === "admin"
       ? [
           ["/butterlearn/app/manage", "Manage courses"],
           ["/butterlearn/app/people", "People"],
         ]
       : []),
-    ...(["admin", "manager"].includes(user.role)
+    ...(["admin", "manager"].includes(role)
       ? [["/butterlearn/app/reports", "Team progress"]]
       : []),
   ];
@@ -194,6 +238,22 @@ export function LMSLayout() {
       </a>
       <aside className="lms-sidebar">
         <Logo />
+        {user.role === "admin" && (
+          <div className="lms-view-switch">
+            <label htmlFor="lms-view-role">View as</label>
+            <select
+              id="lms-view-role"
+              value={role}
+              disabled={switching || loggingOut}
+              onChange={(event) => switchView(event.target.value as Role)}
+            >
+              <option value="admin">Admin</option>
+              <option value="manager">Manager</option>
+              <option value="learner">Learner</option>
+            </select>
+            {switching && <span role="status">Switching view…</span>}
+          </div>
+        )}
         <nav aria-label="Learning navigation">
           {links.map(([to, label]) => (
             <Link
@@ -247,7 +307,23 @@ export function LMSLayout() {
           </p>
         )}
         {logoutError && <Notice error>{logoutError}</Notice>}
-        <LMSContent key={location.pathname} />
+        {viewError && <Notice error>{viewError}</Notice>}
+        {user.role === "admin" && role !== "admin" && (
+          <div className="lms-view-note" role="status">
+            <p>
+              <strong>
+                {role === "manager" ? "Manager" : "Learner"} view.
+              </strong>{" "}
+              {role === "learner"
+                ? "Learning activity is saved to your account."
+                : "Explore your team's learning progress."}
+            </p>
+            <button disabled={switching} onClick={() => switchView("admin")}>
+              Return to admin <Arrow />
+            </button>
+          </div>
+        )}
+        <LMSContent key={location.pathname + ":" + role} />
       </main>
     </div>
   );

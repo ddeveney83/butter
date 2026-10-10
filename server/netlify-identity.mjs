@@ -98,6 +98,23 @@ export function netlifyIdentity(request, context, options = {}) {
     return establish(session);
   }
   return {
+    getViewRole() {
+      return context.cookies.get("butterlearn_view");
+    },
+    setViewRole(role) {
+      context.cookies.set({
+        name: "butterlearn_view",
+        value: role,
+        path: "/",
+        httpOnly: true,
+        secure: true,
+        sameSite: "Lax",
+        maxAge: 14 * 86400,
+      });
+    },
+    clearViewRole() {
+      context.cookies.delete("butterlearn_view");
+    },
     async getUser() {
       if (!access && !refresh) return null;
       try {
@@ -143,6 +160,7 @@ export function netlifyIdentity(request, context, options = {}) {
       } finally {
         context.cookies.delete("nf_jwt");
         context.cookies.delete("nf_refresh");
+        context.cookies.delete("butterlearn_view");
       }
     },
     async requestPasswordRecovery(email) {

@@ -35,6 +35,15 @@ export const publicUser = (user) => ({
   group: user.group || "Butter team",
 });
 
+// A view can only reduce an existing admin's privileges. It never changes the
+// stored role or learner identity, and is ignored for all other account roles.
+export function activeView(user, requested) {
+  return user?.role === "admin" &&
+    ["admin", "manager", "learner"].includes(requested)
+    ? requested
+    : user?.role || null;
+}
+
 export async function profile(store, identity) {
   if (!identity?.id || !identity.email) return null;
   const owner =

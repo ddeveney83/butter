@@ -10,17 +10,20 @@ The public product page stays at `/butterlearn`. Account access starts at `/butt
 - An isolated course player with persistent completion, normalized scores, session time, lesson location and suspend data. HTML courses have a manual completion button. Multi-object SCORM courses have explicit part selection and aggregate completion.
 - Admin uploads, draft previews, publishing, learner roles/groups, individual or bulk course assignments and optional due dates.
 - Manager/admin reports with progress filters and CSV export. Three optional, original Butter starter courses exercise HTML and both SCORM formats.
+- Admin-only **View as** switching between admin, manager and learner without signing out. The active view persists through refreshes and changes server permissions as well as navigation. **Return to admin** restores management access immediately.
 
 The public interactive product preview remains a clearly labelled concept with fictional sample records. It is independent of the real LMS and never writes to learner accounts.
 
 ## Activate account access on Netlify
 
-1. Open the existing site's [Identity dashboard](https://app.netlify.com/projects/buttertest/identity) and enable Netlify Identity. Activation cannot be performed through Netlify's public add-on API.
+1. Netlify Identity is enabled on the existing site's [Identity dashboard](https://app.netlify.com/projects/buttertest/identity).
 2. Keep email confirmation enabled: **do not enable automatic confirmation**. Public registration is intended for learner accounts; choose invite-only registration in Identity settings if the workspace should be private. Configure Identity email templates/delivery in the same dashboard as needed.
-3. Create and verify the owner's account at `/butterlearn/login` using `ddeveney83@gmail.com`. Only that verified email receives the initial admin role. Other accounts default to learner; admins grant manager/admin access in People. `BUTTERLEARN_OWNER_EMAIL` optionally overrides the owner email as a Netlify function environment variable.
+3. The owner account `ddeveney83@gmail.com` has been created with the trusted Identity admin role. Use its password setup email to verify access and choose a password, then sign in at `/butterlearn/login`. Other accounts default to learner; admins grant manager/admin access in People. `BUTTERLEARN_OWNER_EMAIL` optionally overrides the verified owner email as a Netlify function environment variable.
 4. Upload and preview a course in Manage courses, then publish it. People appear after their first sign-in; assign published courses from People. Managers see Team progress.
 
 Identity confirmation, invitation and recovery links arriving at the site root are routed to the LMS login page automatically. Tokens are exchanged on the server for Secure, HttpOnly session cookies. Every authenticated request verifies the provider's user response; expired access sessions renew using the refresh cookie. Never put authentication tokens in frontend environment variables.
+
+The sidebar's **View as** selector changes only the current browser's active role. It preserves the real admin account, user ID, enrolments and progress; learner activity is saved to that same account. It does not impersonate another person. Learner view sees published courses and personal progress; manager view additionally sees workspace reports. Admin-only operations remain blocked in both lower views. Signing out clears the selected view, and a new sign-in starts with the account's actual role. Non-admin accounts cannot use the switcher or gain permissions by changing its cookie.
 
 ## Storage and deployment
 
@@ -41,10 +44,10 @@ BUTTERLEARN_LOCAL_DATA=/tmp/butterlearn-browser-tests npm test
 npm run build
 ```
 
-Server tests cover package validation, permissions, session verification/renewal, concurrent writes, tracking and content isolation. Browser tests upload real ZIPs, publish them, play HTML and both SCORM versions, resume a checkpoint, sign back in, inspect persisted reports, assign due dates and check manager permissions on desktop/mobile. `npm run preview` serves only static build output; use Vite development or Netlify to exercise the API.
+Server tests cover package validation, permissions, session verification/renewal, concurrent writes, tracking and content isolation. Browser tests upload real ZIPs, publish them, play HTML and both SCORM versions, resume a checkpoint, sign back in, inspect persisted reports, assign due dates, switch admin/manager/learner views, refresh the selected view and reject forged view cookies on desktop/mobile. `npm run preview` serves only static build output; use Vite development or Netlify to exercise the API.
 
 ## Scope of this release
 
 This is a single Butter workspace. Groups are labels, and managers can report on the whole workspace; there is no organisation isolation or manager-specific team boundary yet. SCORM support implements practical runtime tracking and manual multi-object navigation, rather than a certified full SCORM 2004 sequencing engine. Validate representative exports from the intended authoring tools before onboarding a live learning programme.
 
-Certificates, reminders, automatic assignment rules, SSO, multiple organisations, content versioning/deletion, large media uploads and billing remain future work. They are not implied by the concept preview. Production signup/confirmation/recovery checks require Identity activation and an account with access to its email; local tests do not prove email delivery.
+Certificates, reminders, automatic assignment rules, SSO, multiple organisations, content versioning/deletion, large media uploads and billing remain future work. They are not implied by the concept preview. Identity is active. Completing the owner setup and production confirmation/recovery requires access to the account email; local tests do not prove inbox delivery.

@@ -99,21 +99,17 @@ for (const format of ["scorm12", "scorm2004", "html"] as const) {
     await page
       .getByLabel("A little about the course")
       .fill("A browser-tested course with linked assets.");
-    await page
-      .getByLabel("Course package")
-      .setInputFiles({
-        name: title + ".zip",
-        mimeType: "application/zip",
-        buffer,
-      });
+    await page.getByLabel("Course package").setInputFiles({
+      name: title + ".zip",
+      mimeType: "application/zip",
+      buffer,
+    });
     await page
       .getByRole("button", { name: "Upload course", exact: true })
       .click();
-    const row = page
-      .getByRole("row")
-      .filter({
-        has: page.getByRole("rowheader", { name: new RegExp(title) }),
-      });
+    const row = page.getByRole("row").filter({
+      has: page.getByRole("rowheader", { name: new RegExp(title) }),
+    });
     await expect(row).toContainText("Draft", { timeout: 15000 });
     await row.getByRole("button", { name: "Publish", exact: true }).click();
     await expect(row).toContainText("Published");
@@ -294,4 +290,134 @@ test("protected routes, assignment due dates and manager permissions", async ({
   await expect(page.getByRole("alert")).toContainText(
     "Course management is available to admins.",
   );
+});
+
+test("admins switch learner, manager and admin views without signing out", async ({
+  page,
+  request,
+}) => {
+  await admin(request);
+  await request.post("/api/lms/admin/starters", {
+    headers: { Origin: origin },
+    data: {},
+  });
+  await login(page);
+  const before = (await (await page.request.get("/api/lms/session")).json())
+    .user;
+  const view = page.getByLabel("View as", { exact: true });
+  await expect(view).toHaveValue("admin");
+  await view.selectOption("learner");
+  await expect(
+    page.getByRole("heading", { name: "Hello, Daniel." }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Manage courses", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("link", { name: "Team progress", exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator(".lms-view-note")).toContainText("Learner view.");
+  expect((await page.request.get("/api/lms/admin/report")).status()).toBe(403);
+  await page.reload();
+  await expect(view).toHaveValue("learner");
+  await page.getByRole("link", { name: "Course library", exact: true }).click();
+  const card = page
+    .locator(".lms-course-card")
+    .filter({
+      has: page.getByRole("heading", { name: "Room to grow.", exact: true }),
+    });
+  await card
+    .getByRole("link", {
+      name: /Join course|Start learning|Continue learning|Revisit course/,
+    })
+    .click();
+  await page
+    .getByRole("button", {
+      name: /Start learning|Continue learning|Revisit course/,
+    })
+    .click();
+  await expect(
+    page
+      .frameLocator(".lms-player-stage iframe")
+      .getByRole("heading", { name: "Room to grow.", exact: true }),
+  ).toBeVisible();
+  const complete = page.getByRole("button", {
+    name: "Mark complete",
+    exact: true,
+  });
+  if (await complete.count()) await complete.click();
+  await view.selectOption("manager");
+  await expect(
+    page.getByRole("heading", { name: "Progress with perspective." }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Team progress", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "People", exact: true }),
+  ).toHaveCount(0);
+  expect(
+    (
+      await page.request.post("/api/lms/admin/assign", {
+        headers: { Origin: origin },
+        data: {},
+      })
+    ).status(),
+  ).toBe(403);
+  await fits(page);
+  await page
+    .getByRole("button", { name: "Return to admin", exact: false })
+    .click();
+  await expect(view).toHaveValue("admin");
+  await expect(
+    page.getByRole("heading", { name: "Make room for learning." }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "People", exact: true }),
+  ).toBeVisible();
+  expect((await page.request.get("/api/lms/admin/report")).status()).toBe(200);
+  const after = (await (await page.request.get("/api/lms/session")).json())
+    .user;
+  expect(after.id).toBe(before.id);
+  expect(after.role).toBe("admin");
+  await fits(page);
+  await view.selectOption("learner");
+  await page.getByRole("button", { name: "Sign out", exact: true }).click();
+  await login(page);
+  await expect(view).toHaveValue("admin");
+});
+
+test("learner accounts cannot switch views or forge an admin view cookie", async ({
+  page,
+  context,
+}) => {
+  const email = randomUUID() + "@butter.test";
+  await page.goto("/butterlearn/login");
+  await page
+    .getByRole("button", { name: "Create an account", exact: true })
+    .click();
+  await page.getByLabel("Your name").fill("Jo Learner");
+  await page.getByLabel("Email address").fill(email);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page
+    .getByRole("button", { name: "Create account", exact: true })
+    .click();
+  await expect(page.getByRole("heading", { name: "Hello, Jo." })).toBeVisible();
+  await expect(page.getByLabel("View as", { exact: true })).toHaveCount(0);
+  expect(
+    (
+      await page.request.post("/api/lms/session/view", {
+        headers: { Origin: origin },
+        data: { role: "admin" },
+      })
+    ).status(),
+  ).toBe(403);
+  await context.addCookies([
+    { name: "butterlearn_view", value: "admin", url: origin },
+  ]);
+  await page.reload();
+  await expect(
+    page.getByRole("link", { name: "Manage courses", exact: true }),
+  ).toHaveCount(0);
+  expect((await page.request.get("/api/lms/admin/report")).status()).toBe(403);
 });

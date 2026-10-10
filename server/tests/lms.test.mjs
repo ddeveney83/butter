@@ -244,9 +244,19 @@ test("real local API enforces sessions and roles, imports a course, saves tracki
     return { response, value: await response.json() };
   }
   assert.equal((await request("dashboard")).response.status, 401);
-  const spaced = {email: 'spaced@example.test', name: 'Space', password: '  Butter-test-password-2026  '};
-  assert.equal((await request('auth/signup', 'POST', spaced)).response.status, 200);
-  assert.equal((await request('auth/login', 'POST', spaced)).response.status, 200);
+  const spaced = {
+    email: "spaced@example.test",
+    name: "Space",
+    password: "  Butter-test-password-2026  ",
+  };
+  assert.equal(
+    (await request("auth/signup", "POST", spaced)).response.status,
+    200,
+  );
+  assert.equal(
+    (await request("auth/login", "POST", spaced)).response.status,
+    200,
+  );
   assert.equal(
     (
       await request(
@@ -517,4 +527,140 @@ test("an expired access cookie renews from the HttpOnly refresh cookie", async (
   assert.equal(JSON.parse(calls[0].options.body).grant_type, "refresh_token");
   assert.equal(writes[0].name, "nf_jwt");
   assert.equal(writes[0].httpOnly, true);
+});
+
+test("admin view switching persists per browser, applies server permissions and keeps the account role intact", async (t) => {
+  const dir = await mkdtemp(join(tmpdir(), "butter-views-"));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const services = createLocalServices(dir),
+    origin = "http://localhost:5173";
+  function client() {
+    const cookies = new Map();
+    return async (path, method = "GET", data, extraCookies = "") => {
+      const response = await services.handle(
+        new Request(origin + "/api/lms/" + path, {
+          method,
+          headers: {
+            Origin: origin,
+            Cookie:
+              [...cookies].map(([k, v]) => `${k}=${v}`).join("; ") +
+              extraCookies,
+            "Content-Type": "application/json",
+          },
+          body: method === "GET" ? undefined : JSON.stringify(data || {}),
+        }),
+      );
+      for (const cookie of response.headers.getSetCookie()) {
+        const [key, value] = cookie.split(";")[0].split("=");
+        if (cookie.includes("Max-Age=0")) cookies.delete(key);
+        else cookies.set(key, value);
+      }
+      return {
+        status: response.status,
+        value: await response.json(),
+        cookies: response.headers.getSetCookie(),
+      };
+    };
+  }
+  const owner = client(),
+    learner = client(),
+    otherBrowser = client();
+  const credentials = {
+    email: OWNER_EMAIL,
+    name: "Owner",
+    password: "Butter-view-test-2026",
+  };
+  const created = await owner("auth/signup", "POST", credentials);
+  assert.equal(created.value.user.role, "admin");
+  await owner("admin/starters", "POST");
+  await services.store.setJSON("courses/draft", {
+    id: "draft",
+    title: "Draft",
+    published: false,
+    createdAt: new Date().toISOString(),
+    format: "html",
+    lessons: [],
+  });
+  assert.equal(
+    (await owner("session/view", "POST", { role: "unknown" })).status,
+    400,
+  );
+  const switched = await owner("session/view", "POST", { role: "learner" });
+  assert.equal(switched.value.viewRole, "learner");
+  assert.equal(switched.value.user.role, "admin");
+  assert.match(switched.cookies[0], /HttpOnly/);
+  assert.equal((await owner("session")).value.viewRole, "learner");
+  assert.equal((await owner("admin/report")).status, 403);
+  assert.equal(
+    (
+      await owner("uploads", "POST", {
+        filename: "course.html",
+        title: "A course",
+        size: 1,
+      })
+    ).status,
+    403,
+  );
+  assert.equal((await owner("courses/draft")).status, 404);
+  await owner("courses/butter-resources/enrol", "POST");
+  const learning = (
+    await owner("courses/butter-resources/launch", "POST", {
+      lessonId: "lesson-1",
+    })
+  ).value;
+  assert.equal(
+    (
+      await owner("launches/" + learning.token, "POST", {
+        cmi: {},
+        manual: true,
+      })
+    ).value.enrolment.status,
+    "completed",
+  );
+  await otherBrowser("auth/login", "POST", credentials);
+  assert.equal((await otherBrowser("session")).value.viewRole, "admin");
+  assert.equal((await otherBrowser("admin/report")).status, 200);
+  await owner("session/view", "POST", { role: "manager" });
+  assert.equal((await owner("admin/report")).status, 200);
+  assert.equal((await owner("admin/assign", "POST", {})).status, 403);
+  await owner("session/view", "POST", { role: "admin" });
+  assert.equal((await owner("courses/draft")).status, 200);
+  const report = (await owner("admin/report")).value;
+  assert.equal(
+    report.people.find((person) => person.id === created.value.user.id).role,
+    "admin",
+  );
+  assert.equal(
+    report.enrolments.find((record) => record.userId === created.value.user.id)
+      .status,
+    "completed",
+  );
+  await learner("auth/signup", "POST", {
+    ...credentials,
+    email: "learner@example.test",
+  });
+  assert.equal(
+    (await learner("session/view", "POST", { role: "admin" })).status,
+    403,
+  );
+  assert.equal(
+    (await learner("session", "GET", null, "; butterlearn_view=admin")).value
+      .viewRole,
+    "learner",
+  );
+  assert.equal(
+    (await learner("admin/report", "GET", null, "; butterlearn_view=admin"))
+      .status,
+    403,
+  );
+  await owner("session/view", "POST", { role: "learner" });
+  const logout = await owner("auth/logout", "POST");
+  assert.ok(
+    logout.cookies.some(
+      (cookie) =>
+        cookie.startsWith("butterlearn_view=;") && cookie.includes("Max-Age=0"),
+    ),
+  );
+  await owner("auth/login", "POST", credentials);
+  assert.equal((await owner("session")).value.viewRole, "admin");
 });
