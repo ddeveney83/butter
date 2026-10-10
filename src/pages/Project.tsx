@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MotionLink as Link } from "../components/Motion";
-import { Arrow, ControlIcon, Doodle, ProjectArt } from "../components/Artwork";
+import { Arrow, ControlIcon, Doodle } from "../components/Artwork";
+import { CourseGallery, CourseShowcase } from "../components/CourseShowcase";
 import { ContactCTA, Reveal, TextLink } from "../components/UI";
 import { projects } from "../data/projects";
 import NotFound from "./NotFound";
@@ -26,7 +27,7 @@ export default function ProjectPage() {
           </p>
         </div>
         <p className="project-intro">{project.intro}</p>
-        <ProjectArt kind={project.theme} />
+        <CourseShowcase key={project.id} project={project} />
       </section>
       <section className="project-story section container">
         <Reveal>
@@ -50,6 +51,7 @@ export default function ProjectPage() {
           </p>
         </Reveal>
       </section>
+      <CourseGallery key={`gallery-${project.id}`} project={project} />
       <section className={`project-demo demo-${project.theme}`}>
         <div className="container demo-grid">
           <Reveal>
