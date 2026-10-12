@@ -27,6 +27,9 @@ import Project from "./pages/Project";
 import NotFound from "./pages/NotFound";
 import Brand from "./pages/Brand";
 import Butterlearn from "./pages/Butterlearn";
+import Journal, { JournalArticle } from "./pages/Journal";
+import Labs, { LabExperiment } from "./pages/Labs";
+import { getPageMeta, structuredData } from "./data/seo";
 import { LMSProvider, LMSLayout, LMSLogin, Loading } from "./lms/Auth";
 import {
   Dashboard,
@@ -43,47 +46,11 @@ const links = [
   ["/services", "Services"],
   ["/work", "Work"],
   ["/butterlearn", "butterlearn"],
+  ["/journal", "Journal"],
+  ["/labs", "Labs"],
   ["/pricing", "Pricing"],
   ["/contact", "Contact"],
 ];
-const meta: Record<string, [string, string]> = {
-  "/butterlearn": [
-    "Meet Butterlearn.",
-    "Explore Butterlearn: HTML and SCORM courses, learner dashboards, assignments and team progress, with a thoughtful learner experience.",
-  ],
-  "/butterlearn/login": [
-    "Butterlearn login.",
-    "Sign in to Butterlearn to find your courses and continue your learning.",
-  ],
-  "/brand": [
-    "The Butter way.",
-    "Explore Butter’s brand guide: colours, DM Sans typography, tone of voice, illustration, spacing, components and motion.",
-  ],
-  "/": [
-    "Learning with feeling.",
-    "Butter is a creative learning studio. We turn complex things into learning experiences people feel, remember, and use.",
-  ],
-  "/about": [
-    "A little more human.",
-    "Meet Butter: a creative learning studio bringing curiosity, clarity, and humanity to digital learning.",
-  ],
-  "/services": [
-    "Big ideas. A little Butter.",
-    "Learning strategy, digital experiences, story and design, and ongoing creative support from Butter.",
-  ],
-  "/work": [
-    "A taste of our work.",
-    "Explore six digital learning experiences and two learning platforms, with original project imagery, video and interactive samples.",
-  ],
-  "/pricing": [
-    "Find your starting point.",
-    "Explore indicative project budgets and build a ballpark learning project estimate with Butter.",
-  ],
-  "/contact": [
-    "Good things start with hello.",
-    "Tell Butter about your learning challenge and start a creative conversation.",
-  ],
-};
 
 function PageContent() {
   const location = useLocation();
@@ -103,24 +70,65 @@ function PageContent() {
 function Site() {
   const location = useLocation();
   const reduced = useReducedMotion();
-  const compactNavigation = useMediaQuery("(max-width: 760px)");
+  const compactNavigation = useMediaQuery("(max-width: 1120px)");
   const [menuOpen, setMenuOpen] = useState(false);
   const firstRender = useRef(true);
   const menuButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     setMenuOpen(false);
-    const project = projects.find(
-      (item) => location.pathname === `/work/${item.id}`,
-    );
-    const [title, description] =
-      meta[location.pathname] ||
-      (project
-        ? [project.title, project.description]
-        : ["A little lost?", "Let’s get you back to Butter."]);
+    const path = location.pathname.replace(/\/+$/, "") || "/";
+    const [title, description] = getPageMeta(path);
     document.title = `Butter — ${title}`;
-    document
-      .querySelector('meta[name="description"]')
-      ?.setAttribute("content", description);
+    const siteURL = (
+      import.meta.env.VITE_SITE_URL || "https://buttertest.netlify.app"
+    ).replace(/\/$/, "");
+    function tag(attribute: "name" | "property", key: string, value: string) {
+      let element = document.querySelector<HTMLMetaElement>(
+        `meta[${attribute}="${key}"]`,
+      );
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, key);
+        document.head.append(element);
+      }
+      element.content = value;
+    }
+    tag("name", "description", description);
+    tag("property", "og:title", `Butter — ${title}`);
+    tag("property", "og:description", description);
+    tag(
+      "property",
+      "og:type",
+      path.startsWith("/journal/") ? "article" : "website",
+    );
+    tag("property", "og:url", siteURL + path);
+    tag("property", "og:image", siteURL + "/brand/butter-mascot.png");
+    tag("property", "og:site_name", "Butter");
+    tag("name", "twitter:card", "summary_large_image");
+    tag(
+      "name",
+      "robots",
+      path === "/brand" || title === "A little lost?"
+        ? "noindex,follow"
+        : "index,follow",
+    );
+    let canonical = document.querySelector<HTMLLinkElement>(
+      'link[rel="canonical"]',
+    );
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.append(canonical);
+    }
+    canonical.href = siteURL + path;
+    let schema = document.getElementById("page-structured-data");
+    if (!schema) {
+      schema = document.createElement("script");
+      schema.id = "page-structured-data";
+      schema.setAttribute("type", "application/ld+json");
+      document.head.append(schema);
+    }
+    schema.textContent = JSON.stringify(structuredData(path, siteURL));
     if (firstRender.current) {
       firstRender.current = false;
       return;
@@ -295,6 +303,10 @@ const router = createBrowserRouter([
 
       { path: "/pricing", element: <Pricing /> },
       { path: "/contact", element: <Contact /> },
+      { path: "/journal", element: <Journal /> },
+      { path: "/journal/:slug", element: <JournalArticle /> },
+      { path: "/labs", element: <Labs /> },
+      { path: "/labs/:slug", element: <LabExperiment /> },
       { path: "/brand", element: <Brand /> },
       { path: "*", element: <NotFound /> },
     ],

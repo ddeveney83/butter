@@ -1,25 +1,25 @@
 # Portfolio content and provenance
 
-Source: <https://danieldeveney.com/work>, read successfully on 10 October 2026 after the environment allowlist was updated. Eight individual case studies supplied the facts, credited roles, images and video links. Work is attributed to Daniel Deveney; client relationships are not newly attributed to Butter.
+Source: <https://danieldeveney.com/work>, read successfully on 10 October 2026 after the environment allowlist was updated. Eight individual case studies supplied the facts, credited roles, images and video links. The original portfolio belongs to Daniel Deveney. This document retains provenance; the public agency site uses project-focused wording and does not expose personal credits or source-site links. Client relationships are not newly attributed to Butter.
 
-| Project | Source format | Recreated preview | Original video |
-| --- | --- | --- | --- |
-| Allergen Awareness | eLearning | Food-service knowledge check | Yes |
-| Matrix Reloaded | Blended learning | Shared-priority conversation | Yes |
-| Alcohol & Drug Awareness | eLearning | Private reflection | Yes |
-| Record Keeping & Information Management | eLearning | Capture / protect / retrieve journey | Yes |
-| 15-Minute Compliance | eLearning | Environmental action ordering | No video in source |
-| Information Security | eLearning | Suspicious-message hotspots | Yes |
-| Your Learning Platform | Cornerstone LMS | Searchable sample library, filters and saved resources | Omitted: source duplicates Vaccination Programme film |
-| Nansen Learning Academy | Webflow LXP, listed in LMS source category | Three learning levels and sample module completion | Yes |
+| Project                                 | Source format                              | Recreated preview                                      | Original video                                        |
+| --------------------------------------- | ------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------- |
+| Allergen Awareness                      | eLearning                                  | Food-service knowledge check                           | Yes                                                   |
+| Matrix Reloaded                         | Blended learning                           | Shared-priority conversation                           | Yes                                                   |
+| Alcohol & Drug Awareness                | eLearning                                  | Private reflection                                     | Yes                                                   |
+| Record Keeping & Information Management | eLearning                                  | Capture / protect / retrieve journey                   | Yes                                                   |
+| 15-Minute Compliance                    | eLearning                                  | Environmental action ordering                          | No video in source                                    |
+| Information Security                    | eLearning                                  | Suspicious-message hotspots                            | Yes                                                   |
+| Your Learning Platform                  | Cornerstone LMS                            | Searchable sample library, filters and saved resources | Omitted: source duplicates Vaccination Programme film |
+| Nansen Learning Academy                 | Webflow LXP, listed in LMS source category | Three learning levels and sample module completion     | Yes                                                   |
 
 The Work filters group six digital learning experiences under eLearning and two platforms under LMS. Matrix Reloaded retains its **Blended learning** label: the source has five standalone eLearning case studies, and Matrix includes self-paced online modules alongside live sessions and workplace practice. Humankind EducatorHub is excluded at the user's request.
 
 ## Assets and attribution
 
-`src/data/projectMedia.json` records original image URLs, alternative text, local paths and source video IDs. Four original images per project (one hero and three gallery screens) are hosted locally as 1200px WebP files, approximately 1.4 MB in total. No image CDN access is needed by visitors. Each case study includes a source link and Daniel's credited role.
+`docs/project-media-provenance.json` preserves the original image URLs and video IDs. The frontend data at `src/data/projectMedia.json` contains only local paths, alternative text and video IDs. Four original images per project (one hero and three gallery screens) are hosted locally as 1200px WebP files, approximately 1.4 MB in total. No image CDN access is needed by visitors. Public case studies describe project disciplines rather than an individual’s role; source links and credits stay in this private documentation.
 
-Six original videos use click-to-load YouTube privacy-enhanced embeds, with player controls, fullscreen support and direct watch links. Frames are not created until Play is pressed. Videos are referenced through the original public embed IDs rather than downloaded or rehosted. The duplicate video on Your Learning Platform is intentionally not displayed.
+Six original videos use click-to-load YouTube privacy-enhanced embeds, with player controls, fullscreen support and no direct external profile/watch links. Frames are not created until Play is pressed. Videos are referenced through the original public embed IDs rather than downloaded or rehosted. The duplicate video on Your Learning Platform is intentionally not displayed.
 
 Reported results retain their context. For example, the 16% Information Security result is **increased incident reporting**, not reduced incidents; the 15-Minute Compliance £5.5M result is an **estimated six-year saving**, not realised revenue; Nansen's support-ticket reduction applies to academy learners. Interactive previews are recreated examples, not the original courses or connected LMS instances. Search, saved resources, progress and reflection notes are page state only.
 

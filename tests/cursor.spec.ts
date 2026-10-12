@@ -74,8 +74,10 @@ test("native form cursors, touch and reduced motion remain usable", async ({
     await expect(hint).toHaveCount(0);
     return;
   }
-  await page.getByRole("link", { name: "ddeveney83@gmail.com" }).hover();
-  await expect(hint).toHaveText("Email us");
+  await page
+    .getByRole("button", { name: "Send your enquiry", exact: false })
+    .hover();
+  await expect(hint).toHaveText("Send enquiry");
   await page.getByLabel("Your name").hover();
   await expect(page.getByLabel("Your name")).toHaveCSS("cursor", "text");
   await expect(hint).toHaveCSS("opacity", "0");
@@ -90,10 +92,14 @@ test("native form cursors, touch and reduced motion remain usable", async ({
     input.disabled = false;
   });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.getByRole("button", { name: "Digital learning", exact: true }).hover();
+  await page
+    .getByRole("button", { name: "Digital learning", exact: true })
+    .hover();
   await expect(hint).toHaveText("Choose");
   await expect(hint).toHaveCSS("transition-duration", "0s");
-  await page.getByRole("button", { name: "Digital learning", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Digital learning", exact: true })
+    .click();
   await expect(hint).toHaveText("Selected");
   await page.goto("/pricing");
   const checkbox = page.getByLabel("Branching scenarios");

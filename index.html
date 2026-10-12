@@ -12,6 +12,19 @@
     <title>Butter — Learning with feeling.</title>
   </head>
   <body>
+    <form
+      name="butter-contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="website"
+      hidden
+    >
+      <input name="name" /><input name="email" type="email" /><input
+        name="company"
+      /><textarea name="brief"></textarea><input name="interest" /><input
+        name="budget"
+      /><input name="timing" /><input name="website" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

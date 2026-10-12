@@ -1,5 +1,5 @@
 import { MotionLink as Link } from "../components/Motion";
-import { Arrow, ButterCharacter, Spark } from "../components/Artwork";
+import { Arrow, ButterCharacter, Spark, Doodle } from "../components/Artwork";
 import { ContactCTA, ProjectCard, Reveal, TextLink } from "../components/UI";
 import { projects } from "../data/projects";
 
@@ -118,9 +118,9 @@ export default function Home() {
               <br />A moment that sticks.
             </p>
             <p>
-              We’re Butter, a creative studio bringing a little more humanity to
-              digital learning. We turn your knowledge into experiences that
-              feel good and do good.
+              We’re Butter, a creative learning agency bringing a little more
+              humanity to digital learning. We turn your knowledge into
+              experiences that feel good and do good.
             </p>
             <div className="services">
               {[
@@ -138,6 +138,27 @@ export default function Home() {
             <TextLink to="/about">A little about Butter</TextLink>
           </Reveal>
         </div>
+      </section>
+      <section
+        className="home-studio-links container"
+        aria-label="From the Butter studio"
+      >
+        <Link to="/journal">
+          <Doodle kind="idea" />
+          <div>
+            <h2>Fresh thinking.</h2>
+            <p>Practical ideas from the Butter journal.</p>
+          </div>
+          <Arrow diagonal />
+        </Link>
+        <Link to="/labs">
+          <Doodle kind="spark" />
+          <div>
+            <h2>A little what if.</h2>
+            <p>Experiments and learning snippets from Labs.</p>
+          </div>
+          <Arrow diagonal />
+        </Link>
       </section>
       <ContactCTA />
     </>

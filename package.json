@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/build-search.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "test": "playwright test",
     "test:server": "node --no-experimental-require-module --test server/tests/*.test.mjs"

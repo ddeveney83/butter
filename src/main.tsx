@@ -7,6 +7,7 @@ import "./styles.css";
 import "./pages.css";
 import "./motion.css";
 import "./components/ButterCursor.css";
+import "./pages/Studio.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

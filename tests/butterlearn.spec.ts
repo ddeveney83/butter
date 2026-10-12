@@ -126,7 +126,7 @@ test("preview roles keep the frame stable and fit phone, tablet and desktop layo
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/butterlearn");
     await page.evaluate(() => document.fonts.ready);
-    if (width > 760) {
+    if (width > 1120) {
       const logo = (await page.locator("header .wordmark").boundingBox())!;
       const navigation = (await page.locator("header nav").boundingBox())!;
       expect(

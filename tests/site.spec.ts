@@ -201,14 +201,20 @@ test("pricing model and calculator update real totals and carry the estimate int
   );
 });
 
-test("contact validates fields, creates a complete draft and clears it after an edit", async ({
+test("contact validates fields, sends a complete enquiry and allows another after an edit", async ({
   page,
 }) => {
+  const submissions: string[] = [];
+  await page.route("http://127.0.0.1:5173/", async (route) => {
+    if (route.request().method() !== "POST") return route.continue();
+    submissions.push(route.request().postData() || "");
+    await route.fulfill({ status: 200, body: "captured" });
+  });
   await page.goto("/contact?service=Learning%20strategy");
   await expect(
     page.getByRole("button", { name: "Learning strategy", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "Create an email draft" }).click();
+  await page.getByRole("button", { name: "Send your enquiry" }).click();
   expect(
     await page
       .getByLabel("Your name")
@@ -232,14 +238,9 @@ test("contact validates fields, creates a complete draft and clears it after an 
   await page
     .getByRole("combobox", { name: "Timing", exact: true })
     .selectOption("In 1–3 months");
-  await page.getByRole("button", { name: "Create an email draft" }).click();
-  const draft = await page
-    .getByRole("link", { name: "Open email draft" })
-    .getAttribute("href");
-  expect(decodeURIComponent(draft!.split("?")[0])).toBe(
-    "mailto:ddeveney83@gmail.com",
-  );
-  const body = new URLSearchParams(draft!.split("?")[1]).get("body");
+  await page.getByRole("button", { name: "Send your enquiry" }).click();
+  const body = decodeURIComponent(submissions[0].replace(/\+/g, " "));
+  expect(submissions[0]).not.toContain("ddeveney");
   for (const content of [
     "An onboarding experience",
     "Alex Example",
@@ -251,15 +252,12 @@ test("contact validates fields, creates a complete draft and clears it after an 
   ])
     expect(body).toContain(content);
   await expect(page.getByRole("status")).toContainText(
-    "Nothing has been sent yet.",
+    "Your enquiry is with Butter.",
   );
   await page.getByLabel("Your name").fill("Alex Updated");
   await expect(
-    page.getByRole("link", { name: "Open email draft" }),
-  ).toHaveCount(0);
-  await expect(
-    page.getByRole("button", { name: "Create an email draft" }),
-  ).toBeVisible();
+    page.getByRole("button", { name: "Send your enquiry", exact: false }),
+  ).toBeEnabled();
 });
 
 test("FAQ, reduced motion and unknown routes behave correctly", async ({

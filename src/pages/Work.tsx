@@ -67,7 +67,7 @@ export default function Work() {
           ))}
         </div>
         <p className="work-footnote">
-          Selected work by Daniel Deveney. Original imagery and project films,
+          Selected learning and platform projects. Project imagery and films,
           with recreated interactions to explore.
         </p>
       </section>

@@ -47,7 +47,7 @@ export default function ProjectPage() {
             <dd>{project.year}</dd>
           </div>
           <div>
-            <dt>Daniel’s role</dt>
+            <dt>Project focus</dt>
             <dd>{project.role}</dd>
           </div>
         </dl>
@@ -75,12 +75,6 @@ export default function ProjectPage() {
             {project.metric.label}
           </p>
           <p>{project.outcome}</p>
-          <p className="project-credit">
-            Project work by Daniel Deveney.{" "}
-            <a href={project.source} target="_blank" rel="noreferrer">
-              Read the original case study ↗
-            </a>
-          </p>
         </Reveal>
       </section>
       <section className="project-sample container">

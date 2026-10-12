@@ -1,11 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-  Arrow,
-  ButterCharacter,
-  ControlIcon,
-  Doodle,
-} from "../components/Artwork";
+import { Arrow, ButterCharacter, Doodle } from "../components/Artwork";
 import { PageHero } from "../components/UI";
 
 const interests = [
@@ -20,31 +15,30 @@ export default function Contact() {
   const [interest, setInterest] = useState(
     params.get("service") || "Not sure yet",
   );
-  const [emailDraft, setEmailDraft] = useState<string | null>(null);
-  const [draftBody, setDraftBody] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [copyError, setCopyError] = useState(false);
-  const recipient =
-    import.meta.env.VITE_CONTACT_EMAIL || "ddeveney83@gmail.com";
-  function submit(event: FormEvent<HTMLFormElement>) {
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const body = `Hi Butter,\n\n${form.get("brief")}\n\nInterested in: ${interest}\nBudget: ${form.get("budget") || "Let’s work it out"}\nTiming: ${form.get("timing") || "Flexible"}\n\nFrom ${form.get("name")}\n${form.get("email")}${form.get("company") ? `\n${form.get("company")}` : ""}`;
-    setDraftBody(body);
-    setEmailDraft(
-      `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent("A little Butter for our next project")}&body=${encodeURIComponent(body)}`,
-    );
-    setCopied(false);
-    setCopyError(false);
-  }
-  async function copyBrief() {
+    const data = new FormData(event.currentTarget);
+    data.set("form-name", "butter-contact");
+    data.set("interest", interest);
+    setState("sending");
     try {
-      await navigator.clipboard.writeText(draftBody);
-      setCopied(true);
-      setCopyError(false);
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(
+          Array.from(data.entries()).map(([key, value]) => [
+            key,
+            String(value),
+          ]),
+        ).toString(),
+      });
+      if (!response.ok) throw new Error("The enquiry could not be sent.");
+      setState("sent");
     } catch {
-      setCopied(false);
-      setCopyError(true);
+      setState("error");
     }
   }
   return (
@@ -73,14 +67,10 @@ export default function Contact() {
             <br />
             Let’s see what happens.
           </p>
-          <a className="contact-email" href={`mailto:${recipient}`}>
-            {recipient}
-            <Arrow diagonal />
-          </a>
           <p className="contact-info-note">
-            Prefer a simple email?
+            Send us a little about your project.
             <br />
-            That’s a good place to start, too.
+            The Butter studio will take it from there.
           </p>
           <div className="contact-character">
             <ButterCharacter />
@@ -94,12 +84,23 @@ export default function Contact() {
         <form
           className="contact-form full-contact-form"
           onSubmit={submit}
+          name="butter-contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="website"
+          aria-busy={state === "sending"}
           onChange={() => {
-            setEmailDraft(null);
-            setCopied(false);
-            setCopyError(false);
+            if (state !== "sending") setState("idle");
           }}
         >
+          <input type="hidden" name="form-name" value="butter-contact" />
+          <input type="hidden" name="interest" value={interest} />
+          <p hidden>
+            <label>
+              Leave this empty
+              <input name="website" tabIndex={-1} autoComplete="off" />
+            </label>
+          </p>
           <fieldset className="interest-fieldset">
             <legend>What can we help with?</legend>
             <div className="interest-chips">
@@ -111,13 +112,12 @@ export default function Contact() {
               {interests.map((item) => (
                 <button
                   type="button"
+                  disabled={state === "sending"}
                   key={item}
                   aria-pressed={interest === item}
                   onClick={() => {
                     setInterest(item);
-                    setEmailDraft(null);
-                    setCopied(false);
-                    setCopyError(false);
+                    setState("idle");
                   }}
                 >
                   {item}
@@ -129,6 +129,7 @@ export default function Contact() {
             <label>
               Your name
               <input
+                disabled={state === "sending"}
                 name="name"
                 autoComplete="name"
                 placeholder="Sam Smith"
@@ -139,6 +140,7 @@ export default function Contact() {
             <label>
               Your email
               <input
+                disabled={state === "sending"}
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -151,6 +153,7 @@ export default function Contact() {
           <label>
             Company <span className="optional">(optional)</span>
             <input
+              disabled={state === "sending"}
               name="company"
               autoComplete="organization"
               placeholder="Where you make things happen"
@@ -160,6 +163,7 @@ export default function Contact() {
           <label>
             A little about your project
             <textarea
+              disabled={state === "sending"}
               name="brief"
               defaultValue={params.get("brief") || ""}
               placeholder="We’d love to make…"
@@ -171,7 +175,11 @@ export default function Contact() {
           <div className="form-row">
             <label>
               Budget
-              <select name="budget" defaultValue="">
+              <select
+                disabled={state === "sending"}
+                name="budget"
+                defaultValue=""
+              >
                 <option value="">Let’s work it out</option>
                 <option>Under £2,500</option>
                 <option>£2,500–£7,500</option>
@@ -181,7 +189,11 @@ export default function Contact() {
             </label>
             <label>
               Timing
-              <select name="timing" defaultValue="">
+              <select
+                disabled={state === "sending"}
+                name="timing"
+                defaultValue=""
+              >
                 <option value="">Flexible</option>
                 <option>Within a month</option>
                 <option>In 1–3 months</option>
@@ -191,32 +203,28 @@ export default function Contact() {
             </label>
           </div>
           <div className="contact-actions">
-            {emailDraft ? (
-              <>
-                <a className="pill-button" href={emailDraft}>
-                  Open email draft <Arrow diagonal />
-                </a>
-                <button
-                  className="reset-link"
-                  type="button"
-                  onClick={copyBrief}
-                >
-                  {copied ? "Copied!" : "Copy project brief"}
-                  <ControlIcon kind={copied ? "check" : "copy"} />
-                </button>
-              </>
-            ) : (
-              <button className="pill-button" type="submit">
-                Create an email draft <Arrow diagonal />
-              </button>
-            )}
+            <button
+              className="pill-button"
+              type="submit"
+              disabled={state === "sending" || state === "sent"}
+            >
+              {state === "sending"
+                ? "Sending…"
+                : state === "sent"
+                  ? "Enquiry sent"
+                  : "Send your enquiry"}
+              <Arrow diagonal />
+            </button>
           </div>
-          <p className="form-note" role="status">
-            {emailDraft
-              ? "Your draft is ready. Open your email app to review and send. Nothing has been sent yet."
-              : "Opens in your email app, ready for you to send. Your details stay in this browser until you choose to send."}
-            {copyError &&
-              " Copying wasn’t available. You can still open and send the email draft."}
+          <p
+            className="form-note"
+            role={state === "error" ? "alert" : "status"}
+          >
+            {state === "sent"
+              ? "Thanks. Your enquiry is with Butter."
+              : state === "error"
+                ? "We couldn’t send your enquiry. Your details are still here; please try again."
+                : "We’ll use your details to reply about this enquiry."}
           </p>
         </form>
       </section>

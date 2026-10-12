@@ -17,14 +17,13 @@ export type Project = {
   approach: string;
   outcome: string;
   metric: { value: string; label: string };
-  source: string;
-  hero: { path: string; alt: string; source: string };
-  gallery: { path: string; alt: string; source: string }[];
+  hero: { path: string; alt: string };
+  gallery: { path: string; alt: string }[];
   videoIds: string[];
   scenario: string;
   choices: { label: string; feedback: string }[];
 };
-type ProjectContent = Omit<Project, "source" | "hero" | "gallery" | "videoIds">;
+type ProjectContent = Omit<Project, "hero" | "gallery" | "videoIds">;
 const content: ProjectContent[] = [
   {
     id: "allergen-awareness",
@@ -34,7 +33,7 @@ const content: ProjectContent[] = [
     theme: "yellow",
     client: "Places Leisure",
     year: "2025",
-    role: "Learning Experience Designer",
+    role: "Learning experience design",
     intro: "Small decisions. Serious care.",
     description:
       "A five-part digital learning programme helping leisure teams make safer food-service decisions. Built for franchised outlets, with consistent guidance on allergen handling and Natasha’s Law.",
@@ -76,7 +75,7 @@ const content: ProjectContent[] = [
     theme: "lilac",
     client: "Places for People",
     year: "2024",
-    role: "Learning Experience Designer",
+    role: "Learning experience design",
     intro: "Less silo thinking. More shared possibility.",
     description:
       "A six-month leadership programme supporting a move to matrix working. Self-paced online modules, virtual sessions and workplace practice helped leaders navigate influence, ambiguity and shared accountability.",
@@ -114,7 +113,7 @@ const content: ProjectContent[] = [
     theme: "mint",
     client: "Places for People",
     year: "2025",
-    role: "Learning Experience Designer",
+    role: "Learning experience design",
     intro: "A sensitive subject. A thoughtful approach.",
     description:
       "An outdated compliance course rebuilt as a focused, under-15-minute experience. Workplace video scenarios, knowledge checks and optional anonymous reflection made the topic more approachable for a busy workforce.",
@@ -152,7 +151,7 @@ const content: ProjectContent[] = [
     theme: "peach",
     client: "Places for People",
     year: "2023",
-    role: "Learning Experience Designer",
+    role: "Learning experience design",
     intro: "Good records make room for better decisions.",
     description:
       "A modular learning experience responding to gaps identified by the Housing Ombudsman. Digital record management, retention and data protection became practical skills to apply in everyday housing work.",
@@ -232,7 +231,7 @@ const content: ProjectContent[] = [
     theme: "ink",
     client: "Places for People",
     year: "2025",
-    role: "Learning Experience Designer",
+    role: "Learning experience design",
     intro: "Real threats. Better instincts.",
     description:
       "A rebuilt security pathway grounded in actual phishing emails, a vishing call scenario and a colleague’s experience. Six short modules made security feel relevant to the next message in a learner’s inbox.",
@@ -302,7 +301,7 @@ const content: ProjectContent[] = [
     theme: "mint",
     client: "Nansen.ai",
     year: "2022",
-    role: "End-to-End Development Lead",
+    role: "Platform strategy & development",
     intro: "Complex data. A clearer way in.",
     description:
       "A custom learning experience platform supporting adoption of Nansen’s blockchain analytics product. Foundational, intermediate and advanced tracks helped users build confidence at their own level.",
@@ -321,7 +320,6 @@ const content: ProjectContent[] = [
 ];
 export const projects: Project[] = content.map((project) => ({
   ...project,
-  source: `https://danieldeveney.com/work/${project.id}`,
   ...media[project.id as keyof typeof media],
 }));
 export const projectAliases: Record<string, string> = {

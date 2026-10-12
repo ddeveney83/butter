@@ -37,12 +37,16 @@ function describeTarget(target: Element | null): string {
   if (control.closest(".filter-list"))
     return control.getAttribute("aria-pressed") === "true"
       ? "Showing"
-      : "Filter work";
+      : control.closest(".editorial-list")
+        ? "Filter articles"
+        : control.closest(".lab-playground")
+          ? "Change view"
+          : "Filter work";
   if (control.closest(".interest-chips, .segmented-control"))
     return control.getAttribute("aria-pressed") === "true"
       ? "Selected"
       : "Choose";
-  if (control.closest(".scenario-choices"))
+  if (control.closest(".scenario-choices, .lab-choices"))
     return control.getAttribute("aria-pressed") === "true"
       ? "Selected"
       : "Try this";
@@ -51,9 +55,13 @@ function describeTarget(target: Element | null): string {
   if (control.matches(".contact-actions .reset-link"))
     return control.textContent?.includes("Copied") ? "Copied" : "Copy brief";
   if (control instanceof HTMLButtonElement && control.type === "submit")
-    return "Create draft";
+    return control.closest(".contact-actions") ? "Send enquiry" : "Submit";
   if (control instanceof HTMLAnchorElement) {
     if (control.matches(".project")) return "Explore";
+    if (control.matches(".editorial-card"))
+      return control.pathname.startsWith("/journal/")
+        ? "Read article"
+        : "Try experiment";
     if (control.matches(".wordmark")) return "Home";
     if (control.closest(".next-project")) return "Next project";
     if (control.protocol === "mailto:")

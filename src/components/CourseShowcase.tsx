@@ -300,7 +300,7 @@ export function CourseGallery({ project }: { project: Project }) {
         ))}
       </div>
       <p className="course-gallery-note">
-        Original project screens · Daniel Deveney. Select an image to explore.
+        Project screens. Select an image to explore.
       </p>
       <dialog
         ref={dialog}

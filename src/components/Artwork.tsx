@@ -17,7 +17,7 @@ export function Arrow({
       <path
         d={diagonal ? "M5 19 19 5M5 5h14v14" : "M4 12h16m-7-7 7 7-7 7"}
         stroke="currentColor"
-        strokeWidth="1.7"
+        strokeWidth="2.4"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -33,7 +33,7 @@ export function ControlIcon({ kind }: { kind: "reset" | "copy" | "check" }) {
       fill="none"
       aria-hidden="true"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="2.4"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
@@ -71,71 +71,15 @@ export function Spark({ className = "" }: { className?: string }) {
 
 export function ButterCharacter({ className = "" }: { className?: string }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 480 460"
-      fill="none"
-      role="img"
-      aria-label="A smiling butter character with cartoon gloves and dancing feet"
-    >
-      <g
-        stroke="#20201d"
-        strokeWidth="6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M183 311c-10 35-13 47-35 68m139-69c5 20 17 31 28 44" />
-        <path
-          d="M143 369c-20-7-34 1-45 19-13 22-3 36 21 33l48-10c12-3 14-14 7-24-6-10-16-16-31-18Z"
-          fill="#20201d"
-        />
-        <path
-          d="M306 350c16-7 30 0 34 13l7 13c25 0 35 9 31 20-4 15-55 14-73 4-16-9-13-37 1-50Z"
-          fill="#20201d"
-        />
-        <path d="M110 217c-26 5-39 20-39 41m277-65c26-12 31-26 36-48" />
-        <path d="m135 114 71-45 144 54 2 166-69 49-145-53Z" fill="#fff2a5" />
-        <path d="m135 114 144 51 71-42-144-54Z" fill="#fff8ce" />
-        <path d="m279 165 71-42 2 166-69 49Z" fill="#eac850" />
-        <path d="m135 114 144 51 4 173-145-53Z" fill="#f8df65" />
-        <path d="m154 106 136 47" strokeWidth="3" />
-        <ellipse
-          cx="183"
-          cy="202"
-          rx="13"
-          ry="24"
-          fill="#20201d"
-          transform="rotate(-7 183 202)"
-        />
-        <ellipse
-          cx="231"
-          cy="217"
-          rx="13"
-          ry="24"
-          fill="#20201d"
-          transform="rotate(-7 231 217)"
-        />
-        <path
-          d="m178 246 60 16c-6 24-24 29-40 20-12-7-18-20-20-36Z"
-          fill="#20201d"
-        />
-        <path d="M196 276c9-11 21-10 31-5" stroke="#fff8ce" strokeWidth="5" />
-        <path d="M163 231c-8-1-11 1-14 4m99 23c8 1 11 5 12 9" strokeWidth="3" />
-        <path
-          d="M62 246c-13-9-22-4-20 8l5 13c-19-15-28-8-20 6l9 12c-19-6-21 5-7 15l12 8c-7 6-4 16 12 18 18 2 36-10 39-24 4-17-13-28-14-40-1-17-15-21-16-16Z"
-          fill="#fffcf2"
-        />
-        <path d="m47 277 15 9m-22 9 16 4m13-35 3 17" strokeWidth="3" />
-        <path
-          d="M367 137c-7-20-3-33 7-32 6 0 8 9 9 15 4-30 10-40 18-36 7 4 1 24 0 34 13-19 25-25 29-15 3 7-9 22-14 28 22-9 33-5 29 4-4 8-21 13-25 15 9 10 1 23-15 24-17 1-29-18-38-37Z"
-          fill="#fffcf2"
-        />
-        <path d="m393 136 9-7m-3 19 15-7" strokeWidth="3" />
-        <path d="m68 373-15 4m318-62 17 6M85 126l-12-12" strokeWidth="4" />
-      </g>
-      <ellipse cx="180" cy="194" rx="4" ry="7" fill="#fff8ce" />
-      <ellipse cx="228" cy="209" rx="4" ry="7" fill="#fff8ce" />
-    </svg>
+    <img
+      className={`butter-mascot ${className}`}
+      src="/brand/butter-mascot.webp"
+      alt="Butter’s smiling mascot carrying a pencil and tablet"
+      width={1217}
+      height={1292}
+      loading={className.includes("hero") ? "eager" : "lazy"}
+      fetchPriority={className.includes("hero") ? "high" : "auto"}
+    />
   );
 }
 
@@ -364,6 +308,29 @@ function ExtraProjectArt({ kind }: { kind: string }) {
   );
 }
 
+function CartoonFace({ transform = "" }: { transform?: string }) {
+  return (
+    <g
+      transform={transform}
+      stroke="#080906"
+      strokeWidth="3"
+      strokeLinejoin="round"
+    >
+      <ellipse cx="39" cy="45" rx="9" ry="14" fill="#fff" />
+      <ellipse cx="61" cy="45" rx="9" ry="14" fill="#fff" />
+      <ellipse cx="42" cy="46" rx="5.5" ry="11" fill="#080906" stroke="none" />
+      <ellipse cx="64" cy="46" rx="5.5" ry="11" fill="#080906" stroke="none" />
+      <path d="m36 40 8 6-8 4m22-10 8 6-8 4" fill="#fff" stroke="none" />
+      <path d="M34 63q16 22 32 0-16 5-32 0Z" fill="#080906" />
+      <path d="M45 72q8-8 14-2-7 9-14 2Z" fill="#c35841" stroke="none" />
+      <path
+        d="M31 28q8-7 15-2m9 0q8-5 15 3"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </g>
+  );
+}
 export function Doodle({
   kind,
   className = "",
@@ -373,48 +340,73 @@ export function Doodle({
 }) {
   return (
     <svg
-      className={`doodle ${className}`}
+      className={`doodle toon-icon ${className}`}
       viewBox="0 0 100 100"
       fill="none"
       aria-hidden="true"
     >
+      <ellipse cx="50" cy="94" rx="28" ry="3" fill="#080906" opacity=".12" />
       <g
-        stroke="currentColor"
-        strokeWidth="5"
+        stroke="#080906"
+        strokeWidth="5.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
         {kind === "heart" && (
           <>
             <path
-              d="M50 78S15 59 15 36c0-21 27-28 35-8 8-20 35-13 35 8 0 23-35 42-35 42Z"
-              fill="#f8e477"
+              d="M50 85S12 64 12 38C12 12 43 7 50 28C57 7 88 12 88 38C88 64 50 85 50 85Z"
+              fill="#f1d16b"
             />
-            <path d="M38 41v8m24-8v8m-25 9q13 14 26 0" />
+            <path
+              d="M77 19q17 17 2 39L51 82q8-21 22-37 8-12 4-26Z"
+              fill="#d29e46"
+              stroke="none"
+            />
+            <CartoonFace transform="translate(8 4) scale(.84)" />
           </>
         )}
         {kind === "idea" && (
           <>
             <path
-              d="M34 70c0-12-13-15-13-34a29 29 0 0 1 58 0c0 19-13 22-13 34Z"
-              fill="#f8e477"
+              d="M33 69c0-12-13-15-13-33a30 30 0 0 1 60 0c0 18-13 21-13 33Z"
+              fill="#f1d16b"
             />
-            <path d="M35 80h30m-23 9h16M40 40v7m20-7v7m-20 9q10 8 20 0M9 22l-6-4m88 4 6-4M50 1v-5" />
+            <path
+              d="M66 12q18 11 12 30-3 11-12 24H54q3-11 12-22 11-17 0-32Z"
+              fill="#d29e46"
+              stroke="none"
+            />
+            <path d="M33 71h34v10H33Zm9 11h16v8H42Z" fill="#fff" />
+            <path d="M7 24 3 21m90 3 4-3M50 3V0" />
+            <CartoonFace transform="translate(11 0) scale(.78)" />
           </>
         )}
         {kind === "play" && (
           <>
-            <rect x="12" y="18" width="76" height="60" rx="12" fill="#f8e477" />
-            <path d="m42 34 23 15-23 15ZM27 85h46" />
+            <rect x="10" y="16" width="80" height="64" rx="17" fill="#f1d16b" />
+            <path
+              d="M77 19q11 2 10 16v29q0 13-12 13H58q28-10 19-58Z"
+              fill="#d29e46"
+              stroke="none"
+            />
+            <path d="m42 33 24 16-24 16Z" fill="#fff" />
+            <path d="M29 87h42" />
+            <path d="M18 34q0-10 10-10" stroke="#fff" strokeWidth="4" />
           </>
         )}
         {kind === "spark" && (
           <>
             <path
-              d="m50 10 9 24 24-9-9 25 16 17-26 2-14 22-13-22-27-2 17-17-10-25 25 9Z"
-              fill="#f8e477"
+              d="m50 8 12 23 25-8-9 27 15 19-28 1-15 22-15-22-28-1 15-19-9-27 25 8Z"
+              fill="#f1d16b"
             />
-            <path d="M39 45v8m22-8v8m-21 8q10 9 20 0" />
+            <path
+              d="m74 28-6 21 19 17-26 1-12 20 4-25 12-20Z"
+              fill="#d29e46"
+              stroke="none"
+            />
+            <CartoonFace transform="translate(17 13) scale(.66)" />
           </>
         )}
       </g>
@@ -432,8 +424,8 @@ export function LearningIllustration({
   return (
     <svg viewBox="0 0 240 240" fill="none" aria-hidden="true">
       <g
-        stroke="currentColor"
-        strokeWidth="5"
+        stroke="#080906"
+        strokeWidth="8"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
@@ -441,18 +433,25 @@ export function LearningIllustration({
           <>
             <path
               d="M54 156c-43 0-46-61-5-70 0-46 67-65 91-20 37-15 69 13 64 46 31 24 10 55-19 55H64Z"
-              fill="#fff9d8"
+              fill="#fff3cb"
             />
-            <path d="m89 118 8 5 8-5m32 0 8 5 8-5m-39 16q12 10 24 0M54 190h33m18 0h65" />
+            <CartoonFace transform="translate(70 75)" />
+            <path d="M54 190h33m18 0h65" />
           </>
         )}
         {kind === "shield" && (
           <>
             <path
               d="m120 32 72 29v57c0 43-36 72-72 91-36-19-72-48-72-91V61Z"
-              fill="#f8e477"
+              fill="#f1d16b"
             />
-            <path d="m83 115 25 25 50-55" strokeWidth="9" />
+            <path
+              d="M178 61v59q-3 46-58 80l12-44q39-22 46-95Z"
+              fill="#d29e46"
+              stroke="none"
+            />
+            <path d="m83 115 25 25 50-55" strokeWidth="17" />
+            <path d="m83 115 25 25 50-55" stroke="#fff" strokeWidth="7" />
             <path d="M25 82 13 76m202 6 12-6M120 10V2" />
           </>
         )}
@@ -460,10 +459,12 @@ export function LearningIllustration({
           <>
             <path
               d="M120 143V77m0 32c-51 1-68-27-66-52 37-3 66 17 66 52Zm0-17c46 0 67-28 65-54-39-3-65 22-65 54Z"
-              fill="#d4e3ce"
+              fill="#a1b7ae"
             />
-            <path d="m71 143 13 69h73l13-69Z" fill="#f8e477" />
-            <path d="M70 143h101m-67 24v6m33-6v6m-33 12q16 13 33 0M38 199l-13 8m168-10 15 7" />
+            <path d="m71 143 13 69h73l13-69Z" fill="#f1d16b" />
+            <path d="m153 149-4 56h-19l10-56Z" fill="#d29e46" stroke="none" />
+            <CartoonFace transform="translate(83 148) scale(.74)" />
+            <path d="M70 143h101M38 199l-13 8m168-10 15 7" />
           </>
         )}
       </g>

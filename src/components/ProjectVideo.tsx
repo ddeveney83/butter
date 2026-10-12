@@ -48,19 +48,7 @@ export default function ProjectVideo({ project }: { project: Project }) {
         )}
       </div>
       <figcaption>
-        <span>
-          {id ? "Original project video" : "Original project imagery"} · Daniel
-          Deveney
-        </span>
-        {id && (
-          <a
-            href={`https://www.youtube.com/watch?v=${id}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Watch on YouTube ↗
-          </a>
-        )}
+        <span>{id ? "Project film" : "Project imagery"}</span>
       </figcaption>
     </figure>
   );

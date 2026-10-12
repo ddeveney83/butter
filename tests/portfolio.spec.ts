@@ -23,8 +23,9 @@ test("original images and project video players are mapped to the source and loa
       )
       .toBeGreaterThan(0);
     await expect(
-      page.getByRole("link", { name: "Read the original case study" }),
-    ).toHaveAttribute("href", project.source);
+      page.locator(".project-original-media figcaption"),
+    ).not.toContainText(/daniel|deveney/i);
+    await expect(page.locator('a[href*="danieldeveney"]')).toHaveCount(0);
     await expect(page.locator(".project-intention")).toContainText(
       project.metric.value,
     );
