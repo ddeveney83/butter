@@ -12,7 +12,7 @@ test("original images and project video players are mapped to the source and loa
       body: "<title>Project video player</title>",
     });
   });
-  for (const project of projects) {
+  for (const project of projects.filter((item) => !item.caseStudy)) {
     await page.goto(`/work/${project.id}`);
     const media = page.locator(".project-original-media");
     await expect
@@ -150,7 +150,7 @@ test("all project media and platform previews fit narrow screens", async ({
   await page.setViewportSize({ width: 320, height: 1000 });
   for (const project of projects) {
     await page.goto(`/work/${project.id}`);
-    if (project.filter === "LMS") {
+    if (project.filter === "LMS" && !project.caseStudy) {
       const preview = page.getByRole("region", {
         name: "Interactive platform preview",
       });

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { projects } from "../src/data/projects.ts";
 import { readFile, readdir, access } from "node:fs/promises";
 import {
   articles,
@@ -22,6 +23,30 @@ for (const field of ["slug", "title", "description"]) {
   );
 }
 const journalIndex = await readFile("dist/journal/index.html", "utf8");
+const workIndex = await readFile("dist/work/index.html", "utf8");
+assert.equal(projects.length, 14);
+for (const project of projects) {
+  assert.ok(workIndex.includes(`href="/work/${project.id}"`));
+  const html = await readFile(`dist/work/${project.id}/index.html`, "utf8");
+  assert.ok(html.includes(`<h1>${escape(project.title)}</h1>`));
+  assert.ok(html.includes(escape(project.outcome)));
+  if (!project.caseStudy) continue;
+  assert.ok(html.includes(escape(project.caseStudy.heroBrief)));
+  assert.ok(
+    html.includes(`service=${encodeURIComponent(project.caseStudy.service)}`),
+  );
+  assert.equal((html.match(/<figcaption>Image placeholder/g) || []).length, 4);
+  for (const section of project.caseStudy.sections) {
+    assert.ok(html.includes(`<h2>${escape(section.heading)}</h2>`));
+    for (const paragraph of section.paragraphs)
+      assert.ok(html.includes(escape(paragraph)));
+    assert.ok(html.includes(escape(section.visualBrief)));
+  }
+  for (const image of [project.hero, ...project.gallery]) {
+    await access(`public${image.path}`);
+    assert.ok(html.includes(image.path));
+  }
+}
 for (const article of articles) {
   const html = await readFile(
     `dist/journal/${article.slug}/index.html`,

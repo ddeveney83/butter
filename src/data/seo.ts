@@ -21,7 +21,7 @@ export const pageMeta: Record<string, [string, string]> = {
   ],
   "/work": [
     "A taste of our work.",
-    "Explore six digital learning experiences and two learning platforms, with project imagery, film and interactive samples.",
+    "Explore butter’s eLearning, learning platforms, skills strategy, team development and animation projects, with case studies and interactive samples.",
   ],
   "/contact": [
     "Good things start with hello.",
@@ -127,6 +127,22 @@ export function structuredData(path: string, siteURL: string) {
       image: siteURL + lab.hero.path,
       genre: lab.category,
       creator: organization,
+    };
+  const project = projects.find((item) => path === "/work/" + item.id);
+  if (project)
+    return {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      name: project.title,
+      description: project.description,
+      url: siteURL + path,
+      genre: project.category,
+      about: { "@type": "Organization", name: project.client },
+      publisher: organization,
+      image:
+        siteURL +
+        (project.caseStudy ? "/brand/butter-social.png" : project.hero.path),
+      inLanguage: "en-GB",
     };
   return { "@context": "https://schema.org", ...organization };
 }

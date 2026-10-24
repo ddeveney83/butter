@@ -1,7 +1,24 @@
 import media from "./projectMedia.json" with { type: "json" };
+import { caseStudies } from "./projectCaseStudies.ts";
 
-export const workFilters = ["All work", "eLearning", "LMS"] as const;
+export const workFilters = [
+  "All work",
+  "eLearning",
+  "LMS",
+  "Strategy & capability",
+  "Video",
+] as const;
 export type WorkFilter = (typeof workFilters)[number];
+export type CaseStudy = {
+  service: string;
+  heroBrief: string;
+  sections: {
+    heading: string;
+    paragraphs: string[];
+    visualTitle: string;
+    visualBrief: string;
+  }[];
+};
 export type Project = {
   id: string;
   title: string;
@@ -22,6 +39,7 @@ export type Project = {
   videoIds: string[];
   scenario: string;
   choices: { label: string; feedback: string }[];
+  caseStudy?: CaseStudy;
 };
 type ProjectContent = Omit<Project, "hero" | "gallery" | "videoIds">;
 const content: ProjectContent[] = [
@@ -318,10 +336,13 @@ const content: ProjectContent[] = [
     choices: [],
   },
 ];
-export const projects: Project[] = content.map((project) => ({
-  ...project,
-  ...media[project.id as keyof typeof media],
-}));
+export const projects: Project[] = [
+  ...content.map((project) => ({
+    ...project,
+    ...media[project.id as keyof typeof media],
+  })),
+  ...caseStudies,
+];
 export const projectAliases: Record<string, string> = {
   onboarding: "record-keeping",
   leadership: "matrix-reloaded",

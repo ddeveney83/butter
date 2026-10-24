@@ -27,8 +27,8 @@ export default function Work() {
         aside={<Spark className="work-hero-spark" />}
       >
         <p>
-          Six learning experiences. Two platforms. Explore the work, watch the
-          stories, and try a little of the thinking inside.
+          Learning experiences, platforms, strategy and film. Explore the work
+          and the thinking that brings it together.
         </p>
       </PageHero>
       <section className="work-gallery container">
@@ -67,8 +67,9 @@ export default function Work() {
           ))}
         </div>
         <p className="work-footnote">
-          Selected learning and platform projects. Project imagery and films,
-          with recreated interactions to explore.
+          Selected project imagery, films and recreated interactions. New case
+          studies use clearly labelled image placeholders while final media is
+          prepared.
         </p>
       </section>
       <ContactCTA

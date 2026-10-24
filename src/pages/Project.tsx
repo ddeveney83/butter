@@ -8,6 +8,7 @@ import { projects, projectAliases } from "../data/projects";
 import NotFound from "./NotFound";
 import PlatformShowcase from "../components/PlatformShowcase";
 import ProjectVideo from "../components/ProjectVideo";
+import ProjectCaseStudy from "../components/ProjectCaseStudy";
 
 export default function ProjectPage() {
   const { slug } = useParams();
@@ -77,22 +78,28 @@ export default function ProjectPage() {
           <p>{project.outcome}</p>
         </Reveal>
       </section>
-      <section className="project-sample container">
-        <h2>Get a feel for it.</h2>
-        {project.filter === "LMS" ? (
-          <PlatformShowcase key={project.id} project={project} />
-        ) : (
-          <CourseShowcase key={project.id} project={project} />
-        )}
-        <p className="project-sample-note">
-          Recreated interactive sample inspired by the project.{" "}
-          {project.id === "matrix-reloaded"
-            ? "The original programme combined digital modules, live sessions and workplace practice. "
-            : ""}
-          Sample selections and notes stay on this page.
-        </p>
-      </section>
-      <CourseGallery key={`gallery-${project.id}`} project={project} />
+      {project.caseStudy ? (
+        <ProjectCaseStudy project={project} />
+      ) : (
+        <>
+          <section className="project-sample container">
+            <h2>Get a feel for it.</h2>
+            {project.filter === "LMS" ? (
+              <PlatformShowcase key={project.id} project={project} />
+            ) : (
+              <CourseShowcase key={project.id} project={project} />
+            )}
+            <p className="project-sample-note">
+              Recreated interactive sample inspired by the project.{" "}
+              {project.id === "matrix-reloaded"
+                ? "The original programme combined digital modules, live sessions and workplace practice. "
+                : ""}
+              Sample selections and notes stay on this page.
+            </p>
+          </section>
+          <CourseGallery key={`gallery-${project.id}`} project={project} />
+        </>
+      )}
       {project.filter === "eLearning" && (
         <section className={`project-demo demo-${project.theme}`}>
           <div className="container demo-grid">
@@ -172,6 +179,7 @@ export default function ProjectPage() {
         </Link>
       </section>
       <ContactCTA
+        to={`/contact?service=${encodeURIComponent(project.caseStudy?.service ?? `A project like ${project.title}`)}`}
         title={
           <>
             Something like this.

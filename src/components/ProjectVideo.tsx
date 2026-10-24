@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Project } from "../data/projects";
 import { Doodle } from "./Artwork";
 import "./Portfolio.css";
+import ProjectCardArtwork from "./ProjectCardArtwork";
 
 export default function ProjectVideo({ project }: { project: Project }) {
   const [playing, setPlaying] = useState(false);
@@ -13,6 +14,16 @@ export default function ProjectVideo({ project }: { project: Project }) {
   // Keep that case image-led until a matching platform film is supplied.
   const id =
     project.id === "your-learning-platform" ? undefined : project.videoIds[0];
+  if (project.caseStudy)
+    return (
+      <figure className="project-original-media case-study-hero">
+        <ProjectCardArtwork project={project} image={project.hero} />
+        <figcaption>
+          <span>Image placeholder · Project overview</span>
+        </figcaption>
+        <p className="case-study-image-brief">{project.caseStudy.heroBrief}</p>
+      </figure>
+    );
   return (
     <figure className="project-original-media">
       <div className={`project-video-frame${id ? " has-video" : ""}`}>

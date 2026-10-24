@@ -14,7 +14,7 @@ async function openMenuIfMobile(
     await page.getByRole("button", { name: "Menu", exact: true }).click();
 }
 
-test("all pages and eight project routes load directly without errors or overflow", async ({
+test("all pages and project routes load directly without errors or overflow", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -80,15 +80,15 @@ test("navigation supports separate pages, active links, browser history and mobi
   }
 });
 
-test("work has eight pieces and shareable filters that persist on reload and Back", async ({
+test("work has fourteen pieces and shareable filters that persist on reload and Back", async ({
   page,
 }) => {
   await page.goto("/work");
-  await expect(page.locator(".work-gallery .project")).toHaveCount(8);
-  await expect(page.getByRole("status")).toHaveText("08 projects");
+  await expect(page.locator(".work-gallery .project")).toHaveCount(14);
+  await expect(page.getByRole("status")).toHaveText("14 projects");
   await page.getByRole("button", { name: "LMS", exact: true }).click();
-  await expect(page.locator(".work-gallery .project")).toHaveCount(2);
-  await expect(page.getByRole("status")).toHaveText("02 projects");
+  await expect(page.locator(".work-gallery .project")).toHaveCount(3);
+  await expect(page.getByRole("status")).toHaveText("03 projects");
   await page.reload();
   await expect(
     page.getByRole("button", { name: "LMS", exact: true }),
@@ -98,11 +98,11 @@ test("work has eight pieces and shareable filters that persist on reload and Bac
     .click();
   await expect(page).toHaveURL(/\/work\/nansen-learning-academy$/);
   await page.goBack();
-  await expect(page.locator(".work-gallery .project")).toHaveCount(2);
+  await expect(page.locator(".work-gallery .project")).toHaveCount(3);
   await page.getByRole("button", { name: "eLearning", exact: true }).click();
   await expect(page.locator(".work-gallery .project")).toHaveCount(6);
   await page.getByRole("button", { name: "All work", exact: true }).click();
-  await expect(page.locator(".work-gallery .project")).toHaveCount(8);
+  await expect(page.locator(".work-gallery .project")).toHaveCount(14);
 });
 
 test("every project has a working learning sample and next-project navigation", async ({

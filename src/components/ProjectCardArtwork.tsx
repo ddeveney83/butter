@@ -15,8 +15,13 @@ const screens: Record<string, number> = {
   "nansen-learning-academy": 1,
 };
 
-export default function ProjectCardArtwork({ project }: { project: Project }) {
-  const image = project.gallery[screens[project.id] ?? 0];
+export default function ProjectCardArtwork({
+  project,
+  image = project.gallery[screens[project.id] ?? 0],
+}: {
+  project: Project;
+  image?: Project["hero"];
+}) {
   const illustration =
     coursePreviews[project.id]?.illustration ??
     (project.id === "your-learning-platform" ? "butter" : "idea");
@@ -43,7 +48,8 @@ export default function ProjectCardArtwork({ project }: { project: Project }) {
           className="portfolio-card-screen"
           src={image.path}
           alt={`${project.title} — ${image.alt}`}
-          loading="lazy"
+          loading={image.path === project.hero.path ? "eager" : "lazy"}
+          fetchPriority={image.path === project.hero.path ? "high" : "auto"}
           width="1200"
           height="675"
         />

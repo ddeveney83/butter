@@ -1,0 +1,67 @@
+.case-study-hero .portfolio-card-art {
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+}
+.case-study-hero .portfolio-card-window {
+  width: 62%;
+  left: 19%;
+}
+.case-study-hero .portfolio-card-illustration {
+  width: 18%;
+  left: 8%;
+}
+.case-study-image-brief {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 65ch;
+  margin: 10px 0 0;
+}
+.case-study-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(28px, 6vw, 88px);
+  padding: clamp(36px, 6vw, 80px) 0;
+  border-top: 1px solid var(--line);
+}
+.case-study-section > * {
+  min-width: 0;
+}
+.case-study-section:nth-child(even) .case-study-copy {
+  order: 2;
+}
+.case-study-copy h2 {
+  font-size: clamp(30px, 3.8vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+  margin: 0 0 24px;
+  max-width: 14ch;
+}
+.case-study-copy p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+.case-study-visual {
+  margin: 0;
+}
+.case-study-visual .portfolio-card-art {
+  border-radius: 10px;
+}
+.case-study-visual figcaption {
+  font-size: 13px;
+  margin-top: 16px;
+  font-weight: 600;
+}
+@media (max-width: 760px) {
+  .case-study-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .case-study-section:nth-child(even) .case-study-copy {
+    order: initial;
+  }
+  .case-study-hero .portfolio-card-window {
+    width: 74%;
+    left: 13%;
+  }
+}

@@ -170,17 +170,17 @@ test("all six course previews support distinct interactions, screen navigation, 
   expect(errors).toEqual([]);
 });
 
-test("all project image galleries expand, navigate, trap focus and restore it on close", async ({
+test("original project image galleries expand, navigate, trap focus and restore it on close", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const project of projects) {
+  for (const project of projects.filter((item) => !item.caseStudy)) {
     await page.goto(`/work/${project.id}`);
     const gallery = page.getByRole("region", { name: "Course image gallery" });
     const images = gallery.locator(".course-gallery-grid .course-image-open");
     await expect(images).toHaveCount(3);
     await expect(gallery.locator(".course-gallery-note")).toContainText(
-      "Original project screens",
+      "Project screens. Select an image to explore.",
     );
     await images.first().click();
     const dialog = page.getByRole("dialog", {
