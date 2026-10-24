@@ -2,6 +2,7 @@ import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ButterCharacter, Spark, Doodle } from "../components/Artwork";
 import { ContactCTA, ProjectCard, Reveal, TextLink } from "../components/UI";
 import { projects } from "../data/projects";
+import { offers, offerPath } from "../data/offers";
 import ServiceCards from "../components/ServiceCards";
 
 export default function Home() {
@@ -166,16 +167,19 @@ export default function Home() {
             </p>
             <div className="services">
               {[
-                "Learning strategy",
-                "Digital experiences",
-                "Story & design",
-              ].map((item, index) => (
-                <Link to="/services" key={item}>
-                  <span>0{index + 1}</span>
-                  <h3>{item}</h3>
-                  <Arrow diagonal />
-                </Link>
-              ))}
+                "learning-strategy",
+                "bespoke-elearning",
+                "lms-development",
+              ].map((slug, index) => {
+                const offer = offers.find((item) => item.slug === slug)!;
+                return (
+                  <Link to={offerPath(offer)} key={slug}>
+                    <span>0{index + 1}</span>
+                    <h3>{offer.title}</h3>
+                    <Arrow diagonal />
+                  </Link>
+                );
+              })}
             </div>
             <TextLink to="/about">A little about butter</TextLink>
           </Reveal>

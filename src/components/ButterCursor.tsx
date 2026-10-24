@@ -73,6 +73,7 @@ function describeTarget(target: Element | null): string {
     if (control.pathname === "/work")
       return control.closest(".project-hero") ? "Back to work" : "View work";
     if (control.pathname === "/services") return "View services";
+    if (control.pathname.startsWith("/services/")) return "Explore service";
   }
   return "Open";
 }

@@ -357,40 +357,63 @@ h1:focus {
   bottom: 0;
   transform: rotate(-10deg);
 }
-.service-list {
-  margin-bottom: 95px;
+/* Supporting detail uses the same rounded ink as the service cards. */
+.accordion {
+  border: var(--outline);
+  border-radius: 20px;
+  background: var(--paper);
+  transition: background var(--motion-base) var(--ease-butter);
 }
-.service-detail {
-  border-top: 1px solid var(--line);
+.accordion[data-expanded="true"] {
+  background: #fff9e8;
 }
-.service-list > div:last-child .service-detail {
-  border-bottom: 1px solid var(--line);
+.accordion + .accordion {
+  margin-top: 14px;
 }
 .accordion-heading {
   margin: 0;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
 }
 .accordion-trigger {
   display: flex;
   align-items: center;
   gap: 20px;
   width: 100%;
-  min-height: 68px;
+  min-height: 78px;
   border: 0;
+  border-radius: 18px;
   background: transparent;
   text-align: left;
   font: inherit;
   letter-spacing: inherit;
   line-height: 1.4;
-  padding: 22px 0;
+  padding: 22px;
 }
 .accordion-title {
   flex: 1;
   min-width: 0;
 }
 .disclosure-icon {
-  width: 24px;
-  height: 24px;
-  flex: 0 0 24px;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  padding: 4px;
+  border: var(--outline);
+  border-radius: 50%;
+  background: var(--butter-soft);
+  color: var(--ink);
+}
+.accordion[data-expanded="true"] .disclosure-icon {
+  background: var(--ink);
+  color: var(--paper);
+}
+.accordion-trigger:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -6px;
+  border-radius: 18px;
 }
 .disclosure-vertical {
   transform-origin: 12px 12px;
@@ -419,66 +442,18 @@ h1:focus {
   overflow: hidden;
   min-height: 0;
 }
-.service-detail .accordion-trigger {
-  gap: 28px;
-  padding: 35px 0;
-  line-height: 1.2;
+.accordion-content {
+  padding: 0 22px 24px;
 }
-.service-number {
-  color: var(--muted);
-  font-size: 12px;
-  width: 18px;
-  flex: 0 0 18px;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-.service-detail h2 {
-  font-size: 41px;
-  font-weight: 600;
-  letter-spacing: -1.6px;
-}
-.service-content {
-  display: grid;
-  grid-template-columns: 0.65fr 1fr;
-  gap: 70px;
-  padding: 10px 0 40px 46px;
-}
-.service-content > svg {
-  width: 135px;
-  height: 135px;
-  justify-self: center;
-  transform: rotate(-8deg);
-}
-.service-content p {
-  font-size: 18px;
-  color: #66665d;
+.accordion-content p {
+  margin: 0 0 16px;
+  font-size: 15px;
   line-height: 1.75;
-  max-width: 590px;
-  margin-top: 0;
+  color: var(--muted);
 }
-.service-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 25px 0;
-}
-.service-content li {
-  font-size: 14px;
-  line-height: 1.7;
-  padding: 9px 0;
-  border-top: 1px solid var(--line);
-}
-.service-content li {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-.service-content li:before {
-  content: "";
-  width: 8px;
-  height: 1px;
-  background: currentColor;
-  flex: 0 0 8px;
-  margin-top: 0.8em;
+.accordion-content > :last-child,
+.accordion-content > :last-child > :last-child {
+  margin-bottom: 0;
 }
 .process-content {
   display: grid;
@@ -781,25 +756,6 @@ select:focus-visible {
   grid-template-columns: 0.8fr 1.2fr;
   gap: 100px;
 }
-.faq-detail {
-  border-top: 1px solid var(--line);
-}
-.faq-detail:last-child {
-  border-bottom: 1px solid var(--line);
-}
-.faq-detail .accordion-heading {
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.2px;
-  line-height: 1.5;
-}
-.faq-list p {
-  font-size: 14px;
-  line-height: 1.8;
-  color: #66665d;
-  padding-right: 44px;
-  margin: 0 0 25px;
-}
 /* Enquiries stay local until the visitor sends their email draft. */
 .contact-page {
   display: grid;
@@ -927,10 +883,6 @@ select:focus-visible {
   .contact-page {
     gap: 50px;
   }
-  .service-detail h2 {
-    font-size: 34px;
-  }
-  .service-content,
   .process-content {
     gap: 45px;
   }
@@ -1129,33 +1081,6 @@ select:focus-visible {
     left: 80px;
     bottom: 0;
   }
-  .service-list {
-    margin-bottom: 55px;
-  }
-  .service-detail .accordion-trigger {
-    padding-block: 24px;
-    gap: 12px;
-  }
-  .service-detail h2 {
-    font-size: 25px;
-    letter-spacing: -0.8px;
-  }
-  .service-content {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 0 0 30px 30px;
-  }
-  .service-content > svg {
-    width: 85px;
-    height: 85px;
-    justify-self: start;
-  }
-  .service-content p {
-    font-size: 15px;
-  }
-  .service-content li {
-    font-size: 12px;
-  }
   .process-content {
     grid-template-columns: 1fr;
     gap: 28px;
@@ -1259,14 +1184,8 @@ select:focus-visible {
   .faq-section {
     padding-top: 55px;
   }
-  .faq-detail .accordion-heading {
-    font-size: 15px;
-  }
   .accordion-trigger {
     gap: 16px;
-  }
-  .faq-list p {
-    font-size: 13px;
   }
   .contact-page {
     padding-bottom: 65px;
@@ -1317,9 +1236,6 @@ select:focus-visible {
   .about-manifesto > p {
     font-size: 29px;
   }
-  .service-detail h2 {
-    font-size: 22px;
-  }
   .filter-list button {
     font-size: 11px;
     padding-inline: 10px;
@@ -1367,7 +1283,8 @@ select:focus-visible {
     background: #eae9de;
   }
   .accordion-trigger:hover .disclosure-icon {
-    color: #8a731e;
+    background: var(--butter);
+    color: var(--ink);
   }
 }
 .feedback-messages {
@@ -1385,4 +1302,19 @@ select:focus-visible {
 }
 .scenario-choices button .arrow {
   flex-shrink: 0;
+}
+
+@media (max-width: 760px) {
+  .accordion-heading {
+    font-size: 18px;
+  }
+  .accordion-trigger {
+    padding: 18px 16px;
+  }
+  .accordion-content {
+    padding: 0 16px 20px;
+  }
+  .accordion-content p {
+    font-size: 14px;
+  }
 }

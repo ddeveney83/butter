@@ -141,7 +141,9 @@ html:active-view-transition .reveal[data-reveal] {
   transition: transform var(--motion-base) var(--ease-butter);
 }
 .disclosure-icon {
-  transition: color var(--motion-fast) var(--ease-butter);
+  transition:
+    color var(--motion-fast) var(--ease-butter),
+    background var(--motion-fast) var(--ease-butter);
 }
 .contact-actions > *,
 .feedback-messages p[aria-hidden="false"] {

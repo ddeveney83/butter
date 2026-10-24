@@ -150,10 +150,10 @@ test("values and process tabs work with pointer and keyboard; services expand", 
   );
   await page.goto("/services");
   await page
-    .getByRole("button", { name: "Digital experiences", exact: true })
+    .getByRole("button", { name: "We already have courses or an LMS.", exact: true })
     .click();
   await expect(
-    page.getByText("Mobile-first microlearning", { exact: true }),
+    page.locator(".service-list").getByRole("link", { name: "Course refresh", exact: true }),
   ).toBeVisible();
   await page.getByRole("tab", { name: "03 / Make" }).click();
   await expect(page.getByRole("tabpanel")).toContainText(
@@ -298,7 +298,7 @@ test("accordions support keyboard activation, complete collapse and rapid toggli
   page,
 }) => {
   for (const [path, title] of [
-    ["/services", "Digital experiences"],
+    ["/services", "We already have courses or an LMS."],
     ["/services/course-refresh", "Can we start with one module?"],
   ]) {
     await page.goto(path);
@@ -572,6 +572,7 @@ test("visible sections establish a hidden frame and then actually fade into view
     };
   });
   await page.goto("/services");
+  await page.locator(".service-list").scrollIntoViewIfNeeded();
   await expect
     .poll(() =>
       page.evaluate(

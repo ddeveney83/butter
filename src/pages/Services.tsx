@@ -1,5 +1,7 @@
 import { Arrow, Doodle } from "../components/Artwork";
 import ServiceCards from "../components/ServiceCards";
+import ServiceArtwork from "../components/ServiceArtwork";
+import { offers, offerPath } from "../data/offers";
 import {
   Accordion,
   ContactCTA,
@@ -9,48 +11,30 @@ import {
   TextLink,
 } from "../components/UI";
 
-const services = [
+const guidance = [
   {
-    title: "Learning strategy",
-    icon: "idea" as const,
-    copy: "Find the real challenge before choosing the solution. We connect what your people need with what your organisation is trying to change.",
-    list: [
-      "Discovery & audience insight",
-      "Learning journeys & content mapping",
-      "Learning objectives & evaluation planning",
-    ],
+    title: "We’re not sure what we need.",
+    artwork: "learning-strategy",
+    copy: "Start with what your people need to do and what is getting in the way. Discovery can help establish whether the next step is a course, a platform improvement or support for your team. You do not need to arrive with a finished brief.",
+    services: ["learning-strategy", "bespoke-elearning"],
   },
   {
-    title: "Digital experiences",
-    icon: "play" as const,
-    copy: "Learning people can do something with. Thoughtful interactions and a clear journey turn information into practice.",
-    list: [
-      "Interactive eLearning & scenarios",
-      "Mobile-first microlearning",
-      "Learning platform-ready packages, scoped together",
-      "LMS architecture & development",
-      "Platform delivery & migration planning",
-    ],
+    title: "We already have courses or an LMS.",
+    artwork: "course-refresh",
+    copy: "We can review what you have before recommending a change. A clearer learning journey, a focused content refresh or an improvement to your existing platform may be the right starting point. We agree what can be reused before planning the work.",
+    services: ["course-refresh", "lms-development"],
   },
   {
-    title: "Story & design",
-    icon: "spark" as const,
-    copy: "Give your knowledge a voice and a visual world. We make the important things clear, inviting, and hard to forget.",
-    list: [
-      "Creative direction & visual identity",
-      "Scriptwriting & storyboards",
-      "Illustration, motion & explainers",
-    ],
+    title: "Our team needs an extra pair of hands.",
+    artwork: "ld-team-development",
+    copy: "We can work alongside your learning, technical and supplier teams. That might mean practical coaching for your L&D team or coordination of a platform project. We agree responsibilities, review points and the handover from the start.",
+    services: ["ld-team-development", "lms-project-management"],
   },
   {
-    title: "A little ongoing butter",
-    icon: "heart" as const,
-    copy: "An extra pair of thoughtful hands for your team. Keep your learning fresh with a clear, agreed rhythm of support.",
-    list: [
-      "Content refreshes & improvements",
-      "Design support & creative reviews",
-      "An ongoing partnership with agreed priorities",
-    ],
+    title: "Can we combine several services?",
+    artwork: "learning-animation",
+    copy: "Yes. A learning experience can bring together strategy, courses, animation and a platform. For example, a compliance programme might combine realistic decision practice with short films. We scope the pieces around one goal, with a shared creative direction and delivery plan.",
+    services: ["compliance-training", "learning-animation"],
   },
 ];
 const process = [
@@ -109,34 +93,47 @@ export default function Services() {
         <TextLink to="/contact">Talk about your project</TextLink>
       </PageHero>
       <ServiceCards className="lead-service-links container" headingLevel={2} />
-      <section className="service-list container" aria-label="Our services">
-        {services.map((service, index) => (
-          <Reveal key={service.title}>
-            <Accordion
-              variant="service"
-              title={service.title}
-              number={`0${index + 1}`}
-              defaultOpen={index === 0}
-            >
-              <div className="service-content">
-                <Doodle kind={service.icon} />
-                <div>
-                  <p>{service.copy}</p>
-                  <ul>
-                    {service.list.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                  <TextLink
-                    to={`/contact?service=${encodeURIComponent(service.title)}`}
-                  >
-                    Let’s talk about it
-                  </TextLink>
+      <section
+        className="service-guidance container"
+        aria-labelledby="service-guidance-heading"
+      >
+        <Reveal className="service-guidance-intro">
+          <h2 id="service-guidance-heading">
+            Find your <br />starting point.
+          </h2>
+          <p>
+            Choose a service above, or start with the situation you’re in.
+            We’ll help connect the right pieces.
+          </p>
+          <TextLink to="/contact">Let’s work it out together</TextLink>
+        </Reveal>
+        <div className="service-list">
+          {guidance.map((item, index) => (
+            <Reveal key={item.title}>
+              <Accordion
+                variant="service"
+                headingLevel={3}
+                title={item.title}
+                illustration={<ServiceArtwork slug={item.artwork} />}
+                defaultOpen={index === 0}
+              >
+                <div className="service-guidance-content">
+                  <p>{item.copy}</p>
+                  <div className="service-guidance-links">
+                    {item.services.map((slug) => {
+                      const offer = offers.find((entry) => entry.slug === slug)!;
+                      return (
+                        <TextLink key={slug} to={offerPath(offer)}>
+                          {offer.title}
+                        </TextLink>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            </Accordion>
-          </Reveal>
-        ))}
+              </Accordion>
+            </Reveal>
+          ))}
+        </div>
       </section>
       <section className="process-section">
         <div className="container">

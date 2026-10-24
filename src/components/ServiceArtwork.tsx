@@ -1,8 +1,14 @@
 /** Small, original illustrations using the melting logo's rounded ink and colour. */
-export default function ServiceArtwork({ slug }: { slug: string }) {
+export default function ServiceArtwork({
+  slug,
+  className = "",
+}: {
+  slug: string;
+  className?: string;
+}) {
   return (
     <svg
-      className="service-artwork"
+      className={`service-artwork ${className}`}
       viewBox="0 0 160 120"
       fill="none"
       aria-hidden="true"

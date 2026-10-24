@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { MotionLink as Link } from "../components/Motion";
-import { Arrow, ButterCharacter, Doodle } from "../components/Artwork";
+import { Arrow } from "../components/Artwork";
+import ServiceArtwork from "../components/ServiceArtwork";
 import {
   Accordion,
   ContactCTA,
@@ -26,13 +27,7 @@ export default function OfferPage() {
     <>
       <PageHero
         title={offer.headline}
-        aside={
-          offer.icon === "play" ? (
-            <ButterCharacter className="offer-hero-logo" />
-          ) : (
-            <Doodle kind={offer.icon} className="offer-hero-icon" />
-          )
-        }
+        aside={<ServiceArtwork slug={offer.slug} className="offer-hero-artwork" />}
       >
         <p>{offer.lead}</p>
         <div className="lead-actions">

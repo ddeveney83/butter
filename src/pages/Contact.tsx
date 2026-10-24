@@ -1,3 +1,4 @@
+import { offers } from "../data/offers";
 import { useRef, useState, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Arrow, ButterCharacter, Doodle } from "../components/Artwork";
@@ -6,13 +7,7 @@ import { enquiryContext, trackMarketing } from "../lib/marketing";
 import { nextSteps } from "../data/offers";
 import { PageHero } from "../components/UI";
 
-const interests = [
-  "Learning strategy",
-  "Digital learning",
-  "Story & design",
-  "Ongoing support",
-  "Not sure yet",
-];
+const interests = [...offers.map((offer) => offer.title), "Not sure yet"];
 export default function Contact() {
   const [params] = useSearchParams();
   const [interest, setInterest] = useState(

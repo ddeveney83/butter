@@ -44,7 +44,7 @@ test("butter cursor gives accurate hover hints without blocking interaction", as
   await expect(page).toHaveURL(/\/work\/allergen-awareness$/);
   await page.goto("/services");
   const accordion = page.getByRole("button", {
-    name: "Digital experiences",
+    name: "We already have courses or an LMS.",
     exact: true,
   });
   await accordion.hover();
@@ -93,12 +93,12 @@ test("native form cursors, touch and reduced motion remain usable", async ({
   });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page
-    .getByRole("button", { name: "Digital learning", exact: true })
+    .getByRole("button", { name: "Bespoke eLearning", exact: true })
     .hover();
   await expect(hint).toHaveText("Choose");
   await expect(hint).toHaveCSS("transition-duration", "0s");
   await page
-    .getByRole("button", { name: "Digital learning", exact: true })
+    .getByRole("button", { name: "Bespoke eLearning", exact: true })
     .click();
   await expect(hint).toHaveText("Selected");
 });

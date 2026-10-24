@@ -5,7 +5,6 @@ type Offer = {
   headline: string;
   lead: string;
   cardSummary: string;
-  icon: "idea" | "heart" | "play" | "spark";
   need: string;
   approach: string;
   deliverables: { title: string; copy: string }[];
@@ -22,7 +21,6 @@ export const offers: Offer[] = [
       "Bespoke eLearning design and development for businesses: clear content, realistic practice, accessible interactions and delivery testing with butter.",
     headline: "Bespoke eLearning. Made for real work.",
     lead: "Turn your expertise into digital learning your team can put to use. Written, designed and built around the decisions they need to make.",
-    icon: "play",
     need: "Your subject experts know the material. Your learners need a clear route through it. We help turn complex information into a focused experience with useful explanation, realistic practice and feedback.",
     approach:
       "We start with the audience and the task, agree the content and learning approach, then prototype the important interaction. Writing, visual design and development follow a shared direction, with agreed review stages throughout.",
@@ -68,7 +66,6 @@ export const offers: Offer[] = [
       "LMS architecture and development from butter: Moodle customisation, learner journeys, platform configuration and integration planning, shaped around your organisation.",
     headline: "LMS architecture & development. Built for learning.",
     lead: "Build a learning platform around the people using it. From system architecture and Moodle development to learner journeys, integrations and a considered technical handover.",
-    icon: "play",
     need: "Your learning platform connects people, content and the systems around them. A useful build needs a clear structure for audiences, permissions, learning pathways and reporting, alongside an interface that helps learners and administrators get things done.",
     approach:
       "We map the learner and administrator journeys, content model, access roles and required data flows before defining the build. Work can include Moodle customisation, bespoke academy interfaces or configuration within an existing LMS. Representative prototypes and integration checks help establish the technical approach before wider development.",
@@ -118,7 +115,6 @@ export const offers: Offer[] = [
       "Create practical compliance training with butter: clear guidance, realistic workplace scenarios, useful assessment and agreed learning-platform reporting.",
     headline: "Important learning. Clear decisions.",
     lead: "Help people use the guidance when it matters. Compliance learning built around realistic situations, clear reasoning and the right route to support.",
-    icon: "idea",
     need: "A policy contains the rules. Your team needs to recognise when those rules apply and what to do next. We turn approved guidance into relevant examples and practice, keeping the important distinctions intact.",
     approach:
       "Your policy owners and subject specialists approve the substance. We shape the learning, explore plausible decisions and write feedback that explains the consequences. Completion, assessment and reporting rules are agreed before production.",
@@ -164,7 +160,6 @@ export const offers: Offer[] = [
       "Refresh existing eLearning with butter: review outdated content, improve accessibility and interactions, and agree a focused update or rebuild plan.",
     headline: "Good content. A fresh start.",
     lead: "Keep what works. Improve what gets in the way. Give an existing course clearer content, a more useful learning journey and a considered visual refresh.",
-    icon: "spark",
     need: "Perhaps the content has grown, the guidance has changed or the interface no longer fits your learners’ devices. A refresh starts by identifying the actual problem, so the work focuses on changes that matter.",
     approach:
       "We review a representative section, the source files and the delivery requirements. Together, we decide whether targeted edits, a redesigned activity or a fuller rebuild is the sensible route. That decision comes before a promise to reuse every existing asset.",
@@ -210,7 +205,6 @@ export const offers: Offer[] = [
       "Learning strategy and training needs analysis for businesses. Map skills, identify performance gaps and agree a practical development plan with butter.",
     headline: "Learning strategy. A clearer way forward.",
     lead: "Get a clearer view of what your people need to do, what stands in their way and where learning can help. A practical direction before production begins.",
-    icon: "idea",
     need: "A request for training often starts with a symptom: inconsistent practice, a new responsibility or a skill the business will need next. Understanding the work, the people and the conditions around them helps you decide what support will make a difference.",
     approach:
       "We work with your stakeholders and colleagues to examine the tasks, existing evidence and capability gaps. Interviews, workshops and a review of current resources inform a shared picture. Together, we prioritise the needs and agree a learning roadmap with useful ways to evaluate progress.",
@@ -256,7 +250,6 @@ export const offers: Offer[] = [
       "Build your L&D team’s digital learning capability with butter: practical instructional design workshops, authoring-tool coaching and supported project work.",
     headline: "L&D team development. Build lasting capability.",
     lead: "Help your learning team plan, design and produce useful digital learning with confidence. Practical development built around the work they need to deliver.",
-    icon: "heart",
     need: "A new authoring tool is only part of the picture. Your team also needs to shape a brief, choose a suitable learning approach, give useful feedback and check the finished experience. Development works best when those skills connect to a real project.",
     approach:
       "We begin with the team’s experience, tools and delivery priorities. Facilitated workshops, worked examples, guided practice and project feedback form a blended programme. Colleagues apply the learning to their own material, with room to review decisions and practise again.",
@@ -302,7 +295,6 @@ export const offers: Offer[] = [
       "Learning animation and training video from butter: clear scripts, storyboards, motion design and captioned films for workplace learning and internal campaigns.",
     headline: "Learning animation. Make the message move.",
     lead: "Bring a learning idea, workplace scenario or internal campaign to life. Animation and video that make the message clear and give people a useful next step.",
-    icon: "spark",
     need: "Sometimes people need to see a situation, recognise themselves in a story or understand a new service before they act. A well-chosen film can make that moment tangible, whether it introduces a conversation, explains a process or invites colleagues to try something new.",
     approach:
       "We agree the audience, message, viewing context and intended action before scripting. A storyboard and visual treatment establish the direction, followed by production, review and delivery. Motion graphics, character animation, screen demonstrations or AI-presented scenarios are selected to suit the brief.",
@@ -352,7 +344,6 @@ export const offers: Offer[] = [
       "LMS project management from discovery to rollout. Coordinate requirements, suppliers, migration, user acceptance testing and handover with butter.",
     headline: "LMS project management. A clearer route to launch.",
     lead: "Keep your platform project moving with a clear plan and shared decisions. Practical delivery support across discovery, suppliers, migration, testing and rollout.",
-    icon: "heart",
     need: "A platform project brings learning, technology, content and organisational change together. Your team needs a clear view of who is doing what, which decisions are needed and how the work will be accepted before learners depend on it.",
     approach:
       "We establish the scope, stakeholders, delivery milestones and decision process with your project sponsor. A shared plan connects requirements, supplier activity, content readiness and technical dependencies. Risk reviews, change control and user acceptance testing support an agreed route into rollout and operational ownership.",

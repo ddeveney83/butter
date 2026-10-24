@@ -198,10 +198,10 @@ html[data-motion="reduced"] .service-card-arrow .arrow {
   rotate: none;
 }
 .lead-service-links {
-  padding-bottom: 80px;
+  padding-bottom: 64px;
 }
 .page-hero-aside .offer-hero-icon,
-.page-hero-aside > .offer-hero-logo {
+.page-hero-aside > .offer-hero-artwork {
   display: block;
   width: min(100%, 260px);
   height: auto;
@@ -303,9 +303,6 @@ html[data-motion="reduced"] .service-card-arrow .arrow {
   grid-template-columns: 0.85fr 1.15fr;
   gap: 60px;
   margin-bottom: 80px;
-}
-.offer-questions .accordion {
-  border-bottom: 1px solid var(--line);
 }
 .offer-other-links {
   display: flex;
@@ -456,8 +453,8 @@ html[data-motion="reduced"] .service-card-arrow .arrow {
     gap: 20px;
   }
   .page-hero-aside .offer-hero-icon,
-  .page-hero-aside > .offer-hero-logo {
-    width: 150px;
+  .page-hero-aside > .offer-hero-artwork {
+    width: 190px;
     max-height: 180px;
   }
   .offer-questions {
@@ -513,5 +510,115 @@ html[data-motion="reduced"] .service-card-arrow .arrow {
     margin-top: 18px;
     padding-top: 12px;
     font-size: 13px;
+  }
+}
+
+.service-guidance {
+  display: grid;
+  grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
+  align-items: start;
+  gap: 64px;
+  padding-bottom: 96px;
+}
+.service-guidance-intro h2 {
+  font-size: clamp(34px, 3.6vw, 50px);
+  font-weight: 850;
+  letter-spacing: -.045em;
+  line-height: 1.08;
+  margin: 4px 0 24px;
+}
+.service-guidance-intro p {
+  max-width: 34ch;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+.service-list {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.service-detail .accordion-heading {
+  font-size: clamp(20px, 1.8vw, 25px);
+  line-height: 1.2;
+}
+.service-detail .accordion-trigger {
+  gap: 16px;
+  padding: 20px;
+  line-height: 1.2;
+}
+.accordion-artwork {
+  flex: 0 0 56px;
+}
+.accordion-artwork .service-artwork {
+  width: 64px;
+  height: 48px;
+  margin: 0 0 0 -4px;
+}
+.service-detail .accordion-content {
+  padding: 0 20px 24px 92px;
+}
+.service-guidance-links {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  margin-top: 22px;
+}
+.service-guidance-links .text-link {
+  max-width: 100%;
+  font-size: 14px;
+  gap: 14px;
+}
+.service-guidance-links .arrow {
+  flex-shrink: 0;
+}
+.page-hero-aside > .offer-hero-artwork {
+  width: min(100%, 340px);
+  rotate: -4deg;
+}
+@media (max-width: 1100px) {
+  .service-guidance {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .service-guidance-intro p {
+    max-width: 54ch;
+  }
+  .service-guidance-intro h2 br {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .service-guidance {
+    padding-bottom: 56px;
+    gap: 28px;
+  }
+  .service-guidance-intro h2 {
+    margin-bottom: 18px;
+  }
+  .service-guidance-intro p {
+    font-size: 15px;
+  }
+  .service-detail .accordion-heading {
+    font-size: 20px;
+  }
+  .service-detail .accordion-trigger {
+    padding: 18px 16px;
+    gap: 12px;
+  }
+  .accordion-artwork {
+    flex-basis: 40px;
+  }
+  .accordion-artwork .service-artwork {
+    width: 48px;
+    height: 36px;
+  }
+  .service-detail .accordion-content {
+    padding: 0 16px 20px;
+  }
+  .page-hero-aside > .offer-hero-artwork {
+    width: 220px;
+    max-height: none;
   }
 }

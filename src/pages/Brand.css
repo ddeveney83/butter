@@ -400,15 +400,6 @@
   font-size: 14px;
   margin-top: var(--space-3);
 }
-.brand-component .accordion-trigger {
-  font-size: 17px;
-  letter-spacing: -0.3px;
-}
-.brand-component .accordion-body p {
-  font-size: 15px;
-  color: var(--muted);
-  margin: 0 0 20px;
-}
 .brand-motion-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

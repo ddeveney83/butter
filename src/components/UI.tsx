@@ -245,18 +245,21 @@ export function Accordion({
   title,
   children,
   variant = "faq",
-  number,
+  illustration,
+  headingLevel,
   defaultOpen = false,
 }: {
   title: string;
   children: ReactNode;
   variant?: "service" | "faq";
-  number?: string;
+  illustration?: ReactNode;
+  headingLevel?: 2 | 3;
   defaultOpen?: boolean;
 }) {
   const [expanded, setExpanded] = useState(defaultOpen);
   const id = useId();
-  const Heading = variant === "service" ? "h2" : "h3";
+  const Heading =
+    (headingLevel ?? (variant === "service" ? 2 : 3)) === 2 ? "h2" : "h3";
   return (
     <div
       className={`accordion ${variant === "service" ? "service-detail" : "faq-detail"}`}
@@ -271,9 +274,9 @@ export function Accordion({
           aria-controls={`${id}-content`}
           onClick={() => setExpanded((current) => !current)}
         >
-          {number && (
-            <span className="service-number" aria-hidden="true">
-              {number}
+          {illustration && (
+            <span className="accordion-artwork" aria-hidden="true">
+              {illustration}
             </span>
           )}
           <span className="accordion-title">{title}</span>
@@ -286,14 +289,14 @@ export function Accordion({
             <path
               d="M5 12h14"
               stroke="currentColor"
-              strokeWidth="1.7"
+              strokeWidth="2.5"
               strokeLinecap="round"
             />
             <path
               className="disclosure-vertical"
               d="M12 5v14"
               stroke="currentColor"
-              strokeWidth="1.7"
+              strokeWidth="2.5"
               strokeLinecap="round"
             />
           </svg>
@@ -307,7 +310,9 @@ export function Accordion({
         aria-hidden={!expanded}
         inert={!expanded}
       >
-        <div className="accordion-body">{children}</div>
+        <div className="accordion-body">
+          <div className="accordion-content">{children}</div>
+        </div>
       </div>
     </div>
   );
