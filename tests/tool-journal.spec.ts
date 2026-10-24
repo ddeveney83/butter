@@ -54,6 +54,7 @@ test("platform comparison is searchable and its table can be read with keyboard 
   await expect(page.getByRole("status")).toHaveText("1 article");
   await page.locator(".editorial-card").click();
   await expect(page).toHaveURL(/\/journal\/lms-vs-lxp-vs-lrs$/);
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   const table = page.getByRole("table", {
     name: "LMS, LXP and LRS: a practical comparison",
   });

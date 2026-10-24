@@ -9,6 +9,7 @@ import NotFound from "./NotFound";
 import PlatformShowcase from "../components/PlatformShowcase";
 import ProjectVideo from "../components/ProjectVideo";
 import ProjectCaseStudy from "../components/ProjectCaseStudy";
+import { offers, offerPath } from "../data/offers";
 
 export default function ProjectPage() {
   const { slug } = useParams();
@@ -25,6 +26,9 @@ export default function ProjectPage() {
     );
   if (!project) return <NotFound />;
   const next = projects[(projects.indexOf(project) + 1) % projects.length];
+  const services = offers.filter((offer) =>
+    offer.projects.includes(project.id),
+  );
   return (
     <>
       <section className="project-hero container">
@@ -76,6 +80,18 @@ export default function ProjectPage() {
             {project.metric.label}
           </p>
           <p>{project.outcome}</p>
+          <div className="lead-actions">
+            {services.map((offer) => (
+              <TextLink key={offer.slug} to={offerPath(offer)}>
+                Explore {offer.title}
+              </TextLink>
+            ))}
+            <TextLink
+              to={`/contact?service=${encodeURIComponent(services[0]?.title ?? project.caseStudy?.service ?? `A project like ${project.title}`)}`}
+            >
+              Talk about your project
+            </TextLink>
+          </div>
         </Reveal>
       </section>
       {project.caseStudy ? (

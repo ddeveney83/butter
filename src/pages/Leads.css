@@ -167,6 +167,7 @@
 .offer-intro h2,
 .offer-work h2,
 .offer-questions h2,
+.offer-related-work > h2,
 .lead-next-steps > h2,
 .local-use-cases > h2 {
   font-size: clamp(32px, 3.2vw, 46px);
@@ -260,6 +261,13 @@
 .offer-other-links a {
   font-size: 15px;
 }
+.journal-service-links {
+  display: grid;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  margin-top: 32px;
+  padding-top: 24px;
+}
 .local-use-cases .doodle {
   width: 70px;
   height: 70px;
@@ -294,11 +302,6 @@
   line-height: 1.7;
   color: var(--muted);
   margin: 8px 0 0;
-}
-.contact-reply-note {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--muted);
 }
 .form-note a {
   text-decoration: underline;

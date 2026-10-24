@@ -162,8 +162,7 @@ html:active-view-transition .reveal[data-reveal] {
 .project-caption > .arrow,
 .scenario-choices .arrow,
 .nav-contact .arrow,
-.back-top span,
-.brand-dot {
+.back-top span {
   transition: transform var(--motion-base) var(--ease-butter);
 }
 .filter-list button,
@@ -211,9 +210,6 @@ select {
   .back-top:hover span {
     display: inline-block;
     transform: translateY(-3px);
-  }
-  .wordmark:hover .brand-dot {
-    transform: rotate(45deg);
   }
 }
 @media (max-width: 760px) {

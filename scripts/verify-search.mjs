@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import { projects } from "../src/data/projects.ts";
+import { offers, offerPath, relatedOffers } from "../src/data/offers.ts";
+import { publicPaths } from "../src/data/publicPaths.ts";
+import { getPageMeta } from "../src/data/seo.ts";
 import { readFile, readdir, access } from "node:fs/promises";
 import {
   articles,
@@ -24,6 +27,38 @@ for (const field of ["slug", "title", "description"]) {
 }
 const journalIndex = await readFile("dist/journal/index.html", "utf8");
 const workIndex = await readFile("dist/work/index.html", "utf8");
+const servicesIndex = await readFile("dist/services/index.html", "utf8");
+assert.equal(offers.length, 7);
+assert.equal(new Set(offers.map((offer) => offer.slug)).size, offers.length);
+for (const offer of offers) {
+  const path = offerPath(offer);
+  const html = await readFile(`dist${path}/index.html`, "utf8");
+  assert.ok(servicesIndex.includes(`href="${path}"`));
+  assert.ok(html.includes(`<h1>${escape(offer.headline)}</h1>`));
+  assert.ok(
+    html.includes(`name="description" content="${escape(offer.description)}"`),
+  );
+  assert.ok(html.includes('"@type":"Service"'));
+  assert.ok(
+    html.includes(escape(offer.need)) && html.includes(escape(offer.approach)),
+  );
+  for (const id of offer.projects) {
+    assert.ok(
+      projects.some((project) => project.id === id),
+      `Missing project ${id}`,
+    );
+    assert.ok(html.includes(`href="/work/${id}"`));
+  }
+  for (const slug of offer.articles) {
+    assert.ok(
+      articles.some((article) => article.slug === slug),
+      `Missing article ${slug}`,
+    );
+    assert.ok(html.includes(`href="/journal/${slug}"`));
+  }
+  for (const question of offer.questions)
+    assert.ok(html.includes(escape(question.answer)));
+}
 assert.equal(projects.length, 14);
 for (const project of projects) {
   assert.ok(workIndex.includes(`href="/work/${project.id}"`));
@@ -81,6 +116,11 @@ for (const article of articles) {
       `Related article ${slug} must exist.`,
     );
   const related = relatedArticles(article);
+  for (const offer of relatedOffers(article.slug, article.enquiryService))
+    assert.ok(
+      html.includes(`href="${offerPath(offer)}"`),
+      "Service links must be crawlable from relevant articles.",
+    );
   assert.equal(related.length, 2);
   assert.equal(new Set(related.map((item) => item.slug)).size, 2);
   for (const item of related)
@@ -145,6 +185,22 @@ for (const article of articles) {
   );
 }
 const sitemap = await readFile("dist/sitemap.xml", "utf8");
+assert.equal(
+  new Set(publicPaths).size,
+  publicPaths.length,
+  "Public routes must be unique.",
+);
+for (const path of publicPaths) {
+  assert.notEqual(
+    getPageMeta(path)[0],
+    "A little lost?",
+    `Missing metadata for ${path}`,
+  );
+  assert.ok(
+    sitemap.includes(`<loc>https://buttertest.netlify.app${path}</loc>`),
+    `Missing sitemap entry for ${path}`,
+  );
+}
 for (const item of articles)
   assert.ok(sitemap.includes("/journal/" + item.slug));
 for (const item of experiments) {

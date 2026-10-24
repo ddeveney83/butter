@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-export class APIError extends Error {
+class APIError extends Error {
   status: number;
   constructor(message: string, status: number) {
     super(message);

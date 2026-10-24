@@ -29,7 +29,7 @@ test("butter cursor gives accurate hover hints without blocking interaction", as
     await expect(hint).toHaveCount(0);
     await expect(page.locator("html")).not.toHaveClass(/butter-cursor-enabled/);
     await page.getByRole("button", { name: "LMS", exact: true }).tap();
-    await expect(page.locator(".work-gallery .project")).toHaveCount(2);
+    await expect(page.locator(".work-gallery .project")).toHaveCount(3);
     return;
   }
   await expect(page.locator("html")).toHaveClass(/butter-cursor-enabled/);

@@ -4,7 +4,7 @@ import { Arrow, ButterCharacter, Doodle, Spark } from "../components/Artwork";
 import { Accordion, PageHero, Reveal, Tabs, TextLink } from "../components/UI";
 import "./Butterlearn.css";
 
-export const butterlearnEnquiry =
+const butterlearnEnquiry =
   "/contact?service=butterlearn&brief=" +
   encodeURIComponent(
     "I’d like to talk about butterlearn for our team. We’re looking for a learning platform that helps us…",

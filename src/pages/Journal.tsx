@@ -11,7 +11,7 @@ import {
   type Article,
 } from "../data/editorial";
 import NotFound from "./NotFound";
-import { articleEnquiryPath } from "../data/offers";
+import { articleEnquiryPath, relatedOffers, offerPath } from "../data/offers";
 import ArticleTable from "../components/ArticleTable";
 
 export function ArticleCard({ article }: { article: Article }) {
@@ -136,6 +136,7 @@ export function JournalArticle() {
   const { slug } = useParams();
   const article = articles.find((article) => article.slug === slug);
   if (!article) return <NotFound />;
+  const services = relatedOffers(article.slug, article.enquiryService);
   return (
     <>
       <article className="journal-article container">
@@ -201,6 +202,22 @@ export function JournalArticle() {
                 <Arrow diagonal />
               </Link>
             </aside>
+            {services.length > 0 && (
+              <nav
+                className="journal-service-links"
+                aria-label="Services related to this article"
+              >
+                {services.map((offer) => (
+                  <Link
+                    className="text-link"
+                    key={offer.slug}
+                    to={offerPath(offer)}
+                  >
+                    Explore {offer.title} <Arrow diagonal />
+                  </Link>
+                ))}
+              </nav>
+            )}
           </div>
         </div>
       </article>

@@ -58,10 +58,12 @@ test("new case studies have complete stories, labelled media, contextual enquiri
       }),
     ).toHaveAttribute("aria-pressed", "true");
     await page.goBack();
+    await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
     await page.locator(".next-project a").click();
     await expect(page.getByRole("heading", { level: 1 })).not.toHaveText(
       project.title,
     );
+    await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   }
   expect(errors).toEqual([]);
 });

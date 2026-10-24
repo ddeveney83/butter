@@ -7,7 +7,7 @@ import {
   Reveal,
   TextLink,
 } from "../components/UI";
-import { offers, offerPath } from "../data/offers";
+import ServiceCards from "../components/ServiceCards";
 export default function Devon() {
   return (
     <>
@@ -92,18 +92,7 @@ export default function Devon() {
       </section>
       <section className="lead-services section container">
         <h2>Find your starting point.</h2>
-        <div>
-          {offers.map((offer) => (
-            <Link key={offer.slug} to={offerPath(offer)}>
-              <Doodle kind={offer.icon} />
-              <h3>{offer.title}</h3>
-              <p>{offer.lead}</p>
-              <span>
-                Explore the service <Arrow diagonal />
-              </span>
-            </Link>
-          ))}
-        </div>
+        <ServiceCards />
       </section>
       <section className="offer-questions section container">
         <h2>A few useful answers.</h2>

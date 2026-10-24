@@ -2,11 +2,6 @@
 h1:focus {
   outline: none;
 }
-.brand-dot svg {
-  width: 13px;
-  height: 13px;
-  color: var(--ink);
-}
 .page-enter {
   animation: page-arrive 0.45s ease-out both;
 }
@@ -27,16 +22,6 @@ h1:focus {
   from {
     opacity: 0;
     transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes panel-arrive {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
   }
   to {
     opacity: 1;
@@ -577,307 +562,6 @@ h1:focus {
   line-height: 1.6;
 }
 /* Each concept has its own small visual world. */
-.art-small {
-  font-size: 10px;
-}
-.art-wellbeing {
-  background: #dce7da;
-}
-.wellbeing-orbit {
-  position: absolute;
-  width: 530px;
-  height: 300px;
-  border: 1px solid #aebca9;
-  border-radius: 50%;
-  transform: rotate(-28deg);
-}
-.phone-card {
-  background: #f9faf4;
-  border: 2px solid var(--ink);
-  border-radius: 26px;
-  padding: 22px 22px 25px;
-  width: 225px;
-  transform: rotate(-6deg);
-  box-shadow: 9px 10px 0 #b0c0ad;
-  text-align: center;
-  transition: transform var(--motion-slow);
-}
-.phone-notch {
-  background: var(--ink);
-  border-radius: 8px;
-  width: 48px;
-  height: 5px;
-  margin: -7px auto 15px;
-}
-.breathing-circle {
-  width: 125px;
-  height: 125px;
-  border: 1px solid #a9b7a2;
-  background: #ecf1df;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  position: relative;
-  margin: 25px auto;
-}
-.breathing-circle span {
-  font-size: 34px;
-  font-weight: 500;
-  letter-spacing: -1px;
-}
-.breathing-circle > svg {
-  position: absolute;
-  top: -7px;
-  right: -8px;
-  width: 28px;
-  height: 28px;
-}
-.phone-card strong {
-  font-size: 29px;
-  line-height: 1.1;
-  letter-spacing: -1px;
-  display: block;
-}
-.phone-progress {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 25px;
-}
-.phone-progress i {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #c9d1c2;
-}
-.phone-progress i:first-child {
-  background: var(--ink);
-}
-.art-side-note {
-  position: absolute;
-  right: 4%;
-  bottom: 17%;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.3px;
-  font-style: italic;
-  transform: rotate(-9deg);
-  max-width: 100px;
-}
-.project:hover .phone-card {
-  transform: rotate(-3deg) translateY(-5px);
-}
-.art-ethics {
-  background: #272723;
-}
-.ethics-card {
-  width: 320px;
-  border: 1px solid #858575;
-  border-radius: 10px;
-  padding: 24px;
-  color: var(--paper);
-  transform: rotate(5deg);
-  transition: transform var(--motion-slow);
-  background: #34342c;
-  box-shadow: 10px 10px 0 #181816;
-}
-.ethics-card > .art-small {
-  color: #d0d0be;
-}
-.shield-art {
-  width: 92px;
-  height: 112px;
-  display: block;
-  margin: 18px auto;
-}
-.ethics-card strong {
-  display: block;
-  text-align: center;
-  font-size: 31px;
-  line-height: 1.08;
-  letter-spacing: -1px;
-  font-weight: 600;
-}
-.ethics-choices {
-  border-top: 1px solid #858575;
-  margin-top: 24px;
-  padding-top: 13px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-}
-.ethics-choices svg {
-  width: 16px;
-  height: 16px;
-}
-.ethics-spark {
-  position: absolute;
-  width: 45px;
-  height: 45px;
-  left: 8%;
-  bottom: 13%;
-  color: var(--butter);
-}
-.art-ethics ~ .concept-label {
-  color: #d0d0be;
-}
-.project:hover .ethics-card {
-  transform: rotate(2deg) translateY(-5px);
-}
-.art-garden {
-  background: #e6e5c5;
-}
-.garden-card {
-  background: #faf9ed;
-  width: 335px;
-  padding: 20px 25px 22px;
-  border: 2px solid var(--ink);
-  border-radius: 8px;
-  transform: rotate(-5deg);
-  box-shadow: 9px 10px 0 #bebc8f;
-  transition: transform var(--motion-slow);
-}
-.garden-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #cecebe;
-}
-.garden-top span:first-child {
-  font-weight: 650;
-  letter-spacing: -0.3px;
-}
-.garden-top > svg {
-  width: 14px;
-  height: 14px;
-}
-.garden-card strong {
-  display: block;
-  font-size: 31px;
-  line-height: 1.12;
-  letter-spacing: -1px;
-  margin-top: 18px;
-}
-.sprout-art {
-  width: 180px;
-  height: 126px;
-  display: block;
-  margin: 12px auto;
-}
-.garden-step {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 10px;
-}
-.garden-step svg {
-  width: 17px;
-  height: 17px;
-}
-.garden-dot {
-  position: absolute;
-  border: 1px solid #a5a379;
-  border-radius: 50%;
-  width: 180px;
-  height: 180px;
-  z-index: 0;
-  pointer-events: none;
-}
-.garden-card {
-  z-index: 1;
-}
-.dot-one {
-  left: -65px;
-  top: -50px;
-}
-.dot-two {
-  right: -60px;
-  bottom: -75px;
-}
-.project:hover .garden-card {
-  transform: rotate(-2deg) translateY(-5px);
-}
-.art-skills {
-  background: #f0d8ca;
-}
-.skills-card {
-  width: 325px;
-  border-radius: 10px;
-  background: #fffbf3;
-  border: 2px solid var(--ink);
-  box-shadow: 9px 10px 0 #cda993;
-  padding: 23px;
-  transform: rotate(6deg);
-  transition: transform var(--motion-slow);
-}
-.skills-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-}
-.skills-top span:first-child {
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: -0.4px;
-}
-.skills-check {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: var(--butter);
-  display: grid;
-  place-items: center;
-  margin: 24px auto;
-}
-.skills-check svg {
-  width: 76px;
-  height: 76px;
-}
-.skills-card strong {
-  display: block;
-  text-align: center;
-  font-size: 28px;
-  letter-spacing: -1px;
-  line-height: 1.1;
-}
-.skills-options {
-  display: flex;
-  gap: 8px;
-  margin-top: 26px;
-  font-size: 10px;
-}
-.skills-options > span {
-  flex: 1;
-  text-align: center;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 9px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-.skills-options > span:last-child {
-  background: var(--ink);
-  color: var(--paper);
-}
-.skills-options .arrow {
-  width: 13px;
-  height: 13px;
-}
-.skills-spark {
-  position: absolute;
-  left: 7%;
-  top: 17%;
-  width: 45px;
-  height: 45px;
-}
-.project:hover .skills-card {
-  transform: rotate(3deg) translateY(-5px);
-}
 /* Dedicated project pages and hands-on learning samples. */
 .project-hero {
   padding-top: 25px;
@@ -915,48 +599,6 @@ h1:focus {
   color: #66665d;
   line-height: 1.5;
   margin: 26px 0 45px;
-}
-.project-hero > .project-art {
-  height: 580px;
-  border-radius: 5px;
-}
-.project-hero .learning-window {
-  width: 410px;
-  max-width: 410px;
-}
-.project-hero .window-content {
-  padding: 37px;
-}
-.project-hero .window-content > strong {
-  font-size: 46px;
-}
-.project-hero .leadership-window {
-  width: 390px;
-  max-width: 390px;
-}
-.project-hero .leadership-window > strong {
-  font-size: 38px;
-}
-.project-hero .smile-flower {
-  width: 190px;
-}
-.project-hero .phone-card {
-  width: 260px;
-  padding-bottom: 30px;
-}
-.project-hero .breathing-circle {
-  width: 170px;
-  height: 170px;
-}
-.project-hero .ethics-card,
-.project-hero .garden-card,
-.project-hero .skills-card {
-  width: 390px;
-}
-.project-hero .ethics-card strong,
-.project-hero .garden-card strong,
-.project-hero .skills-card strong {
-  font-size: 38px;
 }
 .project-story {
   display: grid;
@@ -1115,12 +757,6 @@ h1:focus {
 .next-project > a:hover .arrow {
   transform: translate(5px, -5px);
 }
-.select-label,
-.range-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-}
 select {
   font: inherit;
   color: var(--ink);
@@ -1138,29 +774,6 @@ select {
 select:focus-visible {
   outline: 2px solid #a68a28;
   outline-offset: 3px;
-}
-.range-label {
-  margin-top: 28px;
-}
-.range-label > span:not(.range-endpoints) {
-  float: right;
-  font-size: 20px;
-  font-weight: 500;
-}
-.range-label input {
-  display: block;
-  width: 100%;
-  margin: 21px 0 10px;
-  accent-color: var(--ink);
-  cursor: pointer;
-  height: 21px;
-}
-.range-endpoints {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  font-weight: 400;
-  color: var(--muted);
 }
 .faq-section {
   padding-top: 85px;
@@ -1203,18 +816,6 @@ select:focus-visible {
 }
 .contact-info .large-copy {
   font-size: 27px;
-}
-.contact-email {
-  display: inline-flex;
-  gap: 20px;
-  align-items: center;
-  border-bottom: 1px solid var(--ink);
-  padding: 8px 0;
-  font-size: 16px;
-}
-.contact-email .arrow {
-  width: 17px;
-  height: 17px;
 }
 .contact-info-note {
   font-size: 13px;
@@ -1333,9 +934,6 @@ select:focus-visible {
   .process-content {
     gap: 45px;
   }
-  .project-hero > .project-art {
-    height: 520px;
-  }
   .project-title-row {
     display: block;
   }
@@ -1363,55 +961,6 @@ select:focus-visible {
   }
   .work-hero-spark {
     margin-top: -40px;
-  }
-  .art-side-note {
-    right: 3%;
-    font-size: 11px;
-    max-width: 83px;
-  }
-  .phone-card {
-    width: 190px;
-    padding: 19px 16px;
-  }
-  .breathing-circle {
-    width: 105px;
-    height: 105px;
-    margin-block: 20px;
-  }
-  .phone-card strong {
-    font-size: 26px;
-  }
-  .ethics-card,
-  .garden-card,
-  .skills-card {
-    width: 73%;
-    padding: 20px;
-  }
-  .ethics-card strong,
-  .garden-card strong,
-  .skills-card strong {
-    font-size: 26px;
-  }
-  .shield-art {
-    width: 75px;
-    height: 90px;
-    margin: 14px auto;
-  }
-  .sprout-art {
-    width: 150px;
-    height: 105px;
-  }
-  .skills-check {
-    width: 80px;
-    height: 80px;
-    margin: 20px auto;
-  }
-  .skills-check svg {
-    width: 65px;
-    height: 65px;
-  }
-  .contact-email {
-    font-size: 14px;
   }
 }
 @media (max-width: 850px) and (min-width: 761px) {
@@ -1646,56 +1195,6 @@ select:focus-visible {
     margin-top: 30px;
     font-size: 11px;
   }
-  .phone-card {
-    width: 205px;
-  }
-  .breathing-circle {
-    width: 115px;
-    height: 115px;
-  }
-  .art-side-note {
-    bottom: 12%;
-    right: 3%;
-  }
-  .ethics-card,
-  .garden-card,
-  .skills-card {
-    width: 75%;
-    max-width: 320px;
-  }
-  .ethics-card strong,
-  .garden-card strong,
-  .skills-card strong {
-    font-size: 28px;
-  }
-  .shield-art {
-    width: 85px;
-    height: 102px;
-  }
-  .skills-check {
-    width: 95px;
-    height: 95px;
-  }
-  .skills-check svg {
-    width: 70px;
-    height: 70px;
-  }
-  .sprout-art {
-    width: 170px;
-    height: 120px;
-  }
-  .ethics-spark {
-    width: 30px;
-    height: 30px;
-    left: 4%;
-    bottom: 10%;
-  }
-  .skills-spark {
-    width: 30px;
-    height: 30px;
-    left: 3%;
-    top: 13%;
-  }
   .section-tail {
     justify-content: flex-start;
     margin-top: 28px;
@@ -1719,48 +1218,6 @@ select:focus-visible {
   .project-intro {
     font-size: 17px;
     margin: 20px 0 30px;
-  }
-  .project-hero > .project-art {
-    height: 400px;
-  }
-  .project-hero .learning-window {
-    width: 76%;
-    max-width: 340px;
-  }
-  .project-hero .window-content {
-    padding: 28px 23px;
-  }
-  .project-hero .window-content > strong {
-    font-size: 32px;
-  }
-  .project-hero .leadership-window {
-    width: 74%;
-    max-width: 320px;
-  }
-  .project-hero .leadership-window > strong {
-    font-size: 29px;
-  }
-  .project-hero .smile-flower {
-    width: 150px;
-  }
-  .project-hero .phone-card {
-    width: 215px;
-    padding: 23px;
-  }
-  .project-hero .breathing-circle {
-    width: 125px;
-    height: 125px;
-  }
-  .project-hero .ethics-card,
-  .project-hero .garden-card,
-  .project-hero .skills-card {
-    width: 75%;
-    max-width: 320px;
-  }
-  .project-hero .ethics-card strong,
-  .project-hero .garden-card strong,
-  .project-hero .skills-card strong {
-    font-size: 29px;
   }
   .project-story {
     padding-block: 55px;
@@ -1821,9 +1278,6 @@ select:focus-visible {
     font-size: 24px;
     margin-top: 0;
   }
-  .contact-email {
-    font-size: 15px;
-  }
   .contact-character {
     display: none;
   }
@@ -1881,14 +1335,6 @@ select:focus-visible {
   .full-contact-form .form-row:first-of-type label + label {
     margin-top: 20px;
   }
-  .art-side-note {
-    display: none;
-  }
-  .ethics-card strong,
-  .garden-card strong,
-  .skills-card strong {
-    font-size: 24px;
-  }
 }
 /* Consistent sizing for controls and their changing content. */
 .demo-grid > *,
@@ -1914,56 +1360,6 @@ select:focus-visible {
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-}
-.contact-email {
-  overflow-wrap: anywhere;
-}
-.contact-email .arrow {
-  flex-shrink: 0;
-}
-.range-label input {
-  appearance: none;
-  height: 32px;
-  background: transparent;
-}
-.range-label input::-webkit-slider-runnable-track {
-  height: 4px;
-  border-radius: 4px;
-  background: linear-gradient(
-    to right,
-    var(--ink) var(--range-progress),
-    #d7d7ca var(--range-progress)
-  );
-}
-.range-label input::-webkit-slider-thumb {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  margin-top: -7px;
-  border-radius: 50%;
-  background: var(--butter);
-  border: 2px solid var(--ink);
-}
-.range-label input::-moz-range-track {
-  height: 4px;
-  border-radius: 4px;
-  background: #d7d7ca;
-}
-.range-label input::-moz-range-progress {
-  height: 4px;
-  background: var(--ink);
-}
-.range-label input::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--butter);
-  border: 2px solid var(--ink);
-}
-.range-label input:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 4px;
-  border-radius: 4px;
 }
 @media (hover: hover) {
   .tab-list button:hover {

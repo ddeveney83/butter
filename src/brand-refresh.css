@@ -108,9 +108,7 @@ h3,
   background: var(--butter-soft);
 }
 .ticker svg,
-.contact-spark,
-.values-spark,
-.about-spark {
+.contact-spark {
   color: var(--accent);
 }
 .nav > a:after {
@@ -198,9 +196,6 @@ h3,
 }
 .lms-sidebar {
   background: #fff9e8;
-}
-.lms-auth-art {
-  background: var(--butter-soft);
 }
 .lms-auth-card {
   border: var(--outline);

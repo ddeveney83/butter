@@ -97,7 +97,7 @@ export function LMSProvider() {
     </Auth.Provider>
   );
 }
-export function Logo() {
+function Logo() {
   return (
     <Link to="/butterlearn" className="lms-logo" aria-label="butterlearn home">
       <BrandLogo learning />

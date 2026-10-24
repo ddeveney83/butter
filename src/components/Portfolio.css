@@ -100,14 +100,6 @@
   letter-spacing: -0.06em;
   margin-bottom: 10px;
 }
-.project-credit {
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 24px;
-}
-.project-credit a {
-  text-underline-offset: 4px;
-}
 .platform-showcase {
   border: 1px solid var(--ink);
   border-radius: 12px;

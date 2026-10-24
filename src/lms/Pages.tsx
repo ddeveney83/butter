@@ -54,7 +54,7 @@ function DateText({ value }: { value?: string }) {
   );
 }
 
-export function CourseCard({ course }: { course: Course }) {
+function CourseCard({ course }: { course: Course }) {
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");

@@ -4,6 +4,8 @@ The new build provides a solid agency-site foundation: clear service routes, a s
 
 Scope: the public agency website, excluding LMS functionality. Reviewed implementation: `a65600b`, followed by the text-contrast correction included with this report. The portfolio additions were pushed to GitHub before this review. This assessment distinguishes the production build tested locally from the older website currently served by Netlify.
 
+Follow-up implementation: dedicated Learning strategy, L&D team development and Learning animation service pages now connect to the relevant project case studies and journal articles. Projects and articles link back to these services, and project outcomes have an earlier enquiry link. The public build now contains 69 pages. A subsequent cleanup removed the superseded artwork renderer, unused styles and exports, an unused development dependency and an unreachable Labs rendering branch. The findings and measurements below describe the original review snapshot; deployment, final project imagery, lead-delivery verification and performance measurement remain follow-up priorities.
+
 ## What is in place
 
 - **66 crawlable public pages:** ten core pages, four service pages, fourteen project case studies, 33 journal articles and five Labs projects. The brand reference page and private learning routes are excluded from the sitemap.

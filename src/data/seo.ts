@@ -6,7 +6,7 @@ import {
 } from "./editorial.ts";
 import { projects } from "./projects.ts";
 import { offers, offerPath } from "./offers.ts";
-export const pageMeta: Record<string, [string, string]> = {
+const pageMeta: Record<string, [string, string]> = {
   "/": [
     "Learning with feeling.",
     "Bespoke eLearning, staff onboarding and training content for businesses. Explore butter’s work, project examples and a clear route to your next project.",

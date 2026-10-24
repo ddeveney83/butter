@@ -19,7 +19,9 @@ export default function OfferPage() {
   const { slug } = useParams();
   const offer = offers.find((item) => item.slug === slug);
   if (!offer) return <NotFound />;
-  const project = projects.find((item) => item.id === offer.project)!;
+  const [project, ...relatedProjects] = offer.projects.map(
+    (id) => projects.find((item) => item.id === id)!,
+  );
   return (
     <>
       <PageHero
@@ -85,6 +87,21 @@ export default function OfferPage() {
           <ProjectCard project={project} />
         </Reveal>
       </section>
+      {relatedProjects.length > 0 && (
+        <section
+          className="offer-related-work container"
+          aria-labelledby="related-work-heading"
+        >
+          <h2 id="related-work-heading">A little more of the work.</h2>
+          <div className="projects">
+            {relatedProjects.map((item) => (
+              <Reveal key={item.id}>
+                <ProjectCard project={item} />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
       <section
         className="lead-next-steps section container"
         aria-labelledby="offer-next-heading"

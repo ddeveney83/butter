@@ -9,7 +9,7 @@ const escape = (value) =>
         char
       ],
   );
-export function mediaURL(value, optional = false) {
+function mediaURL(value, optional = false) {
   if (optional && !value) return "";
   if (typeof value !== "string" || value.length > 2000)
     throw problem(400, "Use a valid HTTPS media URL.");
@@ -23,7 +23,7 @@ export function mediaURL(value, optional = false) {
   }
   throw problem(400, "Use a valid HTTPS media URL.");
 }
-export function richHTML(value) {
+function richHTML(value) {
   if (typeof value !== "string" || value.length > 30000)
     throw problem(400, "Keep each text area below 30,000 characters.");
   return sanitizeHtml(value, {

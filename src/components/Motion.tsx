@@ -6,7 +6,7 @@ import {
   type NavLinkProps,
 } from "react-router-dom";
 
-export type MotionPreference = "system" | "full" | "reduced";
+type MotionPreference = "system" | "full" | "reduced";
 const storageKey = "butter-motion";
 const changeEvent = "butter-motion-change";
 let preference: MotionPreference = "system";
@@ -24,7 +24,7 @@ function applyPreference() {
   window.dispatchEvent(new Event(changeEvent));
 }
 
-export function setMotionPreference(value: MotionPreference) {
+function setMotionPreference(value: MotionPreference) {
   preference = value;
   try {
     localStorage.setItem(storageKey, value);
@@ -69,7 +69,7 @@ function subscribePreference(callback: () => void) {
   return () => window.removeEventListener(changeEvent, callback);
 }
 
-export function useMotionPreference() {
+function useMotionPreference() {
   return useSyncExternalStore(
     subscribePreference,
     () => preference,

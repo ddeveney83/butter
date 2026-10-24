@@ -1,13 +1,10 @@
 import { test, expect } from "@playwright/test";
-const offerPaths = [
-  "bespoke-elearning",
-  "staff-onboarding",
-  "compliance-training",
-  "course-refresh",
-];
+import { offers } from "../src/data/offers";
+const offerPaths = offers.map((offer) => offer.slug);
 test("commercial pages are discoverable, indexed and fit narrow layouts", async ({
   page,
 }) => {
+  test.setTimeout(60000);
   await page.goto("/");
   await expect(page.locator(".hero-copy")).toContainText(
     "Bespoke eLearning, onboarding and training content for businesses.",
@@ -57,6 +54,79 @@ test("commercial pages are discoverable, indexed and fit narrow layouts", async 
   await expect(page.locator("body")).not.toContainText(
     /Devon.based|our Devon office|testimonial/i,
   );
+});
+
+test("strategy, team development and animation connect evidence, reading and contextual enquiries", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  for (const [slug, title, project, article] of [
+    [
+      "learning-strategy",
+      "Learning strategy",
+      "strategic-skills-mapping",
+      "learning-needs-analysis",
+    ],
+    [
+      "ld-team-development",
+      "L&D team development",
+      "ld-digital-upskilling",
+      "worked-examples",
+    ],
+    [
+      "learning-animation",
+      "Learning animation",
+      "ai-enabled-scenario-learning",
+      "elearning-storyboarding",
+    ],
+  ]) {
+    await page.goto("/services");
+    await page
+      .locator(".lead-service-links")
+      .getByRole("link", { name: title, exact: true })
+      .click();
+    await expect(page).toHaveURL(`/services/${slug}`);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(title);
+    const projects = page.locator(".offer-work, .offer-related-work");
+    await expect(projects.locator(".project")).toHaveCount(
+      slug === "learning-animation" ? 3 : 1,
+    );
+    await projects.locator(`a[href="/work/${project}"]`).click();
+    await page
+      .locator(".project-story")
+      .getByRole("link", { name: `Explore ${title}`, exact: true })
+      .click();
+    await expect(page).toHaveURL(`/services/${slug}`);
+    await page
+      .locator(".editorial-related")
+      .locator(`a[href="/journal/${article}"]`)
+      .click();
+    const services = page.getByRole("navigation", {
+      name: "Services related to this article",
+    });
+    await services
+      .getByRole("link", { name: `Explore ${title}`, exact: true })
+      .click();
+    await expect(page).toHaveURL(`/services/${slug}`);
+    const question = page.locator(".offer-questions .accordion").first();
+    await question.getByRole("button").click();
+    await expect(question.locator(".accordion-panel")).toHaveAttribute(
+      "aria-hidden",
+      "false",
+    );
+    await question.getByRole("button").press("Space");
+    await expect(question.locator(".accordion-panel")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    await page
+      .locator(".page-hero")
+      .getByRole("link", { name: "Talk about your project" })
+      .click();
+    await expect(
+      page.getByRole("button", { name: title, exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+  }
 });
 
 test("service enquiry carries origin context and records success only after capture", async ({

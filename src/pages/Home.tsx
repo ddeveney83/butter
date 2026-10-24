@@ -2,7 +2,7 @@ import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ButterCharacter, Spark, Doodle } from "../components/Artwork";
 import { ContactCTA, ProjectCard, Reveal, TextLink } from "../components/UI";
 import { projects } from "../data/projects";
-import { offers, offerPath } from "../data/offers";
+import ServiceCards from "../components/ServiceCards";
 
 export default function Home() {
   return (
@@ -110,18 +110,7 @@ export default function Home() {
             ahead.
           </p>
         </Reveal>
-        <div>
-          {offers.map((offer) => (
-            <Link key={offer.slug} to={offerPath(offer)}>
-              <Doodle kind={offer.icon} />
-              <h3>{offer.title}</h3>
-              <p>{offer.lead}</p>
-              <span>
-                Explore the service <Arrow diagonal />
-              </span>
-            </Link>
-          ))}
-        </div>
+        <ServiceCards />
       </section>
       <section id="selected-work" className="work section container">
         <Reveal className="section-intro">

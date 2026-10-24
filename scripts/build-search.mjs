@@ -7,15 +7,17 @@ import {
   formatArticleDate,
   relatedArticles,
 } from "../src/data/editorial.ts";
-import { pageMeta, getPageMeta, structuredData } from "../src/data/seo.ts";
+import { getPageMeta, structuredData } from "../src/data/seo.ts";
 import { privacySections } from "../src/data/privacy.ts";
 import {
   offers,
   offerPath,
   nextSteps,
   articleEnquiryPath,
+  relatedOffers,
 } from "../src/data/offers.ts";
 import { projects } from "../src/data/projects.ts";
+import { publicPaths } from "../src/data/publicPaths.ts";
 const siteURL = (
   process.env.VITE_SITE_URL || "https://buttertest.netlify.app"
 ).replace(/\/$/, "");
@@ -28,12 +30,7 @@ const escape = (value) =>
         char
       ],
   );
-const routes = [
-  ...Object.keys(pageMeta).filter((path) => path !== "/brand"),
-  ...projects.map((item) => "/work/" + item.id),
-  ...articles.map((item) => "/journal/" + item.slug),
-  ...experiments.map((item) => "/labs/" + item.slug),
-];
+const routes = publicPaths;
 const navigation = `<header class="header container"><a class="wordmark" href="/" aria-label="butter home"><span class="brand-logo" aria-hidden="true"><img class="brand-logo-mark" src="/brand/butter-mark.webp" width="96" height="112" alt=""><span class="brand-logo-name">butter</span></span></a><nav aria-label="Main navigation" class="nav"><a href="/about">About</a><a href="/services">Services</a><a href="/work">Work</a><a href="/butterlearn">butterlearn</a><a href="/journal">Journal</a><a href="/labs">Labs</a><a href="/contact">Contact</a></nav></header>`;
 function articleTable(table) {
   if (!table) return "";
@@ -58,8 +55,16 @@ function content(path) {
   }
   const offer = offers.find((item) => path === offerPath(item));
   if (offer) {
-    const project = projects.find((item) => item.id === offer.project);
-    return `<section class="page-hero container"><h1>${escape(offer.headline)}</h1><p>${escape(offer.lead)}</p><a class="pill-button" href="/contact?service=${encodeURIComponent(offer.title)}">Talk about your project ↗</a></section><section class="offer-intro section container"><div><h2>A clear reason to make it.</h2><p>${escape(offer.need)}</p></div><div><h2>A thoughtful way to get there.</h2><p>${escape(offer.approach)}</p></div></section><section class="offer-deliverables container">${offer.deliverables.map((item) => `<div><h2>${escape(item.title)}</h2><p>${escape(item.copy)}</p></div>`).join("")}</section><section class="section container"><h2>See the thinking in practice.</h2><a href="/work/${project.id}">${escape(project.title)}</a><p>${escape(project.outcome)}</p></section><section class="section container"><h2>A clear next step.</h2>${nextSteps.map((step) => `<h3>${escape(step.title)}</h3><p>${escape(step.copy)}</p>`).join("")}<h2>A few useful answers.</h2>${offer.questions.map((item) => `<h3>${escape(item.title)}</h3><p>${escape(item.answer)}</p>`).join("")}<h2>A little useful reading.</h2>${offer.articles.map((slug) => `<p><a href="/journal/${slug}">${escape(articles.find((item) => item.slug === slug).title)}</a></p>`).join("")}</section>`;
+    const examples = offer.projects.map((id) =>
+      projects.find((item) => item.id === id),
+    );
+    const work = examples
+      .map(
+        (project) =>
+          `<article><h3><a href="/work/${project.id}">${escape(project.title)}</a></h3><p>${escape(project.description)}</p><p>${escape(project.outcome)}</p></article>`,
+      )
+      .join("");
+    return `<section class="page-hero container"><h1>${escape(offer.headline)}</h1><p>${escape(offer.lead)}</p><a class="pill-button" href="/contact?service=${encodeURIComponent(offer.title)}">Talk about your project ↗</a></section><section class="offer-intro section container"><div><h2>A clear reason to make it.</h2><p>${escape(offer.need)}</p></div><div><h2>A thoughtful way to get there.</h2><p>${escape(offer.approach)}</p></div></section><section class="offer-deliverables container">${offer.deliverables.map((item) => `<div><h2>${escape(item.title)}</h2><p>${escape(item.copy)}</p></div>`).join("")}</section><section id="offer-work" class="section container"><h2>See the thinking in practice.</h2>${work}</section><section class="section container"><h2>A clear next step.</h2>${nextSteps.map((step) => `<h3>${escape(step.title)}</h3><p>${escape(step.copy)}</p>`).join("")}<h2>A few useful answers.</h2>${offer.questions.map((item) => `<h3>${escape(item.title)}</h3><p>${escape(item.answer)}</p>`).join("")}<h2>A little useful reading.</h2>${offer.articles.map((slug) => `<p><a href="/journal/${slug}">${escape(articles.find((item) => item.slug === slug).title)}</a></p>`).join("")}</section>`;
   }
   if (path === "/elearning-devon")
     return `<section class="page-hero container"><h1>eLearning for Devon businesses.</h1><p>Bespoke digital learning, staff onboarding and practical training content for teams across Devon and the South West.</p><a class="pill-button" href="/contact?service=Devon%20project">Talk about your project ↗</a></section><section class="section container"><h2>Built around your working day.</h2><p>A seasonal team, several sites or a small group of specialists: your learning needs to fit the way your business works. Projects can be planned remotely, with clear review stages and input from your subject experts.</p><p>For businesses in Exeter, Plymouth, Torbay, North Devon and the surrounding area, the starting point is what your people need to do and what support will help.</p><h2>Useful places to start.</h2><p>A focused induction for hospitality, leisure or visitor-facing roles could connect customer care, key procedures and the right route to help. A care, housing or service business could use realistic decisions to help people apply approved policies, with specialist review where needed.</p>${offers.map((item) => `<h3><a href="${offerPath(item)}">${escape(item.title)}</a></h3><p>${escape(item.lead)}</p>`).join("")}</section>`;
@@ -77,13 +82,17 @@ function content(path) {
     const resources = article.resources?.length
       ? `<section class="journal-resources" aria-labelledby="resources-heading"><h2 id="resources-heading">Sources and further reading.</h2><ul>${article.resources.map((resource) => `<li><a href="${escape(resource.url)}">${escape(resource.title)}</a></li>`).join("")}</ul></section>`
       : "";
+    const services = relatedOffers(article.slug, article.enquiryService);
+    const serviceLinks = services.length
+      ? `<nav class="journal-service-links" aria-label="Services related to this article">${services.map((offer) => `<a class="text-link" href="${offerPath(offer)}">Explore ${escape(offer.title)} ↗</a>`).join("")}</nav>`
+      : "";
     const related = relatedArticles(article)
       .map(
         (item) =>
           `<article><h2><a href="/journal/${item.slug}">${escape(item.title)}</a></h2><p>${escape(item.description)}</p></article>`,
       )
       .join("");
-    return `<article class="journal-article container"><header><a class="studio-back-link" href="/journal">← All articles</a><h1>${escape(article.title)}</h1><p class="journal-standfirst">${escape(article.description)}</p><div class="journal-byline"><span>butter studio</span><time datetime="${article.date}">${formatArticleDate(article.date)}</time><span>${readMinutes(article)} min read</span></div></header><div class="journal-reading-layout"><nav aria-label="In this article"><span>In this article</span>${article.sections.map((section, i) => `<a href="#section-${i + 1}">${escape(section.heading)}</a>`).join("")}</nav><div class="journal-prose">${article.sections.map((section, i) => `<section id="section-${i + 1}"><h2>${escape(section.heading)}</h2>${section.paragraphs.map((paragraph) => `<p>${escape(paragraph)}</p>`).join("")}${section.points ? `<ul>${section.points.map((point) => `<li>${escape(point)}</li>`).join("")}</ul>` : ""}${articleTable(section.table)}</section>`).join("")}${resources}<a href="${escape(article.action.to)}">${escape(article.action.label)} ↗</a></div></div></article><section class="editorial-related container"><h2>A little more reading.</h2><div class="editorial-grid two-columns">${related}</div></section><section class="contact-section container"><h2>Put the thinking to work.</h2><p>A few lines about your team and the challenge are enough to start.</p><a class="pill-button" href="${escape(articleEnquiryPath(article.slug, article.enquiryService))}">Talk about your project ↗</a></section>`;
+    return `<article class="journal-article container"><header><a class="studio-back-link" href="/journal">← All articles</a><h1>${escape(article.title)}</h1><p class="journal-standfirst">${escape(article.description)}</p><div class="journal-byline"><span>butter studio</span><time datetime="${article.date}">${formatArticleDate(article.date)}</time><span>${readMinutes(article)} min read</span></div></header><div class="journal-reading-layout"><nav aria-label="In this article"><span>In this article</span>${article.sections.map((section, i) => `<a href="#section-${i + 1}">${escape(section.heading)}</a>`).join("")}</nav><div class="journal-prose">${article.sections.map((section, i) => `<section id="section-${i + 1}"><h2>${escape(section.heading)}</h2>${section.paragraphs.map((paragraph) => `<p>${escape(paragraph)}</p>`).join("")}${section.points ? `<ul>${section.points.map((point) => `<li>${escape(point)}</li>`).join("")}</ul>` : ""}${articleTable(section.table)}</section>`).join("")}${resources}<a href="${escape(article.action.to)}">${escape(article.action.label)} ↗</a>${serviceLinks}</div></div></article><section class="editorial-related container"><h2>A little more reading.</h2><div class="editorial-grid two-columns">${related}</div></section><section class="contact-section container"><h2>Put the thinking to work.</h2><p>A few lines about your team and the challenge are enough to start.</p><a class="pill-button" href="${escape(articleEnquiryPath(article.slug, article.enquiryService))}">Talk about your project ↗</a></section>`;
   }
   const [title, description] = getPageMeta(path);
   let extra = "";
@@ -92,13 +101,6 @@ function content(path) {
       .map(
         (item) =>
           `<article><h2><a href="/journal/${item.slug}">${escape(item.title)}</a></h2><p>${escape(item.description)}</p></article>`,
-      )
-      .join("");
-  if (path === "/labs")
-    extra = experiments
-      .map(
-        (item) =>
-          `<article><a href="/labs/${item.slug}"><img src="${item.hero.path}" alt="${escape(item.hero.alt)}" width="${item.hero.width}" height="${item.hero.height}" loading="lazy"><h2>${escape(item.title)}</h2></a><span>${item.status}</span><p>${escape(item.description)}</p></article>`,
       )
       .join("");
   if (path === "/services")

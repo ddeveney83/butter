@@ -16,7 +16,6 @@ import {
   initializeMotion,
 } from "./components/Motion";
 import { Arrow } from "./components/Artwork";
-import { projects } from "./data/projects";
 import ButterCursor from "./components/ButterCursor";
 import BrandLogo from "./components/BrandLogo";
 import { marketingPage, onMarketingClick } from "./lib/marketing";
