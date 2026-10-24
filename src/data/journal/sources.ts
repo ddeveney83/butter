@@ -1,5 +1,29 @@
 // Stable primary guidance and practical references, linked from the articles.
 export const sources = {
+  rise: {
+    title: "Articulate: Rise responsive course authoring",
+    url: "https://www.articulate.com/360/rise/",
+  },
+  storyline: {
+    title: "Articulate: Storyline custom course authoring",
+    url: "https://www.articulate.com/360/storyline/",
+  },
+  h5p: {
+    title: "H5P: interactive content types and examples",
+    url: "https://h5p.org/content-types-and-applications",
+  },
+  h5pDocs: {
+    title: "H5P: authoring, hosting and integration documentation",
+    url: "https://h5p.org/documentation",
+  },
+  lti: {
+    title: "1EdTech: Learning Tools Interoperability",
+    url: "https://www.1edtech.org/standards/lti",
+  },
+  moodleMigration: {
+    title: "MoodleDocs: Moodle migration",
+    url: "https://docs.moodle.org/en/Moodle_migration",
+  },
   study: {
     title:
       "Institute of Education Sciences: Organizing Instruction and Study to Improve Student Learning",

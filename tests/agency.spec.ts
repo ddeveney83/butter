@@ -53,12 +53,12 @@ test("journal filters and article links provide readable content and article met
   page,
 }) => {
   await page.goto("/journal");
-  await expect(page.locator(".editorial-card")).toHaveCount(23);
+  await expect(page.locator(".editorial-card")).toHaveCount(33);
   await page
     .getByRole("button", { name: "Learning tech", exact: true })
     .click();
-  await expect(page.locator(".editorial-card")).toHaveCount(7);
-  await expect(page.getByRole("status")).toHaveText("7 articles");
+  await expect(page.locator(".editorial-card")).toHaveCount(17);
+  await expect(page.getByRole("status")).toHaveText("17 articles");
   await page.getByRole("link", { name: /SCORM or HTML/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "SCORM or HTML? Start with the learner.",

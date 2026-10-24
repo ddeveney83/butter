@@ -309,6 +309,66 @@
   margin-bottom: 50px;
   scroll-margin-top: 40px;
 }
+.journal-prose {
+  min-width: 0;
+}
+.journal-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--ink);
+  border-radius: 18px;
+  margin-block: 28px;
+}
+.journal-table-scroll:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+.journal-table-scroll table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.journal-table-scroll caption {
+  text-align: left;
+  font-weight: 650;
+  padding: 20px;
+  background: var(--butter-soft);
+  color: var(--ink);
+}
+.journal-table-scroll th,
+.journal-table-scroll td {
+  padding: 18px 20px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid var(--line);
+}
+.journal-table-scroll th {
+  font-weight: 600;
+  color: var(--ink);
+}
+.journal-table-scroll thead {
+  background: #fff9e5;
+}
+.journal-table-scroll td {
+  color: var(--muted);
+}
+.journal-table-scroll tbody th {
+  min-width: 110px;
+}
+.journal-prose .journal-table-guidance {
+  display: none;
+}
+@media (max-width: 760px) {
+  .journal-prose .journal-table-guidance {
+    display: block;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: -12px 0 28px;
+  }
+}
 .journal-prose h2 {
   font-size: 33px;
   line-height: 1.2;

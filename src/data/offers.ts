@@ -195,7 +195,8 @@ export const offers: Offer[] = [
   },
 ];
 export const offerPath = (offer: Offer) => `/services/${offer.slug}`;
-export function articleEnquiryPath(slug: string) {
+export function articleEnquiryPath(slug: string, service?: string) {
+  if (service) return `/contact?service=${encodeURIComponent(service)}`;
   const offer = offers.find((item) => item.articles.includes(slug));
   return offer
     ? `/contact?service=${encodeURIComponent(offer.title)}`

@@ -12,6 +12,7 @@ import {
 } from "../data/editorial";
 import NotFound from "./NotFound";
 import { articleEnquiryPath } from "../data/offers";
+import ArticleTable from "../components/ArticleTable";
 
 export function ArticleCard({ article }: { article: Article }) {
   return (
@@ -175,6 +176,7 @@ export function JournalArticle() {
                     ))}
                   </ul>
                 )}
+                {section.table && <ArticleTable table={section.table} />}
               </section>
             ))}
             {!!article.resources?.length && (
@@ -212,7 +214,7 @@ export function JournalArticle() {
       </section>
       <ContactCTA
         title="Put the thinking to work."
-        to={articleEnquiryPath(article.slug)}
+        to={articleEnquiryPath(article.slug, article.enquiryService)}
       />
     </>
   );

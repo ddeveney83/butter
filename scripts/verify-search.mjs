@@ -69,6 +69,29 @@ for (const article of articles) {
         html.includes(`<p>${escape(paragraph)}</p>`),
         "Article text must exist before JavaScript runs.",
       );
+  for (const section of article.sections) {
+    if (!section.table) continue;
+    assert.ok(
+      html.includes(`<caption>${escape(section.table.caption)}</caption>`),
+    );
+    for (const column of section.table.columns)
+      assert.ok(html.includes(`<th scope="col">${escape(column)}</th>`));
+    for (const row of section.table.rows) {
+      assert.equal(
+        row.length,
+        section.table.columns.length,
+        "Comparison rows must match the table headings.",
+      );
+      for (const [i, cell] of row.entries())
+        assert.ok(
+          html.includes(
+            i === 0
+              ? `<th scope="row">${escape(cell)}</th>`
+              : `<td>${escape(cell)}</td>`,
+          ),
+        );
+    }
+  }
   const schema = JSON.parse(
     html.match(
       /<script type="application\/ld\+json" id="page-structured-data">(.*?)<\/script>/s,
@@ -79,6 +102,13 @@ for (const article of articles) {
   assert.equal(schema.author.name, "butter studio");
   assert.equal(schema.datePublished, article.date);
   assert.equal(schema.inLanguage, "en-GB");
+  assert.ok(Number.isInteger(schema.wordCount) && schema.wordCount > 0);
+  for (const section of article.sections)
+    for (const cell of section.table?.rows.flat() || [])
+      assert.ok(
+        schema.articleBody.includes(cell),
+        "Structured article text must include comparison content.",
+      );
   assert.deepEqual(
     schema.citation || [],
     (article.resources || []).map((resource) => resource.url),

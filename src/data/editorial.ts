@@ -1,11 +1,13 @@
 import { designArticles } from "./journal/design.ts";
 import { practiceArticles } from "./journal/practice.ts";
 import { technologyArticles } from "./journal/technology.ts";
+import { toolSelectionArticles } from "./journal/tool-selection.ts";
 
 export type ArticleSection = {
   heading: string;
   paragraphs: string[];
   points?: string[];
+  table?: { caption: string; columns: string[]; rows: string[][] };
 };
 export type Article = {
   slug: string;
@@ -18,8 +20,10 @@ export type Article = {
   action: { to: string; label: string };
   relatedSlugs?: string[];
   resources?: { title: string; url: string }[];
+  enquiryService?: string;
 };
 export const articles: Article[] = [
+  ...toolSelectionArticles,
   ...designArticles,
   ...practiceArticles,
   ...technologyArticles,
@@ -233,18 +237,23 @@ export function relatedArticles(article: Article) {
     .slice(0, 2);
 }
 
+export const articleText = (article: Article) =>
+  article.sections
+    .flatMap((section) => [
+      section.heading,
+      ...section.paragraphs,
+      ...(section.points || []),
+      ...(section.table
+        ? [
+            section.table.caption,
+            ...section.table.columns,
+            ...section.table.rows.flat(),
+          ]
+        : []),
+    ])
+    .join("\n\n");
+export const articleWordCount = (article: Article) =>
+  articleText(article).trim().split(/\s+/).length;
 export const readMinutes = (article: Article) =>
-  Math.max(
-    1,
-    Math.ceil(
-      article.sections
-        .flatMap((section) => [
-          section.heading,
-          ...section.paragraphs,
-          ...(section.points || []),
-        ])
-        .join(" ")
-        .split(/\s+/).length / 200,
-    ),
-  );
+  Math.max(1, Math.ceil(articleWordCount(article) / 200));
 export { labs as experiments } from "./labs.ts";

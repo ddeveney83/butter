@@ -5,7 +5,7 @@ test("journal search combines with topics and recovers from empty results", asyn
 }) => {
   await page.goto("/journal");
   const search = page.getByRole("searchbox", { name: "Find something useful" });
-  await expect(page.getByRole("status")).toHaveText("23 articles");
+  await expect(page.getByRole("status")).toHaveText("33 articles");
   await page
     .getByRole("button", { name: "Education in practice", exact: true })
     .click();
@@ -26,8 +26,8 @@ test("journal search combines with topics and recovers from empty results", asyn
     .getByRole("button", { name: "Show all articles", exact: false })
     .click();
   await expect(search).toHaveValue("");
-  await expect(page.getByRole("status")).toHaveText("23 articles");
-  await search.fill("  ACCESSIBLE ELEARNING  ");
+  await expect(page.getByRole("status")).toHaveText("33 articles");
+  await search.fill("  ACCESSIBLE ELEARNING: A PRACTICAL WCAG  ");
   await expect(page.locator(".editorial-card")).toHaveCount(1);
   await page.locator(".editorial-card").click();
   await expect(page).toHaveURL(/\/journal\/accessible-elearning-wcag$/);

@@ -1,4 +1,9 @@
-import { articles, experiments } from "./editorial.ts";
+import {
+  articles,
+  experiments,
+  articleText,
+  articleWordCount,
+} from "./editorial.ts";
 import { projects } from "./projects.ts";
 import { offers, offerPath } from "./offers.ts";
 export const pageMeta: Record<string, [string, string]> = {
@@ -107,13 +112,8 @@ export function structuredData(path: string, siteURL: string) {
         ? { citation: article.resources.map((resource) => resource.url) }
         : {}),
       articleSection: article.topic,
-      articleBody: article.sections
-        .flatMap((section) => [
-          section.heading,
-          ...section.paragraphs,
-          ...(section.points || []),
-        ])
-        .join("\n\n"),
+      articleBody: articleText(article),
+      wordCount: articleWordCount(article),
     };
   const lab = experiments.find((item) => path === "/labs/" + item.slug);
   if (lab)

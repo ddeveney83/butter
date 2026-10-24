@@ -166,7 +166,7 @@ export const technologyArticles: Article[] = [
         ],
       },
     ],
-    relatedSlugs: ["scorm-or-html-course", "learning-analytics"],
+    relatedSlugs: ["lms-vs-lxp-vs-lrs", "elearning-tool-pilot-checklist"],
     resources: [sources.checks],
     action: { to: "/butterlearn", label: "Explore the butterlearn platform" },
   },
