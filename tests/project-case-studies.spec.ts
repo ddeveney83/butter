@@ -129,7 +129,7 @@ test("leaving an open gallery restores scrolling on the destination page", async
 }) => {
   await page.goto("/work");
   await page
-    .getByRole("link", { name: "Explore Allergen Awareness", exact: true })
+    .locator('.project[href="/work/allergen-awareness"]')
     .click();
   await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   await page

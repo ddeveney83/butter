@@ -112,7 +112,7 @@ test("specialist services connect evidence, reading and contextual enquiries", a
     await page.goto("/services");
     await page
       .locator(".lead-service-links")
-      .getByRole("link", { name: title, exact: true })
+      .getByRole("link", { name: title, exact: false })
       .click();
     await expect(page).toHaveURL(`/services/${slug}`);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(title);

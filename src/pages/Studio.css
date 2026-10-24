@@ -338,16 +338,6 @@ html[data-motion="reduced"] .journal-row-arrow .arrow {
 .editorial-card:hover .doodle {
   rotate: 5deg;
 }
-.editorial-card-art > span {
-  position: absolute;
-  font-size: 170px;
-  line-height: 1;
-  font-weight: 850;
-  color: #11111008;
-  letter-spacing: -12px;
-  bottom: -18px;
-  right: -4px;
-}
 .editorial-card-copy {
   padding: 27px;
   display: flex;

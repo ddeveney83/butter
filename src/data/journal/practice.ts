@@ -4,6 +4,7 @@ import { sources } from "./sources.ts";
 export const practiceArticles: Article[] = [
   {
     slug: "retrieval-practice",
+    enquiryService: "Bespoke eLearning",
     title: "Retrieval practice: make remembering part of learning.",
     description:
       "Use retrieval practice in lessons and digital learning with low-stakes questions, useful feedback and opportunities to apply remembered ideas.",
@@ -62,6 +63,7 @@ export const practiceArticles: Article[] = [
   },
   {
     slug: "spaced-practice",
+    enquiryService: "Bespoke eLearning",
     title: "Spaced practice: design the return, not just the reminder.",
     description:
       "Plan spaced practice with purposeful revisits, retrieval prompts and feedback, using a realistic schedule that fits learners’ work or study.",
@@ -120,6 +122,7 @@ export const practiceArticles: Article[] = [
   },
   {
     slug: "formative-assessment",
+    enquiryService: "L&D team development",
     title: "Formative assessment: find out, then change what happens next.",
     description:
       "Use formative assessment to surface learner thinking, spot misconceptions and adapt teaching with practical classroom and online examples.",
@@ -291,6 +294,7 @@ export const practiceArticles: Article[] = [
   },
   {
     slug: "teaching-online-discussion",
+    enquiryService: "L&D team development",
     title: "Online discussion activities that lead somewhere.",
     description:
       "Plan purposeful online discussions with a clear prompt, accessible participation, facilitation and a useful output beyond posting a reply.",

@@ -29,6 +29,7 @@ export const articles: Article[] = [
   ...technologyArticles,
   {
     slug: "how-to-brief-elearning-project",
+    enquiryService: "Bespoke eLearning",
     title: "How to brief an eLearning project.",
     description:
       "Write a useful eLearning brief: define the audience, the task, source material, review process and delivery requirements before production.",
@@ -150,6 +151,7 @@ export const articles: Article[] = [
   },
   {
     slug: "scorm-or-html-course",
+    enquiryService: "Bespoke eLearning",
     title: "SCORM or HTML? Start with the learner.",
     description:
       "A plain-language guide to choosing course delivery and tracking, with practical questions for your LMS and authoring workflow.",

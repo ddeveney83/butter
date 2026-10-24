@@ -114,6 +114,7 @@ export const designArticles: Article[] = [
   },
   {
     slug: "cognitive-load-elearning",
+    enquiryService: "Bespoke eLearning",
     title: "Cognitive load in eLearning: make room for the difficult bit.",
     description:
       "Apply cognitive load principles to eLearning with clearer examples, focused screens and activities that support the learner’s actual task.",
@@ -172,6 +173,7 @@ export const designArticles: Article[] = [
   },
   {
     slug: "universal-design-for-learning",
+    enquiryService: "Bespoke eLearning",
     title: "Universal Design for Learning: plan for learner variability.",
     description:
       "Use Universal Design for Learning to anticipate barriers, offer meaningful choices and keep learning goals clear across varied audiences.",
@@ -227,6 +229,7 @@ export const designArticles: Article[] = [
   },
   {
     slug: "blended-learning-design",
+    enquiryService: "Learning strategy",
     title: "Blended learning design: give every part a purpose.",
     description:
       "Design a blended learning journey that connects preparation, live practice and workplace follow-up instead of repeating the same content.",
@@ -282,6 +285,7 @@ export const designArticles: Article[] = [
   },
   {
     slug: "microlearning-design",
+    enquiryService: "Bespoke eLearning",
     title: "Microlearning design: one useful job, done well.",
     description:
       "Plan microlearning around a focused task, useful practice and the moment of need, with examples of when a short resource helps or falls short.",

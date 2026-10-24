@@ -62,6 +62,7 @@ export const technologyArticles: Article[] = [
   },
   {
     slug: "ai-in-instructional-design",
+    enquiryService: "L&D team development",
     title: "AI in instructional design: useful drafts, human decisions.",
     description:
       "Use generative AI in instructional design with a clear brief, source checks, privacy boundaries and human review of learning and assessment decisions.",
@@ -230,6 +231,7 @@ export const technologyArticles: Article[] = [
   },
   {
     slug: "xapi-vs-scorm",
+    enquiryService: "LMS architecture & development",
     title: "xAPI vs SCORM: choose the tracking your question needs.",
     description:
       "Understand the practical difference between xAPI and SCORM, what an LRS does and which tracking questions to resolve before choosing a format.",

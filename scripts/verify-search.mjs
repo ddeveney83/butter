@@ -103,6 +103,10 @@ for (const project of projects) {
   for (const image of project.gallery) assert.ok(gallery.includes(image.path));
 }
 for (const article of articles) {
+  assert.ok(
+    relatedOffers(article.slug, article.enquiryService).length > 0,
+    `Article ${article.slug} needs a relevant service and enquiry route.`,
+  );
   const html = await readFile(
     `dist/journal/${article.slug}/index.html`,
     "utf8",

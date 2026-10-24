@@ -94,7 +94,7 @@ test("work has fourteen pieces and shareable filters that persist on reload and 
     page.getByRole("button", { name: "LMS", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
   await page
-    .getByRole("link", { name: "Explore Nansen Learning Academy" })
+    .locator('.project[href="/work/nansen-learning-academy"]')
     .click();
   await expect(page).toHaveURL(/\/work\/nansen-learning-academy$/);
   await page.goBack();

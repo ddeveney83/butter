@@ -8,23 +8,23 @@ import { projects } from "./projects.ts";
 import { offers, offerPath } from "./offers.ts";
 const pageMeta: Record<string, [string, string]> = {
   "/": [
-    "Learning with feeling.",
+    "eLearning agency & LMS development",
     "Bespoke eLearning, LMS architecture, development and project management for businesses. Explore butter’s work and discuss your next learning project.",
   ],
   "/about": [
-    "A little more human.",
+    "About our creative learning agency",
     "Meet butter: a creative learning agency bringing strategy, storytelling and design together for better digital learning.",
   ],
   "/services": [
-    "Big ideas. A little butter.",
+    "eLearning & LMS services",
     "Explore eLearning, LMS architecture and development, platform project management, learning strategy and creative support from butter.",
   ],
   "/work": [
-    "A taste of our work.",
+    "eLearning & LMS case studies",
     "Explore butter’s eLearning, learning platforms, skills strategy, team development and animation projects, with case studies and interactive samples.",
   ],
   "/contact": [
-    "Good things start with hello.",
+    "Discuss your eLearning or LMS project",
     "Tell butter about your learning challenge and start a creative conversation with our studio.",
   ],
   "/butterlearn": [
@@ -32,11 +32,11 @@ const pageMeta: Record<string, [string, string]> = {
     "Explore butterlearn: HTML and SCORM courses, learner dashboards, a visual course creator and team progress.",
   ],
   "/journal": [
-    "Good ideas. Shared.",
+    "Instructional design & learning technology journal",
     "Practical guides to instructional design, teaching, assessment, accessibility, AI and learning technology from the butter studio.",
   ],
   "/labs": [
-    "A little space for what if.",
+    "Learning design & technology experiments",
     "Explore five butter Labs projects: digital accessibility, resilience, branching storytelling, community mapping and live-event management.",
   ],
   "/brand": [
@@ -44,7 +44,7 @@ const pageMeta: Record<string, [string, string]> = {
     "butter’s brand guide: warm yellows, coral sparks, rounded type and bold melting-play iconography.",
   ],
   "/elearning-devon": [
-    "eLearning for Devon businesses.",
+    "eLearning & LMS development in Devon",
     "eLearning, LMS development and learning platform project management for Devon and South West businesses. Discuss your project with butter.",
   ],
   "/privacy": [
@@ -74,6 +74,12 @@ export function structuredData(path: string, siteURL: string) {
     "@type": "Organization",
     name: "butter",
     url: siteURL,
+    logo: {
+      "@type": "ImageObject",
+      url: siteURL + "/brand/butter-mark.webp",
+      width: 720,
+      height: 758,
+    },
   };
   const offer = offers.find((item) => path === offerPath(item));
   if (offer || path === "/elearning-devon")

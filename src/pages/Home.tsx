@@ -1,7 +1,7 @@
 import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ButterCharacter, Spark, Doodle } from "../components/Artwork";
 import { ContactCTA, ProjectCard, Reveal, TextLink } from "../components/UI";
-import { projects } from "../data/projects";
+import { projects, featuredProjects } from "../data/projects";
 import { offers, offerPath } from "../data/offers";
 import ServiceCards from "../components/ServiceCards";
 
@@ -109,6 +109,9 @@ export default function Home() {
           <p>
             Find a starting point for your team, your content and the work
             ahead.
+            <Link className="home-local-link" to="/elearning-devon">
+              eLearning for Devon businesses <Arrow diagonal />
+            </Link>
           </p>
         </Reveal>
         <ServiceCards />
@@ -127,7 +130,7 @@ export default function Home() {
           </p>
         </Reveal>
         <div className="projects">
-          {projects.slice(0, 2).map((project) => (
+          {featuredProjects.map((project) => (
             <Reveal key={project.id}>
               <ProjectCard project={project} />
             </Reveal>

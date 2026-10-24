@@ -16,7 +16,7 @@ import {
   articleEnquiryPath,
   relatedOffers,
 } from "../src/data/offers.ts";
-import { projects } from "../src/data/projects.ts";
+import { projects, projectAliases, featuredProjects } from "../src/data/projects.ts";
 import { publicPaths } from "../src/data/publicPaths.ts";
 const siteURL = (
   process.env.VITE_SITE_URL || "https://buttertest.netlify.app"
@@ -51,7 +51,7 @@ function content(path) {
           `<a href="${offerPath(offer)}"><h3>${escape(offer.title)}</h3><p>${escape(offer.lead)}</p><span>Explore the service ↗</span></a>`,
       )
       .join("");
-    return `<section class="hero container"><div class="hero-copy"><h1>Learning<br>with <span class="feeling">feeling</span>.</h1><p>Bespoke eLearning, LMS development and training content for businesses. We turn complex know-how into clear, practical learning for your team.</p><div class="lead-actions"><a class="pill-button" href="/contact">Talk about your project ↗</a><a class="text-link" href="/work">Explore our work ↗</a></div></div><div class="hero-art"><div class="butter-circle"></div><img class="butter-mascot hero-character" src="/brand/butter-mark.webp" alt="butter’s melting play symbol with coral sparks" width="720" height="758" fetchpriority="high"><span class="handwritten">good things<br>are spreading.</span></div></section><section class="lead-proof container" aria-label="Reported project outcomes"><div class="lead-proof-grid">${proof}</div><p class="lead-footnote">Figures reported in the project case studies. Results depend on the audience, brief and context.</p></section><section class="lead-services section container"><h2>What needs to change?</h2><div>${serviceLinks}</div></section><section class="home-studio-links container"><a href="/journal"><div><h2>Fresh thinking.</h2><p>Practical ideas from the butter journal.</p></div></a><a href="/labs"><div><h2>A little what if.</h2><p>Experiments and learning snippets from Labs.</p></div></a></section>`;
+    return `<section class="hero container"><div class="hero-copy"><h1>Learning<br>with <span class="feeling">feeling</span>.</h1><p>Bespoke eLearning, LMS development and training content for businesses. We turn complex know-how into clear, practical learning for your team.</p><div class="lead-actions"><a class="pill-button" href="/contact">Talk about your project ↗</a><a class="text-link" href="/work">Explore our work ↗</a></div></div><div class="hero-art"><div class="butter-circle"></div><img class="butter-mascot hero-character" src="/brand/butter-mark.webp" alt="butter’s melting play symbol with coral sparks" width="720" height="758" fetchpriority="high"><span class="handwritten">good things<br>are spreading.</span></div></section><section class="lead-proof container" aria-label="Reported project outcomes"><div class="lead-proof-grid">${proof}</div><p class="lead-footnote">Figures reported in the project case studies. Results depend on the audience, brief and context.</p></section><section class="lead-services section container"><h2>What needs to change?</h2><p><a href="/elearning-devon">eLearning for Devon businesses ↗</a></p><div>${serviceLinks}</div></section><section id="selected-work" class="work section container"><h2>Proof is in the pudding.</h2><div class="projects">${featuredProjects.map((project) => `<a class="project" href="/work/${project.id}"><img src="${project.hero.path}" alt="${escape(project.hero.alt)}" width="1200" height="675" loading="lazy"><h3>${escape(project.title)}</h3><p>${escape(project.category)}</p></a>`).join("")}</div><a href="/work">Explore all work ↗</a></section><section class="home-studio-links container"><a href="/journal"><div><h2>Fresh thinking.</h2><p>Practical ideas from the butter journal.</p></div></a><a href="/labs"><div><h2>A little what if.</h2><p>Experiments and learning snippets from Labs.</p></div></a></section>`;
   }
   const offer = offers.find((item) => path === offerPath(item));
   if (offer) {
@@ -95,6 +95,14 @@ function content(path) {
     return `<article class="journal-article container"><header><a class="studio-back-link" href="/journal">← All articles</a><h1>${escape(article.title)}</h1><p class="journal-standfirst">${escape(article.description)}</p><div class="journal-byline"><span>butter studio</span><time datetime="${article.date}">${formatArticleDate(article.date)}</time><span>${readMinutes(article)} min read</span></div></header><div class="journal-reading-layout"><nav aria-label="In this article"><span>In this article</span>${article.sections.map((section, i) => `<a href="#section-${i + 1}">${escape(section.heading)}</a>`).join("")}</nav><div class="journal-prose">${article.sections.map((section, i) => `<section id="section-${i + 1}"><h2>${escape(section.heading)}</h2>${section.paragraphs.map((paragraph) => `<p>${escape(paragraph)}</p>`).join("")}${section.points ? `<ul>${section.points.map((point) => `<li>${escape(point)}</li>`).join("")}</ul>` : ""}${articleTable(section.table)}</section>`).join("")}${resources}<a href="${escape(article.action.to)}">${escape(article.action.label)} ↗</a>${serviceLinks}</div></div></article><section class="editorial-related container"><h2>A little more reading.</h2><div class="editorial-grid two-columns">${related}</div></section><section class="contact-section container"><h2>Put the thinking to work.</h2><p>A few lines about your team and the challenge are enough to start.</p><a class="pill-button" href="${escape(articleEnquiryPath(article.slug, article.enquiryService))}">Talk about your project ↗</a></section>`;
   }
   const [title, description] = getPageMeta(path);
+  // Search titles describe the service; the visible headings retain the brand voice.
+  const heading = {
+    "/about": "A little different. A lot more human.",
+    "/services": "Big ideas. A little butter.",
+    "/work": "Proof is in the pudding.",
+    "/journal": "Good ideas. Shared.",
+    "/butterlearn": "Meet butterlearn.",
+  }[path] || title;
   let extra = "";
   if (path === "/journal")
     extra = articles
@@ -138,7 +146,7 @@ function content(path) {
     const gallery = `<section class="project-gallery container" aria-label="Project image gallery"><div class="project-gallery-grid">${project.gallery.map((image) => `<a class="project-image-open" href="${image.path}" aria-label="Expand ${escape(image.alt)}"><img src="${image.path}" alt="${escape(image.alt)}" width="1200" height="675" loading="lazy"></a>`).join("")}</div></section>`;
     extra = `<dl class="project-facts"><div><dt>Client</dt><dd>${escape(project.client)}</dd></div><div><dt>Year</dt><dd>${escape(project.year)}</dd></div><div><dt>Project focus</dt><dd>${escape(project.role)}</dd></div></dl>${hero}<h2>The thinking.</h2><p>${escape(project.approach)}</p><ul>${project.deliverables.map((item) => `<li>${escape(item)}</li>`).join("")}</ul><h2>Reported outcome.</h2><p>${escape(project.outcome)}</p>${sections}${gallery}<a class="pill-button" href="/contact?service=${encodeURIComponent(project.caseStudy.service)}">Talk about your project ↗</a>`;
   }
-  return `<section class="page-hero container"><h1>${escape(title)}</h1><p>${escape(description)}</p>${extra}<p><a href="/journal">Read the butter journal</a> · <a href="/labs">Explore butter Labs</a> · <a href="/contact">Talk to butter</a></p></section>`;
+  return `<section class="page-hero container"><h1>${escape(heading)}</h1><p>${escape(description)}</p>${extra}<p><a href="/journal">Read the butter journal</a> · <a href="/labs">Explore butter Labs</a> · <a href="/contact">Talk to butter</a></p></section>`;
 }
 for (const path of routes) {
   const [title, description] = getPageMeta(path),
@@ -164,6 +172,12 @@ for (const path of routes) {
   await mkdir(directory, { recursive: true });
   await writeFile(join(directory, "index.html"), html);
 }
+await writeFile(
+  "dist/_redirects",
+  Object.entries(projectAliases)
+    .map(([from, to]) => `/work/${from} /work/${to} 301`)
+    .join("\n") + "\n",
+);
 await writeFile(
   "dist/sitemap.xml",
   `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map((path) => `<url><loc>${escape(siteURL + path)}</loc></url>`).join("")}</urlset>`,

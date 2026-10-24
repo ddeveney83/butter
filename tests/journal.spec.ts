@@ -26,7 +26,7 @@ test("journal view choice persists and keeps search and topics when switching", 
   await expect(page.getByRole("heading", { name: "No articles found." })).toBeVisible();
   await page.getByRole("button", { name: "Show all articles", exact: false }).click();
   await expect(page.locator(".journal-rows > li")).toHaveCount(33);
-  await page.locator(".journal-rows").getByRole("link", { name: title, exact: true }).click();
+  await page.locator(".journal-rows").getByRole("link", { name: title, exact: false }).click();
   await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   await page.goBack();
   await expect(list).toHaveAttribute("aria-pressed", "true");

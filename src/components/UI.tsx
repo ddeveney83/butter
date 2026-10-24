@@ -70,9 +70,8 @@ export function ProjectCard({ project }: { project: Project }) {
     <Link
       className="project"
       to={`/work/${project.id}`}
-      aria-label={`Explore ${project.title}`}
     >
-      <div className="project-image">
+      <div className="project-image" aria-hidden="true">
         <ProjectCardArtwork project={project} />
         <span className="project-open">
           <Arrow diagonal />
@@ -189,7 +188,6 @@ export function Tabs({
             type="button"
             id={`${instance}-tab-${item.id}`}
             role="tab"
-            aria-label={item.label}
             aria-selected={active === index}
             aria-controls={`${instance}-panel-${item.id}`}
             tabIndex={active === index ? 0 : -1}
@@ -210,8 +208,8 @@ export function Tabs({
           >
             {/^\d{2} \/ /.test(item.label) ? (
               <>
-                <span className="tab-number" aria-hidden="true">
-                  {item.label.slice(0, 2)}
+                <span className="tab-number">
+                  {item.label.slice(0, 5)}
                 </span>
                 <span>{item.label.slice(5)}</span>
               </>

@@ -58,11 +58,10 @@ function ArticleRow({ article }: { article: Article }) {
       <Link
         className="journal-row"
         to={"/journal/" + article.slug}
-        aria-labelledby={`journal-row-${article.slug}`}
         data-cursor-label="Read article"
       >
         <div className="journal-row-copy">
-          <h2 id={`journal-row-${article.slug}`}>{article.title}</h2>
+          <h2>{article.title}</h2>
           <p>{article.description}</p>
         </div>
         <div className="journal-row-meta">
@@ -80,7 +79,6 @@ export function ArticleCard({ article }: { article: Article }) {
     <Link className="editorial-card" to={"/journal/" + article.slug}>
       <div className={"editorial-card-art " + article.icon}>
         <Doodle kind={article.icon} />
-        <span aria-hidden="true">Aa.</span>
       </div>
       <div className="editorial-card-copy">
         <span className="editorial-meta">

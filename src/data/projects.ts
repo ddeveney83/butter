@@ -361,3 +361,6 @@ export const projectAliases: Record<string, string> = {
   sustainability: "15-minute-compliance",
   "product-skills": "information-security",
 };
+export const featuredProjects = ["allergen-awareness", "your-learning-platform"].map(
+  (id) => projects.find((project) => project.id === id)!,
+);

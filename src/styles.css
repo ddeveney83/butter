@@ -410,7 +410,7 @@ h2 {
 }
 .services span {
   font-size: 11px;
-  color: #77776c;
+  color: var(--muted);
 }
 .services h3 {
   font-size: 22px;

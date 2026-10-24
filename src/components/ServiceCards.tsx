@@ -1,4 +1,3 @@
-import { useId } from "react";
 import { MotionLink as Link } from "./Motion";
 import { Arrow } from "./Artwork";
 import ServiceArtwork from "./ServiceArtwork";
@@ -11,7 +10,6 @@ export default function ServiceCards({
   className?: string;
   headingLevel?: 2 | 3;
 }) {
-  const id = useId();
   const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
     <nav
@@ -23,21 +21,16 @@ export default function ServiceCards({
           className="service-card"
           key={offer.slug}
           to={offerPath(offer)}
-          aria-labelledby={`${id}-${offer.slug}`}
-          aria-describedby={`${id}-${offer.slug}-summary`}
           data-cursor-label="Explore service"
         >
           <ServiceArtwork slug={offer.slug} />
-          <Heading id={`${id}-${offer.slug}`} className="service-card-title">
+          <Heading className="service-card-title">
             {offer.title}
           </Heading>
-          <p
-            id={`${id}-${offer.slug}-summary`}
-            className="service-card-summary"
-          >
+          <p className="service-card-summary">
             {offer.cardSummary}
           </p>
-          <span className="service-card-action" aria-hidden="true">
+          <span className="service-card-action">
             Explore service
             <span className="service-card-arrow"><Arrow diagonal /></span>
           </span>
