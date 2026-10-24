@@ -1,20 +1,48 @@
+import { useId } from "react";
 import { MotionLink as Link } from "./Motion";
-import { Arrow, Doodle } from "./Artwork";
+import { Arrow } from "./Artwork";
+import ServiceArtwork from "./ServiceArtwork";
 import { offers, offerPath } from "../data/offers";
 
-export default function ServiceCards() {
+export default function ServiceCards({
+  className = "",
+  headingLevel = 3,
+}: {
+  className?: string;
+  headingLevel?: 2 | 3;
+}) {
+  const id = useId();
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
-    <div className="service-cards">
+    <nav
+      className={`service-cards ${className}`}
+      aria-label="Services for your next project"
+    >
       {offers.map((offer) => (
-        <Link key={offer.slug} to={offerPath(offer)}>
-          <Doodle kind={offer.icon} />
-          <h3>{offer.title}</h3>
-          <p>{offer.lead}</p>
-          <span>
-            Explore the service <Arrow diagonal />
+        <Link
+          className="service-card"
+          key={offer.slug}
+          to={offerPath(offer)}
+          aria-labelledby={`${id}-${offer.slug}`}
+          aria-describedby={`${id}-${offer.slug}-summary`}
+          data-cursor-label="Explore service"
+        >
+          <ServiceArtwork slug={offer.slug} />
+          <Heading id={`${id}-${offer.slug}`} className="service-card-title">
+            {offer.title}
+          </Heading>
+          <p
+            id={`${id}-${offer.slug}-summary`}
+            className="service-card-summary"
+          >
+            {offer.cardSummary}
+          </p>
+          <span className="service-card-action" aria-hidden="true">
+            Explore service
+            <span className="service-card-arrow"><Arrow diagonal /></span>
           </span>
         </Link>
       ))}
-    </div>
+    </nav>
   );
 }

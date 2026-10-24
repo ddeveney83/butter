@@ -1,6 +1,5 @@
-import { MotionLink as Link } from "../components/Motion";
-import { offers, offerPath } from "../data/offers";
 import { Arrow, Doodle } from "../components/Artwork";
+import ServiceCards from "../components/ServiceCards";
 import {
   Accordion,
   ContactCTA,
@@ -109,18 +108,7 @@ export default function Services() {
         </p>
         <TextLink to="/contact">Talk about your project</TextLink>
       </PageHero>
-      <section
-        className="lead-service-links container"
-        aria-label="Services for your next project"
-      >
-        {offers.map((offer) => (
-          <Link key={offer.slug} to={offerPath(offer)}>
-            <Doodle kind={offer.icon} />
-            <span>{offer.title}</span>
-            <Arrow diagonal />
-          </Link>
-        ))}
-      </section>
+      <ServiceCards className="lead-service-links container" headingLevel={2} />
       <section className="service-list container" aria-label="Our services">
         {services.map((service, index) => (
           <Reveal key={service.title}>

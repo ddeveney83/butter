@@ -4,6 +4,7 @@ type Offer = {
   description: string;
   headline: string;
   lead: string;
+  cardSummary: string;
   icon: "idea" | "heart" | "play" | "spark";
   need: string;
   approach: string;
@@ -15,6 +16,7 @@ type Offer = {
 export const offers: Offer[] = [
   {
     slug: "bespoke-elearning",
+    cardSummary: "Turn your expertise into learning that clicks.",
     title: "Bespoke eLearning",
     description:
       "Bespoke eLearning design and development for businesses: clear content, realistic practice, accessible interactions and delivery testing with butter.",
@@ -60,6 +62,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "lms-development",
+    cardSummary: "Connect your people, content and systems.",
     title: "LMS architecture & development",
     description:
       "LMS architecture and development from butter: Moodle customisation, learner journeys, platform configuration and integration planning, shaped around your organisation.",
@@ -109,6 +112,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "compliance-training",
+    cardSummary: "Help your team make the right call.",
     title: "Compliance training",
     description:
       "Create practical compliance training with butter: clear guidance, realistic workplace scenarios, useful assessment and agreed learning-platform reporting.",
@@ -154,6 +158,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "course-refresh",
+    cardSummary: "Give good content a fresh lease of life.",
     title: "Course refresh",
     description:
       "Refresh existing eLearning with butter: review outdated content, improve accessibility and interactions, and agree a focused update or rebuild plan.",
@@ -199,6 +204,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "learning-strategy",
+    cardSummary: "Find the need. Shape the way forward.",
     title: "Learning strategy",
     description:
       "Learning strategy and training needs analysis for businesses. Map skills, identify performance gaps and agree a practical development plan with butter.",
@@ -244,6 +250,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "ld-team-development",
+    cardSummary: "Build the skills behind better learning.",
     title: "L&D team development",
     description:
       "Build your L&D team’s digital learning capability with butter: practical instructional design workshops, authoring-tool coaching and supported project work.",
@@ -289,6 +296,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "learning-animation",
+    cardSummary: "Make complex ideas move people.",
     title: "Learning animation",
     description:
       "Learning animation and training video from butter: clear scripts, storyboards, motion design and captioned films for workplace learning and internal campaigns.",
@@ -338,6 +346,7 @@ export const offers: Offer[] = [
   },
   {
     slug: "lms-project-management",
+    cardSummary: "Take your platform from plan to launch.",
     title: "LMS project management",
     description:
       "LMS project management from discovery to rollout. Coordinate requirements, suppliers, migration, user acceptance testing and handover with butter.",
