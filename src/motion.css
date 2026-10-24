@@ -191,10 +191,6 @@ select {
 .scenario-choices button:active {
   transform: translateY(1px);
 }
-.hero-character {
-  animation-duration: 8s;
-  animation-timing-function: var(--ease-in-out);
-}
 .back-top span {
   display: inline-block;
 }

@@ -4,16 +4,6 @@
   height: auto;
   object-fit: contain;
 }
-.hero-character.butter-mascot {
-  width: 96%;
-  max-height: 460px;
-  top: 8px;
-  left: 0;
-}
-.hero-art > .butter-circle {
-  background: var(--butter-soft);
-  inset: 54px 10px 25px;
-}
 .about-doodle .butter-mascot {
   width: 170px;
   max-height: 200px;
@@ -680,10 +670,6 @@ html[data-motion="reduced"] .journal-row-arrow .arrow {
   }
 }
 @media (max-width: 760px) {
-  .hero-character.butter-mascot {
-    max-height: 370px;
-    top: 0;
-  }
   .nav {
     top: 80px;
   }

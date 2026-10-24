@@ -4,67 +4,12 @@ import { ContactCTA, ProjectCard, Reveal, TextLink } from "../components/UI";
 import { projects, featuredProjects } from "../data/projects";
 import { offers, offerPath } from "../data/offers";
 import ServiceCards from "../components/ServiceCards";
+import HomeHero from "../components/HomeHero";
 
 export default function Home() {
   return (
     <>
-      <section className="hero container">
-        <div className="hero-copy">
-          <h1>
-            Learning
-            <br />
-            with{" "}
-            <span className="feeling">
-              feeling
-              <svg
-                viewBox="0 0 380 18"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M5 12Q165-2 374 8"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="12"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>
-            .
-          </h1>
-          <p>
-            Bespoke eLearning, LMS development and training content for
-            businesses. We turn complex know-how into clear, practical learning
-            for your team.
-          </p>
-          <div className="lead-actions">
-            <Link
-              className="pill-button"
-              to="/contact"
-              data-conversion="enquiry_click"
-            >
-              Talk about your project <Arrow diagonal />
-            </Link>
-            <TextLink to="/work">Explore our work</TextLink>
-          </div>
-        </div>
-        <div className="hero-art">
-          <div className="butter-circle" />
-          <Spark className="hero-spark" />
-          <ButterCharacter className="hero-character" />
-          <span className="handwritten">
-            good things
-            <br />
-            are spreading.
-          </span>
-        </div>
-        <a className="scroll-note" href="#selected-work">
-          Scroll for the good stuff <span>↓</span>
-        </a>
-        <span className="hero-footer-note">
-          Independent minds. Shared curiosity.
-        </span>
-      </section>
+      <HomeHero />
       <section
         className="lead-proof container"
         aria-label="Reported project outcomes"

@@ -106,45 +106,6 @@ a:focus-visible {
 .menu-toggle {
   display: none;
 }
-.hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  align-items: center;
-  min-height: 660px;
-  padding-top: 44px;
-  padding-bottom: 115px;
-  gap: 20px;
-}
-.hero h1 {
-  font-size: clamp(68px, 7.35vw, 110px);
-  font-weight: var(--weight-heading);
-  letter-spacing: -6px;
-  line-height: 1.01;
-  margin: 0 0 35px;
-  position: relative;
-  z-index: 1;
-}
-.feeling {
-  position: relative;
-  white-space: nowrap;
-}
-.feeling svg {
-  position: absolute;
-  bottom: -6px;
-  left: 0;
-  width: 101%;
-  height: 17px;
-  color: var(--butter);
-  z-index: -1;
-}
-.hero-copy p {
-  font-size: 19px;
-  line-height: 1.65;
-  margin: 0 0 32px;
-  color: #55554e;
-  letter-spacing: -0.3px;
-}
 .pill-button {
   display: inline-flex;
   align-items: center;
@@ -167,11 +128,6 @@ a:focus-visible {
   color: var(--ink);
   transform: translateY(-2px);
 }
-.hero-art {
-  position: relative;
-  height: 490px;
-  isolation: isolate;
-}
 .butter-circle {
   position: absolute;
   inset: 44px 0 14px 0;
@@ -179,55 +135,6 @@ a:focus-visible {
   background: var(--butter);
   transform: rotate(-10deg);
   z-index: -1;
-}
-.hero-character {
-  position: absolute;
-  width: 105%;
-  left: -3%;
-  top: 18px;
-  transform: rotate(-6deg);
-  animation: float 6s ease-in-out infinite;
-}
-.hero-spark {
-  position: absolute;
-  width: 52px;
-  height: 52px;
-  right: 0;
-  top: 10px;
-  transform: rotate(10deg);
-}
-.handwritten {
-  font-family: "DM Sans Variable", sans-serif;
-  font-size: 23px;
-  font-style: italic;
-  font-weight: 650;
-  line-height: 1.1;
-  letter-spacing: -1px;
-  position: absolute;
-  right: -14px;
-  bottom: 8px;
-  transform: rotate(-10deg);
-}
-.scroll-note {
-  position: absolute;
-  bottom: 35px;
-  left: 0;
-  font-size: 12px;
-  color: #66665d;
-  display: flex;
-  gap: 28px;
-  align-items: center;
-}
-.scroll-note span {
-  font-size: 22px;
-  color: var(--ink);
-}
-.hero-footer-note {
-  position: absolute;
-  right: 0;
-  bottom: 41px;
-  font-size: 12px;
-  color: #66665d;
 }
 .ticker {
   overflow: hidden;
@@ -556,52 +463,14 @@ h2 {
 .form-note:empty {
   display: none;
 }
-@keyframes float {
-  0%,
-  100% {
-    transform: rotate(-6deg) translateY(0);
-  }
-  50% {
-    transform: rotate(-4deg) translateY(-9px);
-  }
-}
-@media (min-width: 1500px) {
-  .hero h1 {
-    font-size: 116px;
-  }
-  .hero {
-    min-height: 710px;
-  }
-  .hero-art {
-    height: 530px;
-  }
-}
+
+
 @media (max-width: 1100px) {
   .container {
     width: calc(100% - 72px);
   }
-  .hero {
-    min-height: 590px;
-    gap: 0;
-  }
-  .hero h1 {
-    font-size: 7.7vw;
-    letter-spacing: -4.5px;
-  }
-  .hero-art {
-    height: 400px;
-  }
-  .hero-character {
-    top: 32px;
-  }
   .butter-circle {
     inset: 48px 0 18px;
-  }
-  .handwritten {
-    font-size: 19px;
-  }
-  .hero-copy p {
-    font-size: 17px;
   }
   .about-grid {
     gap: 50px;
@@ -664,59 +533,13 @@ h2 {
   .nav-contact {
     justify-content: space-between;
   }
-  .hero {
-    padding-top: 31px;
-    padding-bottom: 62px;
-    grid-template-columns: 1fr;
-    min-height: auto;
-    gap: 15px;
-  }
-  .hero h1 {
-    font-size: clamp(61px, 11.8vw, 88px);
-    letter-spacing: -4px;
-    margin-bottom: 26px;
-  }
-  .hero-copy p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-  }
   .pill-button {
     padding: 15px 22px;
     font-size: 14px;
     gap: 22px;
   }
-  .hero-art {
-    height: 390px;
-    width: min(420px, 100%);
-    margin: 0 auto;
-  }
-  .hero-character {
-    width: 98%;
-    left: 0;
-    top: 5px;
-  }
   .butter-circle {
     inset: 32px 13px 7px;
-  }
-  .hero-spark {
-    width: 37px;
-    height: 37px;
-    right: 6px;
-    top: 9px;
-  }
-  .handwritten {
-    right: 0;
-    bottom: -1px;
-    font-size: 19px;
-  }
-  .scroll-note {
-    bottom: 18px;
-    font-size: 11px;
-    gap: 17px;
-  }
-  .hero-footer-note {
-    display: none;
   }
   .ticker {
     padding: 18px 0;
@@ -851,13 +674,6 @@ h2 {
   }
 }
 @media (max-width: 380px) {
-  .hero h1 {
-    font-size: 58px;
-    letter-spacing: -3.7px;
-  }
-  .hero-art {
-    height: 330px;
-  }
   .contact-section h2 {
     font-size: 42px;
   }

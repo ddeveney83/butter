@@ -1,0 +1,288 @@
+/* The opening idea: turn a pile of knowledge into a lightbulb moment. */
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.16fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 52px;
+  padding-block: 44px 80px;
+  min-height: 680px;
+}
+.home-hero .hero-copy {
+  min-width: 0;
+}
+.home-hero h1 {
+  font-size: clamp(54px, 5.6vw, 84px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -.065em;
+  margin: 0 0 30px;
+}
+.home-hero h1 > span {
+  display: block;
+  width: fit-content;
+}
+.hero-highlight {
+  background: linear-gradient(transparent 73%, var(--butter) 73%, var(--butter) 94%, transparent 94%);
+}
+.home-hero .hero-copy > p {
+  max-width: 51ch;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0 0 32px;
+}
+.hero-stage {
+  position: relative;
+  width: 100%;
+  height: 540px;
+  max-width: 550px;
+  margin-left: auto;
+  isolation: isolate;
+}
+.hero-brief-sheet {
+  position: absolute;
+  inset: 0 auto 48px 12px;
+  width: 72%;
+  padding: 28px;
+  background: var(--paper);
+  border: var(--outline);
+  border-radius: 20px;
+  transform: rotate(-9deg);
+  color: var(--ink);
+}
+.hero-brief-sheet > span {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  margin-bottom: 30px;
+  transform: translateY(-18px);
+}
+.hero-brief-sheet > i {
+  display: block;
+  width: 88%;
+  height: 3px;
+  margin-block: 20px;
+  border-radius: 10px;
+  background: var(--line);
+}
+.hero-brief-sheet > i:nth-child(3n) {
+  width: 64%;
+}
+.hero-brief-sheet > svg {
+  width: 100px;
+  height: 50px;
+  margin-top: 15px;
+}
+.hero-idea-sheet {
+  position: absolute;
+  inset: 58px 8px 34px 42px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px 18px;
+  background: var(--butter);
+  border: 3px solid var(--ink);
+  border-radius: 28px;
+  box-shadow: 7px 8px 0 var(--ink);
+  transform: rotate(4deg);
+  transition: transform var(--motion-slow) var(--ease-butter);
+}
+.hero-idea-sheet[data-demo-open="true"] {
+  transform: rotate(0);
+}
+.hero-big-idea {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hero-big-idea[hidden],
+.hero-learning-taster[hidden] {
+  display: none;
+}
+.home-hero .hero-character {
+  display: block;
+  width: 290px;
+  max-width: 100%;
+  height: 250px;
+  object-fit: contain;
+  animation: float 3.6s var(--ease-butter) 1 both;
+}
+.hero-aha {
+  font-family: var(--font-display);
+  font-size: 108px;
+  font-weight: 1000;
+  letter-spacing: -.075em;
+  line-height: .95;
+  margin: -8px 0 16px;
+  transform: rotate(-4deg);
+}
+.hero-taster-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 15px;
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 18px;
+  border: var(--outline);
+  border-radius: 30px;
+  background: var(--paper);
+  font-size: 14px;
+  font-weight: 650;
+  transition:
+    background var(--motion-base) var(--ease-butter),
+    color var(--motion-base) var(--ease-butter);
+}
+.hero-taster-toggle .arrow {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+}
+.hero-taster-toggle:focus-visible,
+.hero-taster-choices button:focus-visible {
+  outline-offset: 4px;
+}
+.hero-butter-seal {
+  position: absolute;
+  top: 25px;
+  right: -12px;
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(13deg);
+  pointer-events: none;
+}
+.hero-butter-seal img {
+  display: block;
+  width: 44px;
+  height: 59px;
+  object-fit: contain;
+}
+.hero-stage-note {
+  position: absolute;
+  bottom: -4px;
+  left: 64px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+}
+.hero-learning-taster {
+  flex: 1;
+  min-height: 0;
+  padding-top: 10px;
+  animation: content-arrive var(--motion-base) var(--ease-butter);
+}
+.hero-learning-taster h2 {
+  font-size: clamp(24px, 2.3vw, 33px);
+  font-weight: 850;
+  line-height: 1.12;
+  letter-spacing: -.04em;
+  margin: 0 0 22px;
+  outline: none;
+}
+.hero-taster-choices {
+  display: grid;
+  gap: 10px;
+}
+.hero-taster-choices button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 50px;
+  padding: 11px 13px;
+  border: var(--outline);
+  border-radius: 12px;
+  background: var(--butter-soft);
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+  transition:
+    background var(--motion-base) var(--ease-butter),
+    color var(--motion-base) var(--ease-butter);
+}
+.hero-taster-choices button > span {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 850;
+  flex: 0 0 18px;
+}
+.hero-taster-choices button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.hero-taster-feedback {
+  min-height: 105px;
+  padding-top: 18px;
+}
+.hero-taster-feedback p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  animation: content-arrive var(--motion-base) var(--ease-butter);
+}
+@keyframes float {
+  0% { transform: translateY(10px) rotate(-7deg); }
+  65% { transform: translateY(-5px) rotate(2deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-taster-toggle:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .hero-taster-choices button:not([aria-pressed="true"]):hover {
+    background: var(--paper);
+  }
+}
+@media (max-width: 1100px) {
+  .home-hero { gap: 28px; min-height: 610px; }
+  .home-hero h1 { font-size: clamp(46px, 5.6vw, 68px); }
+  .home-hero .hero-copy > p { font-size: 16px; }
+  .hero-stage { height: 500px; }
+  .hero-idea-sheet { left: 20px; padding-inline: 18px; }
+  .home-hero .hero-character { height: 225px; }
+  .hero-aha { font-size: 94px; }
+  .hero-stage-note { left: 30px; }
+}
+@media (max-width: 760px) {
+  .home-hero {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 26px 56px;
+    gap: 46px;
+    min-height: auto;
+  }
+  .home-hero h1 { font-size: clamp(42px, 10.8vw, 70px); margin-bottom: 24px; }
+  .home-hero .hero-copy > p { max-width: 48ch; font-size: 16px; margin-bottom: 26px; }
+  .home-hero .lead-actions { gap: 14px 22px; }
+  .home-hero .lead-actions .text-link { min-height: 44px; }
+  .hero-stage { max-width: 470px; height: 490px; margin-inline: auto; }
+  .hero-brief-sheet { padding: 22px; left: 12px; }
+  .hero-brief-sheet > span { font-size: 21px; }
+  .hero-idea-sheet { inset: 52px 8px 34px 24px; padding: 18px 20px 16px; border-radius: 24px; }
+  .hero-butter-seal { top: 22px; right: -6px; width: 76px; height: 76px; }
+  .hero-butter-seal img { width: 37px; height: 50px; }
+  .home-hero .hero-character { height: 220px; }
+  .hero-aha { font-size: 92px; }
+  .hero-learning-taster { padding-top: 8px; }
+  .hero-learning-taster h2 { font-size: 26px; margin-bottom: 18px; }
+  .hero-taster-feedback { padding-top: 14px; }
+  .hero-stage-note { left: 35px; font-size: 12px; }
+}
+@media (max-width: 380px) {
+  .hero-stage { height: 510px; }
+  .hero-idea-sheet { left: 14px; right: 6px; padding-inline: 14px; }
+  .hero-taster-toggle { padding-inline: 13px; font-size: 13px; }
+  .hero-taster-choices button { padding: 10px; gap: 8px; font-size: 13px; }
+  .hero-learning-taster h2 { font-size: 24px; }
+  .hero-taster-feedback p { font-size: 13px; }
+}

@@ -1,6 +1,35 @@
 import { test, expect } from "@playwright/test";
 import { offers } from "../src/data/offers";
 const offerPaths = offers.map((offer) => offer.slug);
+test("homepage learning taster supports keyboard choices, reset and onward navigation", async ({ page }) => {
+  await page.goto("/");
+  const hero = page.locator(".home-hero");
+  const toggle = hero.getByRole("button", { name: "Try a little learning", exact: true });
+  await toggle.focus();
+  await toggle.press("Enter");
+  await expect(hero.locator(".hero-learning-taster h2")).toBeFocused();
+  await page.keyboard.press("Tab");
+  const choices = hero.getByRole("group", { name: "Choose a starting point" }).getByRole("button");
+  await expect(choices.first()).toBeFocused();
+  await page.keyboard.press("Space");
+  await expect(hero.getByRole("status")).toContainText("clear first step");
+  await choices.nth(1).click();
+  await expect(choices.nth(1)).toHaveAttribute("aria-pressed", "true");
+  await expect(hero.getByRole("status")).toContainText("That’s the idea");
+  const back = hero.getByRole("button", { name: "Back to the big idea", exact: true });
+  await back.click();
+  await expect(toggle).toBeFocused();
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(choices.first()).not.toBeVisible();
+  await toggle.click();
+  await expect(choices.first()).toHaveAttribute("aria-pressed", "false");
+  await expect(choices.nth(1)).toHaveAttribute("aria-pressed", "false");
+  await expect(hero.getByRole("status")).toContainText("Pick a starting point");
+  await back.click();
+  await hero.getByRole("link", { name: "Explore our work", exact: false }).click();
+  await expect(page).toHaveURL("/work");
+});
+
 test("commercial pages are discoverable, indexed and fit narrow layouts", async ({
   page,
 }) => {
