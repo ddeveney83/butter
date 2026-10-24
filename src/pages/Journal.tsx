@@ -14,6 +14,67 @@ import NotFound from "./NotFound";
 import { articleEnquiryPath, relatedOffers, offerPath } from "../data/offers";
 import ArticleTable from "../components/ArticleTable";
 
+type JournalView = "cards" | "list";
+const viewStorageKey = "butter-journal-view";
+
+function initialView(): JournalView {
+  try {
+    return localStorage.getItem(viewStorageKey) === "list" ? "list" : "cards";
+  } catch {
+    return "cards";
+  }
+}
+
+function ViewIcon({ view }: { view: JournalView }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {view === "cards" ? (
+        <>
+          <rect x="3" y="3" width="7" height="7" rx="2" />
+          <rect x="14" y="3" width="7" height="7" rx="2" />
+          <rect x="3" y="14" width="7" height="7" rx="2" />
+          <rect x="14" y="14" width="7" height="7" rx="2" />
+        </>
+      ) : (
+        <path d="M4 5h1m5 0h10M4 12h1m5 0h10M4 19h1m5 0h10" />
+      )}
+    </svg>
+  );
+}
+
+function ArticleRow({ article }: { article: Article }) {
+  return (
+    <li>
+      <Link
+        className="journal-row"
+        to={"/journal/" + article.slug}
+        aria-labelledby={`journal-row-${article.slug}`}
+        data-cursor-label="Read article"
+      >
+        <div className="journal-row-copy">
+          <h2 id={`journal-row-${article.slug}`}>{article.title}</h2>
+          <p>{article.description}</p>
+        </div>
+        <div className="journal-row-meta">
+          <span>{article.topic}</span>
+          <span>{readMinutes(article)} min read</span>
+        </div>
+        <span className="journal-row-arrow"><Arrow diagonal /></span>
+      </Link>
+    </li>
+  );
+}
+
 export function ArticleCard({ article }: { article: Article }) {
   return (
     <Link className="editorial-card" to={"/journal/" + article.slug}>
@@ -37,6 +98,15 @@ export function ArticleCard({ article }: { article: Article }) {
 export default function Journal() {
   const [topic, setTopic] = useState("All articles");
   const [query, setQuery] = useState("");
+  const [view, setView] = useState<JournalView>(initialView);
+  function chooseView(next: JournalView) {
+    setView(next);
+    try {
+      localStorage.setItem(viewStorageKey, next);
+    } catch {
+      // The switch still works when browser storage is unavailable.
+    }
+  }
   const topics = [
     "All articles",
     ...new Set(articles.map((article) => article.topic)),
@@ -67,15 +137,36 @@ export default function Journal() {
         </p>
       </PageHero>
       <section className="editorial-list container">
-        <label className="journal-search">
-          <span>Find something useful</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Try accessibility, feedback or SCORM"
-          />
-        </label>
+        <div className="journal-browser-options">
+          <label className="journal-search">
+            <span>Find something useful</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Try accessibility, feedback or SCORM"
+            />
+          </label>
+          <div
+            className="journal-view-switch"
+            role="group"
+            aria-label="Article view"
+          >
+            {(["cards", "list"] as const).map((option) => (
+              <button
+                key={option}
+                type="button"
+                aria-pressed={view === option}
+                aria-controls="journal-results"
+                data-cursor-label={view === option ? "Current view" : `Show ${option}`}
+                onClick={() => chooseView(option)}
+              >
+                <ViewIcon view={option} />
+                {option === "cards" ? "Cards" : "List"}
+              </button>
+            ))}
+          </div>
+        </div>
         <div className="studio-list-toolbar">
           <div
             className="filter-list"
@@ -96,13 +187,21 @@ export default function Journal() {
             {visible.length} {visible.length === 1 ? "article" : "articles"}
           </span>
         </div>
-        <div className="editorial-grid">
-          {visible.map((article) => (
-            <Reveal key={article.slug}>
-              <ArticleCard article={article} />
-            </Reveal>
-          ))}
-        </div>
+        {view === "cards" ? (
+          <div id="journal-results" className="editorial-grid">
+            {visible.map((article) => (
+              <Reveal key={article.slug}>
+                <ArticleCard article={article} />
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <ul id="journal-results" className="journal-rows" aria-label="Journal articles">
+            {visible.map((article) => (
+              <ArticleRow key={article.slug} article={article} />
+            ))}
+          </ul>
+        )}
         {visible.length === 0 && (
           <div className="journal-empty">
             <h2>No articles found.</h2>

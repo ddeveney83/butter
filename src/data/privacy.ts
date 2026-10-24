@@ -16,7 +16,7 @@ export const privacySections = [
   {
     heading: "Media and preferences.",
     paragraphs: [
-      "Project films use external video players only after you choose to play them. The player provider may then process connection and usage information under its own policies. The site’s motion preference is saved in your browser when available so your chosen setting can be applied on later visits.",
+      "Project films use external video players only after you choose to play them. The player provider may then process connection and usage information under its own policies. The site’s motion setting and your choice of journal card or list view are saved in your browser when available so your preferences can be applied on later visits.",
     ],
   },
   {

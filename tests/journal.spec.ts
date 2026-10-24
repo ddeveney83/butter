@@ -1,5 +1,44 @@
 import { test, expect } from "@playwright/test";
 
+test("journal view choice persists and keeps search and topics when switching", async ({ page }) => {
+  await page.goto("/journal");
+  const views = page.getByRole("group", { name: "Article view" });
+  const cards = views.getByRole("button", { name: "Cards", exact: true });
+  const list = views.getByRole("button", { name: "List", exact: true });
+  await expect(cards).toHaveAttribute("aria-pressed", "true");
+  await list.focus();
+  await list.press("Enter");
+  await expect(list).toBeFocused();
+  await expect(list).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".journal-rows > li")).toHaveCount(33);
+  await expect(page.locator(".editorial-card")).toHaveCount(0);
+  await page.getByRole("button", { name: "Education in practice", exact: true }).click();
+  const search = page.getByRole("searchbox", { name: "Find something useful" });
+  await search.fill("retrieval practice");
+  const title = "Retrieval practice: make remembering part of learning.";
+  await expect(page.locator(".journal-row h2")).toHaveText(title);
+  await cards.click();
+  await expect(page.locator(".editorial-card h2")).toHaveText(title);
+  await list.click();
+  await expect(search).toHaveValue("retrieval practice");
+  await expect(page.getByRole("status")).toHaveText("1 article");
+  await search.fill("no matching article here");
+  await expect(page.getByRole("heading", { name: "No articles found." })).toBeVisible();
+  await page.getByRole("button", { name: "Show all articles", exact: false }).click();
+  await expect(page.locator(".journal-rows > li")).toHaveCount(33);
+  await page.locator(".journal-rows").getByRole("link", { name: title, exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
+  await page.goBack();
+  await expect(list).toHaveAttribute("aria-pressed", "true");
+  await page.reload();
+  await expect(page.locator(".journal-rows > li")).toHaveCount(33);
+  await expect(list).toHaveAttribute("aria-pressed", "true");
+  await cards.click();
+  await page.reload();
+  await expect(cards).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".editorial-card")).toHaveCount(33);
+});
+
 test("journal search combines with topics and recovers from empty results", async ({
   page,
 }) => {
