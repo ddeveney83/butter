@@ -5,9 +5,9 @@ import { Accordion, PageHero, Reveal, Tabs, TextLink } from "../components/UI";
 import "./Butterlearn.css";
 
 export const butterlearnEnquiry =
-  "/contact?service=Butterlearn&brief=" +
+  "/contact?service=butterlearn&brief=" +
   encodeURIComponent(
-    "I’d like to talk about Butterlearn for our team. We’re looking for a learning platform that helps us…",
+    "I’d like to talk about butterlearn for our team. We’re looking for a learning platform that helps us…",
   );
 const sampleCourses = [
   {
@@ -106,7 +106,7 @@ function ButterlearnPreview() {
       </div>
       <div className="butterlearn-preview-body">
         <Tabs
-          label="Explore Butterlearn"
+          label="Explore butterlearn"
           items={[
             {
               id: "learner",
@@ -327,7 +327,7 @@ export default function Butterlearn() {
       <PageHero
         title={
           <>
-            A little Butter.
+            A little butter.
             <br />A lot of <span className="underlined">learning.</span>
           </>
         }
@@ -343,12 +343,12 @@ export default function Butterlearn() {
         }
       >
         <p>
-          Butterlearn is our LMS. One welcoming place for your courses, your
+          butterlearn is our LMS. One welcoming place for your courses, your
           people and their progress.
         </p>
         <div className="butterlearn-hero-actions">
           <Link className="pill-button" to={butterlearnEnquiry}>
-            Let’s talk Butterlearn <Arrow diagonal />
+            Let’s talk butterlearn <Arrow diagonal />
           </Link>
           <TextLink to="/butterlearn/login">Log in</TextLink>
         </div>
@@ -358,7 +358,7 @@ export default function Butterlearn() {
       </PageHero>
       <section
         className="butterlearn-product container"
-        aria-label="Butterlearn product preview"
+        aria-label="butterlearn product preview"
       >
         <Reveal>
           <ButterlearnPreview />
@@ -406,7 +406,7 @@ export default function Butterlearn() {
           </h2>
         </Reveal>
         <div className="faq-list">
-          <Accordion title="Can we use Butterlearn yet?">
+          <Accordion title="Can we use butterlearn yet?">
             <p>
               The first release supports learner accounts, HTML course packages,
               SCORM 1.2 and SCORM 2004 tracking, course assignments and team

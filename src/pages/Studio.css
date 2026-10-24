@@ -11,7 +11,7 @@
   left: 0;
 }
 .hero-art > .butter-circle {
-  background: #fff1b7;
+  background: var(--butter-soft);
   inset: 54px 10px 25px;
 }
 .about-doodle .butter-mascot {
@@ -62,11 +62,56 @@
   font-size: 14px;
 }
 .toon-icon {
-  color: #080906;
+  color: #111110;
 }
 .editorial-list,
 .labs-list {
   padding: 0 0 90px;
+}
+.journal-search {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  max-width: 600px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.journal-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 15px 20px;
+  border: 2px solid var(--ink);
+  border-radius: 30px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.journal-search input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+.journal-empty {
+  padding-block: 40px;
+}
+.journal-empty h2 {
+  font-size: 32px;
+}
+.journal-empty p {
+  margin-bottom: 28px;
+  color: var(--muted);
+}
+.journal-resources {
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+}
+.journal-resources a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+.journal-resources a:hover {
+  color: var(--accent-ink);
 }
 .studio-list-toolbar {
   display: flex;
@@ -104,10 +149,10 @@
 }
 .editorial-card:hover {
   translate: 0 -5px;
-  box-shadow: 5px 7px 0 #20201d;
+  box-shadow: 5px 7px 0 #111110;
 }
 .editorial-card-art {
-  background: #fff1b7;
+  background: var(--butter-soft);
   position: relative;
   display: flex;
   align-items: center;
@@ -137,7 +182,7 @@
   font-size: 170px;
   line-height: 1;
   font-weight: 850;
-  color: #20201d08;
+  color: #11111008;
   letter-spacing: -12px;
   bottom: -18px;
   right: -4px;
@@ -288,7 +333,7 @@
   margin-bottom: 14px;
 }
 .journal-next-step {
-  background: #fff1b7;
+  background: var(--butter-soft);
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 30px;
@@ -484,7 +529,7 @@
 .lab-session-prompt {
   padding: 25px;
   border: 1px solid var(--line);
-  background: #fff1b7;
+  background: var(--butter-soft);
   border-radius: 14px;
 }
 .lab-session-prompt p {
@@ -512,7 +557,7 @@
   transition: background 0.3s ease;
 }
 .home-studio-links > a:hover {
-  background: #fff1b7;
+  background: var(--butter-soft);
 }
 .home-studio-links .doodle {
   width: 80px;
@@ -571,7 +616,7 @@
     border: 1px solid var(--ink);
     padding: 26px;
     z-index: 15;
-    box-shadow: 0 12px 30px #20201d12;
+    box-shadow: 0 12px 30px #11111012;
     gap: 24px;
     align-items: stretch;
   }

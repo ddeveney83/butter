@@ -91,7 +91,13 @@ export function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-export function ContactCTA({ title }: { title?: ReactNode }) {
+export function ContactCTA({
+  title,
+  to = "/contact",
+}: {
+  title?: ReactNode;
+  to?: string;
+}) {
   return (
     <Reveal className="contact-section container">
       <Spark className="contact-spark" />
@@ -105,9 +111,11 @@ export function ContactCTA({ title }: { title?: ReactNode }) {
         )}
       </h2>
       <div className="contact-bottom">
-        <p>Let’s turn it into something people remember.</p>
-        <Link className="pill-button" to="/contact">
-          Let’s make it happen <Arrow diagonal />
+        <p>
+          A few lines about your team and the challenge are enough to start.
+        </p>
+        <Link className="pill-button" to={to} data-conversion="enquiry_click">
+          Talk about your project <Arrow diagonal />
         </Link>
       </div>
     </Reveal>

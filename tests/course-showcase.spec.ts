@@ -282,7 +282,7 @@ test("course screens, hotspots and cards hold their layout at narrow and wide si
   }
 });
 
-test("new course interactions animate and obey Butter's saved motion setting", async ({
+test("new course interactions animate and obey butter's saved motion setting", async ({
   page,
 }) => {
   await page.goto("/work/sustainability?motion=full");

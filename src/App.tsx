@@ -14,13 +14,18 @@ import {
   MotionSettings,
   initializeMotion,
 } from "./components/Motion";
-import { Arrow, Spark } from "./components/Artwork";
+import { Arrow } from "./components/Artwork";
 import { projects } from "./data/projects";
 import ButterCursor from "./components/ButterCursor";
+import BrandLogo from "./components/BrandLogo";
+import { marketingPage, onMarketingClick } from "./lib/marketing";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Work from "./pages/Work";
+import OfferPage from "./pages/Offer";
+import Devon from "./pages/Devon";
+import Privacy from "./pages/Privacy";
 import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
 import Project from "./pages/Project";
@@ -76,9 +81,10 @@ function Site() {
   const menuButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     setMenuOpen(false);
+    marketingPage(location.pathname);
     const path = location.pathname.replace(/\/+$/, "") || "/";
     const [title, description] = getPageMeta(path);
-    document.title = `Butter — ${title}`;
+    document.title = `butter — ${title}`;
     const siteURL = (
       import.meta.env.VITE_SITE_URL || "https://buttertest.netlify.app"
     ).replace(/\/$/, "");
@@ -94,7 +100,7 @@ function Site() {
       element.content = value;
     }
     tag("name", "description", description);
-    tag("property", "og:title", `Butter — ${title}`);
+    tag("property", "og:title", `butter — ${title}`);
     tag("property", "og:description", description);
     tag(
       "property",
@@ -102,8 +108,8 @@ function Site() {
       path.startsWith("/journal/") ? "article" : "website",
     );
     tag("property", "og:url", siteURL + path);
-    tag("property", "og:image", siteURL + "/brand/butter-mascot.png");
-    tag("property", "og:site_name", "Butter");
+    tag("property", "og:image", siteURL + "/brand/butter-social.png");
+    tag("property", "og:site_name", "butter");
     tag("name", "twitter:card", "summary_large_image");
     tag(
       "name",
@@ -154,6 +160,10 @@ function Site() {
   useEffect(() => {
     document.querySelector("main h1")?.setAttribute("tabindex", "-1");
   }, [location.pathname]);
+  useEffect(() => {
+    document.addEventListener("click", onMarketingClick, true);
+    return () => document.removeEventListener("click", onMarketingClick, true);
+  }, []);
   return (
     <>
       <ButterCursor />
@@ -161,11 +171,8 @@ function Site() {
         Skip to content
       </a>
       <header className="header container">
-        <Link className="wordmark" to="/" aria-label="Butter home">
-          butter
-          <span className="brand-dot" aria-hidden="true">
-            <Spark />
-          </span>
+        <Link className="wordmark" to="/" aria-label="butter home">
+          <BrandLogo />
         </Link>
         <button
           ref={menuButton}
@@ -188,6 +195,7 @@ function Site() {
               key={to}
               to={to}
               className={to === "/contact" ? "nav-contact" : undefined}
+              data-conversion={to === "/contact" ? "enquiry_click" : undefined}
               onClick={() => setMenuOpen(false)}
             >
               {label}
@@ -200,11 +208,8 @@ function Site() {
       <footer className="footer">
         <div className="container">
           <div className="footer-top">
-            <Link className="wordmark" to="/" aria-label="Butter home">
-              butter
-              <span className="brand-dot" aria-hidden="true">
-                <Spark />
-              </span>
+            <Link className="wordmark" to="/" aria-label="butter home">
+              <BrandLogo />
             </Link>
             <p>
               A little different.
@@ -231,10 +236,14 @@ function Site() {
                 {label}
               </Link>
             ))}
+            <Link to="/elearning-devon">For Devon businesses</Link>
+            <Link to="/privacy">Privacy</Link>
             <Link to="/brand">Brand guide</Link>
           </nav>
           <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} Butter. Made with feeling.</span>
+            <span>
+              © {new Date().getFullYear()} butter. Made with feeling.
+            </span>
             <span>Good learning. No added nonsense.</span>
             <MotionSettings />
           </div>
@@ -297,6 +306,9 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
       { path: "/services", element: <Services /> },
+      { path: "/services/:slug", element: <OfferPage /> },
+      { path: "/elearning-devon", element: <Devon /> },
+      { path: "/privacy", element: <Privacy /> },
       { path: "/work", element: <Work /> },
       { path: "/work/:slug", element: <Project /> },
       { path: "/butterlearn", element: <Butterlearn /> },

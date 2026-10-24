@@ -8,7 +8,7 @@ import { randomUUID } from "node:crypto";
 import { zipSync, strToU8 } from "fflate";
 
 // Only the Vite development adapter is used. These accounts never send email.
-const password = "Butter-test-only-2026";
+const password = "butter-test-only-2026";
 const owner = "ddeveney83@gmail.com";
 const origin = "http://127.0.0.1:5173";
 async function admin(request: APIRequestContext) {

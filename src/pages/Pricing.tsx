@@ -1,7 +1,9 @@
-import { useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { MotionLink as Link } from "../components/Motion";
 import { Arrow, Doodle, Spark } from "../components/Artwork";
 import { Accordion, ContactCTA, PageHero, Reveal } from "../components/UI";
+
+import { trackMarketing } from "../lib/marketing";
 
 const money = (amount: number) =>
   new Intl.NumberFormat("en-GB", {
@@ -67,6 +69,7 @@ const packages = [
 ];
 
 export default function Pricing() {
+  const calculatorStarted = useRef(false);
   const [monthly, setMonthly] = useState(false);
   const [format, setFormat] = useState("2500");
   const [modules, setModules] = useState(1);
@@ -170,7 +173,15 @@ export default function Pricing() {
           applicable tax is confirmed in your proposal.
         </p>
       </section>
-      <section className="estimator-section">
+      <section
+        className="estimator-section"
+        onChangeCapture={() => {
+          if (!calculatorStarted.current) {
+            calculatorStarted.current = true;
+            trackMarketing("calculator_start");
+          }
+        }}
+      >
         <div className="container estimator-grid">
           <Reveal>
             <h2>
@@ -253,7 +264,8 @@ export default function Pricing() {
               </div>
               <Link
                 className="round-link"
-                to={`/contact?brief=${encodeURIComponent(brief)}`}
+                to={`/contact?brief=${encodeURIComponent(brief)}&estimate=${estimate}`}
+                data-conversion="calculator_enquiry"
                 aria-label="Discuss this estimate"
               >
                 <Arrow diagonal />

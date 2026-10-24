@@ -12,10 +12,10 @@ test("brand guide is discoverable, loads directly and fits small screens", async
     .click();
   await expect(page).toHaveURL(/\/brand$/);
   await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
-  await expect(page).toHaveTitle("Butter — The Butter way.");
+  await expect(page).toHaveTitle("butter — The butter way.");
   await page.reload();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "The Butterway.",
+    "The butterway.",
   );
   const sections = page.getByRole("navigation", {
     name: "Brand guide sections",
@@ -24,7 +24,7 @@ test("brand guide is discoverable, loads directly and fits small screens", async
   await sections.getByRole("link", { name: "Colours", exact: true }).click();
   await expect(page).toHaveURL(/#colours$/);
   await expect(
-    page.getByRole("button", { name: "Copy Butter yellow" }),
+    page.getByRole("button", { name: "Copy butter yellow" }),
   ).toBeInViewport();
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
@@ -54,10 +54,13 @@ test("swatches copy actual shared colours and explain clipboard failures", async
     }),
   );
   for (const [name, token, hex] of [
-    ["Butter yellow", "--butter", "#F8E477"],
-    ["Ink", "--ink", "#20201D"],
-    ["Paper", "--paper", "#FDFCF8"],
-    ["Line", "--line", "#D9D9CF"],
+    ["butter yellow", "--butter", "#FFDF55"],
+    ["Ink", "--ink", "#111110"],
+    ["Paper", "--paper", "#FFFEFB"],
+    ["Line", "--line", "#DEDBD2"],
+    ["Soft butter", "--butter-soft", "#FFEDB1"],
+    ["Golden edge", "--butter-gold", "#FFDA43"],
+    ["Coral spark", "--accent", "#EF696C"],
   ]) {
     const swatch = page.getByRole("button", { name: `Copy ${name}` });
     await expect(swatch).toContainText(hex);
@@ -88,9 +91,9 @@ test("swatches copy actual shared colours and explain clipboard failures", async
       },
     }),
   );
-  await page.getByRole("button", { name: "Copy Butter yellow" }).click();
+  await page.getByRole("button", { name: "Copy butter yellow" }).click();
   await expect(page.locator(".brand-copy-status")).toHaveText(
-    "Copy this value manually: #F8E477",
+    "Copy this value manually: #FFDF55",
   );
 });
 

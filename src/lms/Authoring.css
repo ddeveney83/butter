@@ -592,7 +592,7 @@
   background: var(--paper);
 }
 .studio-preview-dialog::backdrop {
-  background: #20201d99;
+  background: #11111099;
   backdrop-filter: blur(5px);
 }
 .studio-preview-dialog[open] {

@@ -25,14 +25,14 @@ export async function body(request) {
 }
 export function verifyOrigin(request) {
   if (request.headers.get("origin") !== new URL(request.url).origin)
-    throw problem(403, "This request must come from Butterlearn.");
+    throw problem(403, "This request must come from butterlearn.");
 }
 export const publicUser = (user) => ({
   id: user.id,
   name: user.name,
   email: user.email,
   role: user.role,
-  group: user.group || "Butter team",
+  group: user.group || "butter team",
 });
 
 // A view can only reduce an existing admin's privileges. It never changes the
@@ -71,7 +71,7 @@ export async function profile(store, identity) {
             : identity.roles?.includes("creator")
               ? "creator"
               : "learner"),
-    group: existing?.group || "Butter team",
+    group: existing?.group || "butter team",
     createdAt: existing?.createdAt || now(),
   }));
 }

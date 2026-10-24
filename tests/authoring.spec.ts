@@ -7,7 +7,7 @@ import {
 import { randomUUID } from "node:crypto";
 test.use({ actionTimeout: 10000 });
 const origin = "http://127.0.0.1:5173",
-  password = "Butter-test-only-2026",
+  password = "butter-test-only-2026",
   owner = "ddeveney83@gmail.com";
 async function admin(request: APIRequestContext) {
   let response = await request.post("/api/lms/auth/login", {
@@ -58,7 +58,7 @@ test("creators build rich layouts and every interaction, preview, save and publi
   await page.getByLabel("Course title", { exact: true }).fill(title);
   await page
     .getByLabel("Course description", { exact: true })
-    .fill("A visual practice course made in Butterlearn.");
+    .fill("A visual practice course made in butterlearn.");
   await page
     .getByLabel("Course format", { exact: true })
     .selectOption("scorm2004");

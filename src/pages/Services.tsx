@@ -1,3 +1,5 @@
+import { MotionLink as Link } from "../components/Motion";
+import { offers, offerPath } from "../data/offers";
 import { Arrow, Doodle } from "../components/Artwork";
 import {
   Accordion,
@@ -40,7 +42,7 @@ const services = [
     ],
   },
   {
-    title: "A little ongoing Butter",
+    title: "A little ongoing butter",
     icon: "heart" as const,
     copy: "An extra pair of thoughtful hands for your team. Keep your learning fresh with a clear, agreed rhythm of support.",
     list: [
@@ -88,7 +90,7 @@ export default function Services() {
         title={
           <>
             Big ideas.
-            <br />A little <span className="underlined">Butter.</span>
+            <br />A little <span className="underlined">butter.</span>
           </>
         }
         aside={
@@ -105,6 +107,18 @@ export default function Services() {
         </p>
         <TextLink to="/pricing">Find your starting point</TextLink>
       </PageHero>
+      <section
+        className="lead-service-links container"
+        aria-label="Services for your next project"
+      >
+        {offers.map((offer) => (
+          <Link key={offer.slug} to={offerPath(offer)}>
+            <Doodle kind={offer.icon} />
+            <span>{offer.title}</span>
+            <Arrow diagonal />
+          </Link>
+        ))}
+      </section>
       <section className="service-list container" aria-label="Our services">
         {services.map((service, index) => (
           <Reveal key={service.title}>

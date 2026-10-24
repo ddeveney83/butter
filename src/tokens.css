@@ -1,16 +1,23 @@
-/* Butter's shared foundations. The brand guide reads these values directly. */
+/* butter's shared foundations. The brand guide reads these values directly. */
 :root {
+  --font-display: "Nunito Variable", sans-serif;
   --font-sans: "DM Sans Variable", sans-serif;
   --weight-body: 400;
   --weight-interface: 500;
   --weight-heading: 800;
   --weight-section: 750;
-  --butter: #f8e477;
-  --ink: #20201d;
-  --paper: #fdfcf8;
-  --line: #d9d9cf;
+  --butter: #ffdf55;
+  --ink: #111110;
+  --paper: #fffefb;
+  --line: #dedbd2;
+  --butter-soft: #ffedb1;
+  --butter-gold: #ffda43;
+  --accent: #ef696c;
+  --accent-soft: #fff0ee;
+  --accent-ink: #a52e34;
+  --outline: 2px solid var(--ink);
   --muted: #55554e;
-  --focus: #8b6918;
+  --focus: #a52e34;
   --space-1: 8px;
   --space-2: 16px;
   --space-3: 24px;

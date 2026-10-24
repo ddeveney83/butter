@@ -19,7 +19,7 @@ export default function NotFound() {
         stuff.
       </p>
       <Link className="pill-button" to="/">
-        Back to Butter <Arrow diagonal />
+        Back to butter <Arrow diagonal />
       </Link>
     </PageHero>
   );

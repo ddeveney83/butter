@@ -544,7 +544,7 @@ export function createHandler({
         (error.name === "MissingIdentityError" ? 503 : 500);
       if (status >= 500)
         console.error(
-          "Butterlearn request failed:",
+          "butterlearn request failed:",
           error.name,
           error.message?.slice(0, 180),
         );

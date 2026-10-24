@@ -9,6 +9,7 @@ import {
 import { Accordion, PageHero, Reveal, Tabs, TextLink } from "../components/UI";
 import { MotionLink as Link, useReducedMotion } from "../components/Motion";
 import "./Brand.css";
+import BrandLogo from "../components/BrandLogo";
 
 const sections = [
   ["brand", "Brand"],
@@ -22,7 +23,7 @@ const sections = [
 ];
 const colours = [
   {
-    name: "Butter yellow",
+    name: "butter yellow",
     token: "--butter",
     use: "The warm hello. Use it for highlights, key actions and a little personality.",
   },
@@ -40,6 +41,21 @@ const colours = [
     name: "Line",
     token: "--line",
     use: "A quiet divider. For borders and structure, rather than body text.",
+  },
+  {
+    name: "Soft butter",
+    token: "--butter-soft",
+    use: "The pale yellow inside our mark. A soft backdrop for illustrations and supporting panels.",
+  },
+  {
+    name: "Golden edge",
+    token: "--butter-gold",
+    use: "The richer melted edge. For illustrated shadows, highlights and the cursor trail.",
+  },
+  {
+    name: "Coral spark",
+    token: "--accent",
+    use: "A small expressive accent. Use for decorative sparks and interaction marks; never small text on paper.",
   },
 ];
 const spaces = [1, 2, 3, 4, 6, 8, 12];
@@ -124,7 +140,7 @@ export default function Brand() {
       <PageHero
         title={
           <>
-            The Butter
+            The butter
             <br />
             <span className="underlined">way.</span>
           </>
@@ -132,8 +148,7 @@ export default function Brand() {
         aside={
           <div className="brand-signature">
             <div className="brand-lockup">
-              butter
-              <Spark />
+              <BrandLogo />
             </div>
             <p>Learning with feeling.</p>
           </div>
@@ -141,7 +156,7 @@ export default function Brand() {
       >
         <p>
           A shared starting point for how we look, sound and feel. Simple, warm
-          and unmistakably Butter.
+          and unmistakably butter.
         </p>
       </PageHero>
       <nav className="brand-jump container" aria-label="Brand guide sections">
@@ -165,7 +180,7 @@ export default function Brand() {
             <br />A little more human.
           </h2>
           <p>
-            Butter is a creative learning studio. We bring learning design,
+            butter is a creative learning studio. We bring learning design,
             storytelling and visual craft together to make complex things click.
             The brand should feel as considered as the learning we make.
           </p>
@@ -207,9 +222,9 @@ export default function Brand() {
         <Reveal className="brand-intro">
           <h2 id="colours-heading">A warm welcome.</h2>
           <p>
-            Three everyday colours and one quiet divider. Butter yellow adds
-            feeling; ink and paper do the talking. Tap a swatch to copy its
-            colour.
+            Warm yellow, confident ink and open paper. A little coral red adds
+            energy; use it sparingly for sparks and small interaction details.
+            Tap a swatch to copy its colour.
           </p>
         </Reveal>
         <div className="brand-palette">
@@ -250,14 +265,14 @@ export default function Brand() {
       >
         <Reveal className="brand-intro">
           <h2 id="type-heading">
-            One font.
+            Soft forms.
             <br />
             Plenty of feeling.
           </h2>
           <p>
-            DM Sans is our voice on the page. Big, bold headings meet light,
-            open body text. Keep the hierarchy simple and the reading
-            comfortable.
+            Nunito brings rounded, confident shapes to our wordmark and
+            headings. DM Sans keeps body text and controls clear and light. Keep
+            the hierarchy simple and the reading comfortable.
           </p>
         </Reveal>
         <div className="brand-type-playground">
@@ -282,7 +297,7 @@ export default function Brand() {
                       {words || "Learning with feeling."}
                     </p>
                     <p className="brand-spec">
-                      DM Sans · {tokens["--weight-heading"]} weight · close
+                      Nunito · {tokens["--weight-heading"]} weight · close
                       spacing · 1.05 line height
                     </p>
                   </div>
@@ -366,7 +381,7 @@ export default function Brand() {
                     <p>{example.before}</p>
                   </div>
                   <div className="brand-voice-butter">
-                    <h3>With Butter</h3>
+                    <h3>With butter</h3>
                     <p>{example.after}</p>
                   </div>
                 </div>
@@ -400,7 +415,7 @@ export default function Brand() {
         <Reveal className="brand-intro">
           <h2 id="visuals-heading">A little character.</h2>
           <p>
-            Bold outlines, soft shapes and a playful nod to 1930s cartoons.
+            Rounded black outlines, pale yellow fills and a golden melted edge.
             Light-touch imagery with enough personality to make the moment
             memorable.
           </p>
@@ -409,8 +424,8 @@ export default function Brand() {
           <div className="brand-character">
             <ButterCharacter />
             <p>
-              Our butter character. One expressive focal point, with room around
-              it.
+              Our melting play symbol. Keep its coral sparks, proportions and
+              clear space intact. Always write butter in lowercase.
             </p>
           </div>
           <div className="brand-visual-details">
@@ -421,9 +436,10 @@ export default function Brand() {
             </div>
             <h3>Simple shapes. Strong lines.</h3>
             <p>
-              Use rounded strokes, expressive gestures and the core palette.
-              Match line weight within each icon family and scale artwork
-              without stretching it.
+              Use soft corners, generous yellow fills and confident black
+              contours. Coral is a small spark: never a competing background
+              colour. Match line weight within each icon family and scale
+              artwork without stretching it.
             </p>
             <h3>Let the work shine.</h3>
             <p>
@@ -542,7 +558,7 @@ export default function Brand() {
         <Reveal className="brand-intro">
           <h2 id="motion-heading">Easy does it.</h2>
           <p>
-            Motion should feel like Butter: smooth, gentle and considered. Use
+            Motion should feel like butter: smooth, gentle and considered. Use
             it to explain a change, guide attention or bring a small moment to
             life.
           </p>
@@ -613,7 +629,7 @@ export default function Brand() {
         <p>
           Clear, always.
           <br />
-          <strong>Butter, through and through.</strong>
+          <strong>butter, through and through.</strong>
         </p>
         <TextLink to="/work">See it in the work</TextLink>
       </div>

@@ -197,13 +197,13 @@ export default function ButterTrail() {
           Math.max(0, 1 - (now - head.time) / lifetime),
           1.4,
         );
-        ctx.fillStyle = `rgba(248, 228, 119, ${0.045 * fade})`;
+        ctx.fillStyle = `rgba(255, 218, 67, ${0.045 * fade})`;
         ribbon(shape, 11);
-        ctx.fillStyle = `rgba(248, 228, 119, ${0.075 * fade})`;
+        ctx.fillStyle = `rgba(255, 218, 67, ${0.075 * fade})`;
         ribbon(shape, 8);
-        ctx.fillStyle = `rgba(248, 228, 119, ${0.3 * fade})`;
+        ctx.fillStyle = `rgba(255, 218, 67, ${0.3 * fade})`;
         ribbon(shape, 5.5);
-        ctx.fillStyle = `rgba(255, 247, 202, ${0.16 * fade})`;
+        ctx.fillStyle = `rgba(255, 237, 177, ${0.16 * fade})`;
         ribbon(shape, 0.8, true);
       }
       if (strokes.length) frame = requestAnimationFrame(paint);

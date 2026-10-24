@@ -17,7 +17,7 @@ export function createContentHandler({ store, files }) {
       if (!grant || grant.expires < Date.now())
         throw problem(
           403,
-          "Your course session has expired. Reopen it from Butterlearn.",
+          "Your course session has expired. Reopen it from butterlearn.",
         );
       const path = safePath(segments.map(decodeURIComponent).join("/"));
       const entry = await files.getWithMetadata(

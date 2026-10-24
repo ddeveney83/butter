@@ -44,7 +44,7 @@ export default function About() {
         }
       >
         <p>
-          We’re Butter. A creative learning agency with a simple belief: good
+          We’re butter. A creative learning agency with a simple belief: good
           learning should feel good, too.
         </p>
       </PageHero>

@@ -2,6 +2,7 @@ import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ButterCharacter, Spark, Doodle } from "../components/Artwork";
 import { ContactCTA, ProjectCard, Reveal, TextLink } from "../components/UI";
 import { projects } from "../data/projects";
+import { offers, offerPath } from "../data/offers";
 
 export default function Home() {
   return (
@@ -31,15 +32,20 @@ export default function Home() {
             .
           </h1>
           <p>
-            We make learning that moves people.
-            <br className="desktop-break" /> A little curiosity. A lot of
-            creativity.
-            <br className="desktop-break" /> And just the right amount of
-            Butter.
+            Bespoke eLearning, onboarding and training content for businesses.
+            We turn complex know-how into clear, practical learning for your
+            team.
           </p>
-          <Link className="pill-button" to="/work">
-            Explore our work <Arrow diagonal />
-          </Link>
+          <div className="lead-actions">
+            <Link
+              className="pill-button"
+              to="/contact"
+              data-conversion="enquiry_click"
+            >
+              Talk about your project <Arrow diagonal />
+            </Link>
+            <TextLink to="/work">Explore our work</TextLink>
+          </div>
         </div>
         <div className="hero-art">
           <div className="butter-circle" />
@@ -58,6 +64,28 @@ export default function Home() {
           Independent minds. Shared curiosity.
         </span>
       </section>
+      <section
+        className="lead-proof container"
+        aria-label="Reported project outcomes"
+      >
+        <div className="lead-proof-grid">
+          {["allergen-awareness", "matrix-reloaded", "record-keeping"]
+            .map((id) => projects.find((project) => project.id === id)!)
+            .map((project) => (
+              <Link key={project.id} to={`/work/${project.id}`}>
+                <strong>{project.metric.value}</strong>
+                <span>{project.metric.label}</span>
+                <span className="lead-proof-project">
+                  {project.title} <Arrow diagonal />
+                </span>
+              </Link>
+            ))}
+        </div>
+        <p className="lead-footnote">
+          Figures reported in the project case studies. Results depend on the
+          audience, brief and context.
+        </p>
+      </section>
       <div className="ticker" aria-label="Thoughtfully made. Joyfully learned.">
         <div>
           <span>Thoughtfully made.</span>
@@ -70,6 +98,31 @@ export default function Home() {
           <Spark />
         </div>
       </div>
+      <section className="lead-services section container">
+        <Reveal className="section-intro">
+          <h2>
+            What needs
+            <br />
+            to <span className="underlined">change?</span>
+          </h2>
+          <p>
+            Find a starting point for your team, your content and the work
+            ahead.
+          </p>
+        </Reveal>
+        <div>
+          {offers.map((offer) => (
+            <Link key={offer.slug} to={offerPath(offer)}>
+              <Doodle kind={offer.icon} />
+              <h3>{offer.title}</h3>
+              <p>{offer.lead}</p>
+              <span>
+                Explore the service <Arrow diagonal />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
       <section id="selected-work" className="work section container">
         <Reveal className="section-intro">
           <h2>
@@ -118,7 +171,7 @@ export default function Home() {
               <br />A moment that sticks.
             </p>
             <p>
-              We’re Butter, a creative learning agency bringing a little more
+              We’re butter, a creative learning agency bringing a little more
               humanity to digital learning. We turn your knowledge into
               experiences that feel good and do good.
             </p>
@@ -135,19 +188,19 @@ export default function Home() {
                 </Link>
               ))}
             </div>
-            <TextLink to="/about">A little about Butter</TextLink>
+            <TextLink to="/about">A little about butter</TextLink>
           </Reveal>
         </div>
       </section>
       <section
         className="home-studio-links container"
-        aria-label="From the Butter studio"
+        aria-label="From the butter studio"
       >
         <Link to="/journal">
           <Doodle kind="idea" />
           <div>
             <h2>Fresh thinking.</h2>
-            <p>Practical ideas from the Butter journal.</p>
+            <p>Practical ideas from the butter journal.</p>
           </div>
           <Arrow diagonal />
         </Link>

@@ -34,7 +34,7 @@ test("all pages and eight project routes load directly without errors or overflo
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page).toHaveTitle(
-      path === "/butterlearn/login" ? "Butterlearn — Sign in." : /^Butter — /,
+      path === "/butterlearn/login" ? "butterlearn — Sign in." : /^butter — /,
     );
     await page.evaluate(() => document.fonts.ready);
     expect(
@@ -252,7 +252,7 @@ test("contact validates fields, sends a complete enquiry and allows another afte
   ])
     expect(body).toContain(content);
   await expect(page.getByRole("status")).toContainText(
-    "Your enquiry is with Butter.",
+    "Your enquiry is with butter.",
   );
   await page.getByLabel("Your name").fill("Alex Updated");
   await expect(
@@ -279,7 +279,7 @@ test("FAQ, reduced motion and unknown routes behave correctly", async ({
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "A littlelost?",
   );
-  await page.getByRole("link", { name: "Back to Butter" }).click();
+  await page.getByRole("link", { name: "Back to butter" }).click();
   await expect(page).toHaveURL(/\/$/);
 });
 

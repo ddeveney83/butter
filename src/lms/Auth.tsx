@@ -16,7 +16,8 @@ import {
   useViewTransitionState,
 } from "react-router-dom";
 import { MotionLink as Link, useReducedMotion } from "../components/Motion";
-import { Arrow, ButterCharacter, Spark } from "../components/Artwork";
+import { Arrow, ButterCharacter } from "../components/Artwork";
+import BrandLogo from "../components/BrandLogo";
 import { api, post } from "./api";
 import type { User, Role } from "./types";
 import "./LMS.css";
@@ -98,9 +99,8 @@ export function LMSProvider() {
 }
 export function Logo() {
   return (
-    <Link to="/butterlearn" className="lms-logo" aria-label="Butterlearn home">
-      butterlearn
-      <Spark />
+    <Link to="/butterlearn" className="lms-logo" aria-label="butterlearn home">
+      <BrandLogo learning />
     </Link>
   );
 }
@@ -192,7 +192,7 @@ export function LMSLayout() {
     if (main && !focus())
       observer.observe(main, { childList: true, subtree: true });
     window.scrollTo({ top: 0, behavior: "instant" });
-    document.title = "Butterlearn — Your learning.";
+    document.title = "butterlearn — Your learning.";
     return () => observer.disconnect();
   }, [location.pathname, auth.loading]);
   if (auth.loading)
@@ -384,7 +384,7 @@ export function LMSLogin() {
     ? requested
     : "/butterlearn/app";
   useEffect(() => {
-    document.title = "Butterlearn — Sign in.";
+    document.title = "butterlearn — Sign in.";
   }, []);
   useEffect(() => {
     if (callbackType !== "confirmation") return;
@@ -458,7 +458,7 @@ export function LMSLogin() {
       <header>
         <Logo />
         <Link className="lms-back" to="/butterlearn">
-          Back to Butterlearn <Arrow />
+          Back to butterlearn <Arrow />
         </Link>
       </header>
       <main className="lms-auth-grid">
@@ -493,7 +493,7 @@ export function LMSLogin() {
                 ? "Create your learner account."
                 : view === "recover"
                   ? "We’ll email you a password reset link."
-                  : "Sign in to your Butterlearn account."}
+                  : "Sign in to your butterlearn account."}
           </p>
           {auth.mode === "local" && (
             <Notice>

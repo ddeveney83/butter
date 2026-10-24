@@ -25,7 +25,7 @@ export default function Labs() {
         aside={<ButterCharacter className="labs-mascot" />}
       >
         <p>
-          Welcome to Butter Labs. Small experiments, learning snippets and ideas
+          Welcome to butter Labs. Small experiments, learning snippets and ideas
           in motion. Try something. See what sticks.
         </p>
       </PageHero>
@@ -53,7 +53,7 @@ export default function Labs() {
           ))}
         </div>
         <p className="labs-note">
-          Working experiments from the Butter studio. Your choices stay in this
+          Working experiments from the butter studio. Your choices stay in this
           browser session; they don’t create learning records.
         </p>
       </section>

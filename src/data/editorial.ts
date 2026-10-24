@@ -1,3 +1,7 @@
+import { designArticles } from "./journal/design.ts";
+import { practiceArticles } from "./journal/practice.ts";
+import { technologyArticles } from "./journal/technology.ts";
+
 export type ArticleSection = {
   heading: string;
   paragraphs: string[];
@@ -12,8 +16,13 @@ export type Article = {
   icon: "idea" | "heart" | "spark";
   sections: ArticleSection[];
   action: { to: string; label: string };
+  relatedSlugs?: string[];
+  resources?: { title: string; url: string }[];
 };
 export const articles: Article[] = [
+  ...designArticles,
+  ...practiceArticles,
+  ...technologyArticles,
   {
     slug: "what-does-elearning-cost",
     title: "What does eLearning actually cost?",
@@ -47,7 +56,7 @@ export const articles: Article[] = [
       {
         heading: "Use indicative budgets carefully.",
         paragraphs: [
-          "Butter’s pricing page gives illustrative GBP starting points: £2,500 for a focused learning moment, £7,500 for an interactive module and £15,000 for a connected learning journey. These help open a conversation about the scale of the work. They are not a fixed quote or a claim that every project fits the same template.",
+          "butter’s pricing page gives illustrative GBP starting points: £2,500 for a focused learning moment, £7,500 for an interactive module and £15,000 for a connected learning journey. These help open a conversation about the scale of the work. They are not a fixed quote or a claim that every project fits the same template.",
           "The estimate calculator lets you explore format, number of pieces, branching and motion. Use it to see how a few choices affect the starting point, then discuss your actual brief. A useful proposal should identify the deliverables, assumptions, review rounds, testing and handover, so you can compare like with like.",
         ],
       },
@@ -159,14 +168,14 @@ export const articles: Article[] = [
         heading: "When a simple HTML experience can work.",
         paragraphs: [
           "A lightweight HTML resource can be a good fit for guidance, a short practice activity or a learning moment where a simple completion action is sufficient. It can keep the content focused and let you shape the interface around the task.",
-          "Tracking is not automatic just because a resource is hosted in an LMS. In Butterlearn, imported and authored HTML courses use a learner-facing ‘Mark complete’ control. Other platforms can have different rules. Agree the behaviour explicitly rather than assuming every HTML package will report completion or a quiz score.",
+          "Tracking is not automatic just because a resource is hosted in an LMS. In butterlearn, imported and authored HTML courses use a learner-facing ‘Mark complete’ control. Other platforms can have different rules. Agree the behaviour explicitly rather than assuming every HTML package will report completion or a quiz score.",
         ],
       },
       {
         heading: "When SCORM tracking is useful.",
         paragraphs: [
           "If you need the course to report completion, a score or a checkpoint back to the LMS, SCORM may be the appropriate delivery format. The course and platform both need to support the relevant version and the data you intend to record.",
-          "SCORM 1.2 and SCORM 2004 use different runtime APIs and data fields. Butterlearn supports practical tracking for both, including completion, normalized scores, session time, lesson location and suspend data. Its SCORM 2004 support is not a certified implementation of the full sequencing engine. Test representative exports against the actual platform requirements.",
+          "SCORM 1.2 and SCORM 2004 use different runtime APIs and data fields. butterlearn supports practical tracking for both, including completion, normalized scores, session time, lesson location and suspend data. Its SCORM 2004 support is not a certified implementation of the full sequencing engine. Test representative exports against the actual platform requirements.",
         ],
       },
       {
@@ -194,13 +203,40 @@ export const articles: Article[] = [
         heading: "Choose a format that supports the outcome.",
         paragraphs: [
           "A technically valid package can still be an unhelpful learning experience. Keep the content, interactions and completion rules connected to the action you want to support. Use tracking to answer a real operational question, and avoid adding complexity simply because a format allows it.",
-          "Butterlearn includes HTML and SCORM example courses, plus a visual creator for HTML and SCORM 2004 drafts. Explore the product and talk through your delivery requirements before moving a live programme. A short platform test is a useful part of the brief, not an afterthought.",
+          "butterlearn includes HTML and SCORM example courses, plus a visual creator for HTML and SCORM 2004 drafts. Explore the product and talk through your delivery requirements before moving a live programme. A short platform test is a useful part of the brief, not an afterthought.",
         ],
       },
     ],
-    action: { to: "/butterlearn", label: "Explore Butterlearn" },
+    action: { to: "/butterlearn", label: "Explore butterlearn" },
   },
 ];
+export const formatArticleDate = (date: string) =>
+  new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(date + "T12:00:00Z"));
+
+export function relatedArticles(article: Article) {
+  const candidates = [
+    ...(article.relatedSlugs || []).map((slug) =>
+      articles.find((item) => item.slug === slug),
+    ),
+    ...articles.filter((item) => item.topic === article.topic),
+    ...articles,
+  ];
+  return candidates
+    .filter(
+      (item, index): item is Article =>
+        !!item &&
+        item.slug !== article.slug &&
+        candidates.findIndex((candidate) => candidate?.slug === item.slug) ===
+          index,
+    )
+    .slice(0, 2);
+}
+
 export const readMinutes = (article: Article) =>
   Math.max(
     1,

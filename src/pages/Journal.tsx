@@ -3,8 +3,15 @@ import { useParams } from "react-router-dom";
 import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ButterCharacter, Doodle } from "../components/Artwork";
 import { PageHero, Reveal, ContactCTA } from "../components/UI";
-import { articles, readMinutes, type Article } from "../data/editorial";
+import {
+  articles,
+  formatArticleDate,
+  readMinutes,
+  relatedArticles,
+  type Article,
+} from "../data/editorial";
 import NotFound from "./NotFound";
+import { articleEnquiryPath } from "../data/offers";
 
 export function ArticleCard({ article }: { article: Article }) {
   return (
@@ -28,12 +35,18 @@ export function ArticleCard({ article }: { article: Article }) {
 }
 export default function Journal() {
   const [topic, setTopic] = useState("All articles");
+  const [query, setQuery] = useState("");
   const topics = [
     "All articles",
     ...new Set(articles.map((article) => article.topic)),
   ];
+  const search = query.trim().toLocaleLowerCase("en-GB");
   const visible = articles.filter(
-    (article) => topic === "All articles" || article.topic === topic,
+    (article) =>
+      (topic === "All articles" || article.topic === topic) &&
+      `${article.title} ${article.description} ${article.topic}`
+        .toLocaleLowerCase("en-GB")
+        .includes(search),
   );
   return (
     <>
@@ -48,11 +61,20 @@ export default function Journal() {
         aside={<ButterCharacter className="journal-mascot" />}
       >
         <p>
-          The Butter journal. Practical thoughts on learning design, creative
+          The butter journal. Practical thoughts on learning design, creative
           production and the technology behind a better experience.
         </p>
       </PageHero>
       <section className="editorial-list container">
+        <label className="journal-search">
+          <span>Find something useful</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Try accessibility, feedback or SCORM"
+          />
+        </label>
         <div className="studio-list-toolbar">
           <div
             className="filter-list"
@@ -80,6 +102,21 @@ export default function Journal() {
             </Reveal>
           ))}
         </div>
+        {visible.length === 0 && (
+          <div className="journal-empty">
+            <h2>No articles found.</h2>
+            <p>Try a different phrase or explore all the articles.</p>
+            <button
+              className="pill-button"
+              onClick={() => {
+                setQuery("");
+                setTopic("All articles");
+              }}
+            >
+              Show all articles <Arrow />
+            </button>
+          </div>
+        )}
       </section>
       <section className="journal-labs-link container">
         <div>
@@ -108,8 +145,10 @@ export function JournalArticle() {
           <h1>{article.title}</h1>
           <p className="journal-standfirst">{article.description}</p>
           <div className="journal-byline">
-            <span>Butter studio</span>
-            <time dateTime={article.date}>12 October 2026</time>
+            <span>butter studio</span>
+            <time dateTime={article.date}>
+              {formatArticleDate(article.date)}
+            </time>
             <span>{readMinutes(article)} min read</span>
           </div>
         </header>
@@ -138,6 +177,21 @@ export function JournalArticle() {
                 )}
               </section>
             ))}
+            {!!article.resources?.length && (
+              <section
+                className="journal-resources"
+                aria-labelledby="resources-heading"
+              >
+                <h2 id="resources-heading">Sources and further reading.</h2>
+                <ul>
+                  {article.resources.map((resource) => (
+                    <li key={resource.url}>
+                      <a href={resource.url}>{resource.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             <aside className="journal-next-step">
               <Doodle kind={article.icon} />
               <Link className="text-link" to={article.action.to}>
@@ -151,14 +205,15 @@ export function JournalArticle() {
       <section className="editorial-related container">
         <h2>A little more reading.</h2>
         <div className="editorial-grid two-columns">
-          {articles
-            .filter((item) => item.slug !== slug)
-            .map((item) => (
-              <ArticleCard key={item.slug} article={item} />
-            ))}
+          {relatedArticles(article).map((item) => (
+            <ArticleCard key={item.slug} article={item} />
+          ))}
         </div>
       </section>
-      <ContactCTA />
+      <ContactCTA
+        title="Put the thinking to work."
+        to={articleEnquiryPath(article.slug)}
+      />
     </>
   );
 }

@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 
 const preview = (page: import("@playwright/test").Page) =>
-  page.getByRole("region", { name: "Butterlearn product preview" });
+  page.getByRole("region", { name: "butterlearn product preview" });
 
-test("Butterlearn is discoverable in navigation and login opens the learning platform", async ({
+test("butterlearn is discoverable in navigation and login opens the learning platform", async ({
   page,
 }, testInfo) => {
   await page.goto("/");
@@ -14,7 +14,7 @@ test("Butterlearn is discoverable in navigation and login opens the learning pla
     .getByRole("link", { name: "butterlearn", exact: true })
     .click();
   await expect(page).toHaveURL(/\/butterlearn$/);
-  await expect(page).toHaveTitle("Butter — Meet Butterlearn.");
+  await expect(page).toHaveTitle("butter — Meet butterlearn.");
   await expect(page.locator(".butterlearn-development-note")).toContainText(
     "HTML and SCORM courses",
   );
@@ -26,17 +26,17 @@ test("Butterlearn is discoverable in navigation and login opens the learning pla
     page.getByRole("button", { name: "Sign in", exact: true }),
   ).toBeVisible();
   await page
-    .getByRole("link", { name: "Back to Butterlearn", exact: false })
+    .getByRole("link", { name: "Back to butterlearn", exact: false })
     .click();
   await expect(page).toHaveURL(/\/butterlearn$/);
   await page
-    .getByRole("link", { name: "Let’s talk Butterlearn", exact: true })
+    .getByRole("link", { name: "Let’s talk butterlearn", exact: true })
     .click();
   await expect(
-    page.getByRole("button", { name: "Butterlearn", exact: true }),
+    page.getByRole("button", { name: "butterlearn", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByLabel("A little about your project")).toHaveValue(
-    /Butterlearn/,
+    /butterlearn/,
   );
 });
 
@@ -153,7 +153,7 @@ test("preview roles keep the frame stable and fit phone, tablet and desktop layo
       ).toBe(true);
     }
     await page
-      .getByRole("button", { name: "Can we use Butterlearn yet?", exact: true })
+      .getByRole("button", { name: "Can we use butterlearn yet?", exact: true })
       .click();
     await expect(
       page.getByText(

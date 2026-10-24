@@ -1,17 +1,18 @@
 import { articles, experiments } from "./editorial.ts";
 import { projects } from "./projects.ts";
+import { offers, offerPath } from "./offers.ts";
 export const pageMeta: Record<string, [string, string]> = {
   "/": [
     "Learning with feeling.",
-    "Butter is a creative eLearning agency. We turn complex things into learning experiences people feel, remember and use.",
+    "Bespoke eLearning, staff onboarding and training content for businesses. Explore butter’s work, indicative budgets and a clear route to your next project.",
   ],
   "/about": [
     "A little more human.",
-    "Meet Butter: a creative learning agency bringing strategy, storytelling and design together for better digital learning.",
+    "Meet butter: a creative learning agency bringing strategy, storytelling and design together for better digital learning.",
   ],
   "/services": [
-    "Big ideas. A little Butter.",
-    "Learning strategy, digital experiences, story and design, and ongoing creative support from Butter.",
+    "Big ideas. A little butter.",
+    "Learning strategy, digital experiences, story and design, and ongoing creative support from butter.",
   ],
   "/work": [
     "A taste of our work.",
@@ -19,28 +20,42 @@ export const pageMeta: Record<string, [string, string]> = {
   ],
   "/pricing": [
     "Find your starting point.",
-    "Explore indicative eLearning project budgets and build a ballpark learning project estimate with Butter.",
+    "Explore indicative eLearning project budgets and build a ballpark learning project estimate with butter.",
   ],
   "/contact": [
     "Good things start with hello.",
-    "Tell Butter about your learning challenge and start a creative conversation with our studio.",
+    "Tell butter about your learning challenge and start a creative conversation with our studio.",
   ],
   "/butterlearn": [
-    "Meet Butterlearn.",
-    "Explore Butterlearn: HTML and SCORM courses, learner dashboards, a visual course creator and team progress.",
+    "Meet butterlearn.",
+    "Explore butterlearn: HTML and SCORM courses, learner dashboards, a visual course creator and team progress.",
   ],
   "/journal": [
     "Good ideas. Shared.",
-    "Practical articles from the Butter studio on eLearning design, project budgets, scenarios, SCORM and learning technology.",
+    "Practical guides to instructional design, teaching, assessment, accessibility, AI and learning technology from the butter studio.",
   ],
   "/labs": [
     "A little space for what if.",
-    "Explore Butter Labs: interactive learning experiments, branching conversations and creative learning snippets.",
+    "Explore butter Labs: interactive learning experiments, branching conversations and creative learning snippets.",
   ],
   "/brand": [
-    "The Butter way.",
-    "Butter’s brand guide: warm colours, bold type, a cartoon mascot and playful iconography.",
+    "The butter way.",
+    "butter’s brand guide: warm yellows, coral sparks, rounded type and bold melting-play iconography.",
   ],
+  "/elearning-devon": [
+    "eLearning for Devon businesses.",
+    "Bespoke eLearning, staff onboarding, compliance training and course refreshes for Devon and South West businesses. Discuss your project with butter.",
+  ],
+  "/privacy": [
+    "A little clarity about your data.",
+    "How butter handles project enquiries, anonymous website counts, media and browser preferences on the agency website.",
+  ],
+  ...Object.fromEntries(
+    offers.map((offer) => [
+      offerPath(offer),
+      [offer.title, offer.description] as [string, string],
+    ]),
+  ),
 };
 export function getPageMeta(path: string): [string, string] {
   path = path.replace(/\/+$/, "") || "/";
@@ -50,15 +65,33 @@ export function getPageMeta(path: string): [string, string] {
   if (lab) return [lab.title, lab.description];
   const project = projects.find((item) => path === "/work/" + item.id);
   if (project) return [project.title, project.description];
-  return pageMeta[path] || ["A little lost?", "Let’s get you back to Butter."];
+  return pageMeta[path] || ["A little lost?", "Let’s get you back to butter."];
 }
 export function structuredData(path: string, siteURL: string) {
   path = path.replace(/\/+$/, "") || "/";
   const organization = {
     "@type": "Organization",
-    name: "Butter",
+    name: "butter",
     url: siteURL,
   };
+  const offer = offers.find((item) => path === offerPath(item));
+  if (offer || path === "/elearning-devon")
+    return {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: offer?.title || "eLearning for Devon businesses",
+      description: offer?.description || pageMeta["/elearning-devon"][1],
+      url: siteURL + path,
+      provider: organization,
+      ...(path === "/elearning-devon"
+        ? {
+            areaServed: {
+              "@type": "AdministrativeArea",
+              name: "Devon, England",
+            },
+          }
+        : {}),
+    };
   const article = articles.find((item) => path === "/journal/" + item.slug);
   if (article)
     return {
@@ -69,9 +102,14 @@ export function structuredData(path: string, siteURL: string) {
       datePublished: article.date,
       dateModified: article.date,
       mainEntityOfPage: siteURL + path,
-      author: { ...organization, name: "Butter studio" },
+      author: { ...organization, name: "butter studio" },
       publisher: organization,
-      image: siteURL + "/brand/butter-mascot.png",
+      image: siteURL + "/brand/butter-social.png",
+      inLanguage: "en-GB",
+      url: siteURL + path,
+      ...(article.resources?.length
+        ? { citation: article.resources.map((resource) => resource.url) }
+        : {}),
       articleSection: article.topic,
       articleBody: article.sections
         .flatMap((section) => [

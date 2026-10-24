@@ -27,6 +27,10 @@ test("agency pages, journal and Labs load without personal credits, errors or ov
     await expect(page.locator("body")).not.toContainText(
       /daniel|deveney|ddeveney/i,
     );
+    await expect(page.locator("body")).not.toContainText(
+      /\bButter(?:learn)?\b/,
+    );
+    expect(await page.title()).not.toMatch(/\bButter(?:learn)?\b/);
     expect(
       await page
         .locator('a[href*="daniel"],a[href*="deveney"],a[href^="mailto:"]')
@@ -50,12 +54,12 @@ test("journal filters and article links provide readable content and article met
   page,
 }) => {
   await page.goto("/journal");
-  await expect(page.locator(".editorial-card")).toHaveCount(3);
+  await expect(page.locator(".editorial-card")).toHaveCount(23);
   await page
     .getByRole("button", { name: "Learning tech", exact: true })
     .click();
-  await expect(page.locator(".editorial-card")).toHaveCount(1);
-  await expect(page.getByRole("status")).toHaveText("1 article");
+  await expect(page.locator(".editorial-card")).toHaveCount(7);
+  await expect(page.getByRole("status")).toHaveText("7 articles");
   await page.getByRole("link", { name: /SCORM or HTML/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "SCORM or HTML? Start with the learner.",
@@ -64,7 +68,7 @@ test("journal filters and article links provide readable content and article met
     (await page.locator("#page-structured-data").textContent())!,
   );
   expect(schema["@type"]).toBe("BlogPosting");
-  expect(schema.author.name).toBe("Butter studio");
+  expect(schema.author.name).toBe("butter studio");
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute(
     "content",
     "article",
@@ -79,7 +83,7 @@ test("journal filters and article links provide readable content and article met
   await expect(page).toHaveURL(/#section-4$/);
   await page.goto("/journal/scorm-or-html-course/");
   await expect(page).toHaveTitle(
-    "Butter — SCORM or HTML? Start with the learner.",
+    "butter — SCORM or HTML? Start with the learner.",
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
@@ -165,7 +169,7 @@ test("contact keeps the destination private and retains the brief after a delive
     .getByRole("button", { name: "Send your enquiry", exact: false })
     .click();
   await expect(page.getByRole("status")).toContainText(
-    "enquiry is with Butter",
+    "enquiry is with butter",
   );
   expect(new URLSearchParams(sent[1]).get("form-name")).toBe("butter-contact");
   expect(sent.join("")).not.toMatch(/ddeveney|daniel/);

@@ -463,7 +463,7 @@ export function ManageCourses() {
     try {
       await post("admin/starters", {});
       reload();
-      setFeedback("Six Butter starter courses are ready in the library.");
+      setFeedback("Six butter starter courses are ready in the library.");
     } catch (error) {
       setActionError((error as Error).message);
     } finally {
@@ -490,7 +490,7 @@ export function ManageCourses() {
           disabled={!!working}
           onClick={starters}
         >
-          {working === "starters" ? "Adding…" : "Add Butter starter courses"}
+          {working === "starters" ? "Adding…" : "Add butter starter courses"}
         </button>
       </div>
       {actionError && <Notice error>{actionError}</Notice>}
@@ -582,7 +582,7 @@ export function ManageCourses() {
         <div className="lms-empty">
           <h3>Your first course starts here.</h3>
           <p>
-            Upload your own learning, or add the Butter starter courses to
+            Upload your own learning, or add the butter starter courses to
             explore HTML and both SCORM formats.
           </p>
         </div>

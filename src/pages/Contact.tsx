@@ -1,6 +1,9 @@
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Arrow, ButterCharacter, Doodle } from "../components/Artwork";
+import { MotionLink as Link } from "../components/Motion";
+import { enquiryContext, trackMarketing } from "../lib/marketing";
+import { nextSteps } from "../data/offers";
 import { PageHero } from "../components/UI";
 
 const interests = [
@@ -18,11 +21,21 @@ export default function Contact() {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
+  const started = useRef(false);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.set("form-name", "butter-contact");
     data.set("interest", interest);
+    const context = enquiryContext();
+    for (const [key, value] of Object.entries(context)) data.set(key, value);
+    const amount = params.get("estimate") || "";
+    const fromCalculator =
+      /^\d{3,7}$/.test(amount) &&
+      Number(amount) >= 2500 &&
+      Number(amount) <= 500000;
+    data.set("calculator_used", fromCalculator ? "yes" : "no");
+    data.set("estimate", fromCalculator ? amount : "");
     setState("sending");
     try {
       const response = await fetch("/", {
@@ -37,8 +50,10 @@ export default function Contact() {
       });
       if (!response.ok) throw new Error("The enquiry could not be sent.");
       setState("sent");
+      trackMarketing("enquiry_success", context.enquiry_origin);
     } catch {
       setState("error");
+      trackMarketing("enquiry_error", context.enquiry_origin);
     }
   }
   return (
@@ -53,25 +68,31 @@ export default function Contact() {
         }
       >
         <p>
-          A big idea, a tricky challenge, or a little “what if?”. Tell us what’s
-          on your mind.
+          Tell us what your people need to do and what is getting in the way. A
+          few lines are enough; you do not need a finished brief.
         </p>
       </PageHero>
       <section className="contact-page container">
         <aside className="contact-info">
           <Doodle kind="heart" />
           <p className="large-copy">
-            Your knowledge.
-            <br />
-            Our curiosity.
-            <br />
-            Let’s see what happens.
+            A clear brief.
+            <br />A useful next step.
           </p>
           <p className="contact-info-note">
-            Send us a little about your project.
-            <br />
-            The Butter studio will take it from there.
+            We’ll reply by email to understand the brief and suggest a next
+            step. An initial conversation carries no obligation.
           </p>
+          <ol className="contact-expectations">
+            {nextSteps.map((step) => (
+              <li key={step.title}>
+                <div>
+                  <strong>{step.title}</strong>
+                  <p>{step.copy}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
           <div className="contact-character">
             <ButterCharacter />
             <span>
@@ -89,12 +110,27 @@ export default function Contact() {
           data-netlify="true"
           data-netlify-honeypot="website"
           aria-busy={state === "sending"}
+          onFocusCapture={() => {
+            if (!started.current) {
+              started.current = true;
+              trackMarketing("form_start", enquiryContext().enquiry_origin);
+            }
+          }}
           onChange={() => {
             if (state !== "sending") setState("idle");
           }}
         >
           <input type="hidden" name="form-name" value="butter-contact" />
           <input type="hidden" name="interest" value={interest} />
+          {[
+            "entry_page",
+            "enquiry_origin",
+            "source_kind",
+            "calculator_used",
+            "estimate",
+          ].map((name) => (
+            <input key={name} type="hidden" name={name} />
+          ))}
           <p hidden>
             <label>
               Leave this empty
@@ -166,7 +202,7 @@ export default function Contact() {
               disabled={state === "sending"}
               name="brief"
               defaultValue={params.get("brief") || ""}
-              placeholder="We’d love to make…"
+              placeholder="Who is the learning for, and what would you like them to do differently?"
               required
               maxLength={3000}
               rows={5}
@@ -220,11 +256,16 @@ export default function Contact() {
             className="form-note"
             role={state === "error" ? "alert" : "status"}
           >
-            {state === "sent"
-              ? "Thanks. Your enquiry is with Butter."
-              : state === "error"
-                ? "We couldn’t send your enquiry. Your details are still here; please try again."
-                : "We’ll use your details to reply about this enquiry."}
+            {state === "sent" ? (
+              "Thanks. Your enquiry is with butter. We’ll reply by email to clarify the brief and suggest a useful next step."
+            ) : state === "error" ? (
+              "We couldn’t send your enquiry. Your details are still here; please try again."
+            ) : (
+              <>
+                We’ll use your details to reply about this enquiry.{" "}
+                <Link to="/privacy">How we handle your information</Link>.
+              </>
+            )}
           </p>
         </form>
       </section>
