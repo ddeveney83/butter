@@ -12,7 +12,6 @@ test("agency pages, journal and Labs load without personal credits, errors or ov
     "/about",
     "/services",
     "/work",
-    "/pricing",
     "/contact",
     "/brand",
     "/butterlearn",
@@ -89,52 +88,6 @@ test("journal filters and article links provide readable content and article met
     "href",
     "https://buttertest.netlify.app/journal/scorm-or-html-course",
   );
-});
-test("Labs branching, disclosure and practice controls work", async ({
-  page,
-}) => {
-  await page.goto("/labs/the-better-question");
-  await page
-    .getByRole("button", { name: /Yesterday’s handover missed/ })
-    .click();
-  await expect(page.getByRole("status")).toContainText("specific observation");
-  await page.getByRole("button", { name: /Explain the impact/ }).click();
-  await expect(page.getByRole("status")).toContainText("shared next step");
-  await page
-    .getByRole("button", { name: "Try another route", exact: false })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: /A detail is missing/ }),
-  ).toBeVisible();
-  await page.goto("/labs/one-idea-at-a-time");
-  await page
-    .getByRole("button", { name: "What changed?", exact: true })
-    .click();
-  await expect(
-    page.getByRole("region", { name: "What changed?" }),
-  ).toContainText("deadline moved to Friday");
-  await page
-    .getByRole("button", { name: "Everything together", exact: true })
-    .click();
-  await expect(page.locator(".lab-open-copy section")).toHaveCount(3);
-  await page
-    .getByRole("button", { name: "One idea at a time", exact: true })
-    .click();
-  await expect(page.locator(".accordion")).toHaveCount(3);
-  await page.goto("/labs/a-little-practice");
-  const gap = page.getByRole("slider", { name: /Days between practice/ });
-  await gap.focus();
-  await gap.press("End");
-  await page.getByRole("button", { name: /02 Day 8/ }).click();
-  await expect(page.locator(".lab-session-prompt")).toContainText(
-    "Session 2 · Day 8",
-  );
-  const count = page.getByRole("slider", { name: /Number of sessions/ });
-  await count.focus();
-  await count.press("End");
-  await expect(page.locator(".lab-plan-timeline button")).toHaveCount(5);
-  await page.getByRole("button", { name: /05 Day 29/ }).click();
-  await expect(page.getByRole("status")).toContainText("confidence");
 });
 test("contact keeps the destination private and retains the brief after a delivery error", async ({
   page,

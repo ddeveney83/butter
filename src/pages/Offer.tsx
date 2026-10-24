@@ -85,14 +85,6 @@ export default function OfferPage() {
           <ProjectCard project={project} />
         </Reveal>
       </section>
-      <section className="offer-budget container">
-        <div>
-          <h2>A useful starting point.</h2>
-          <p className="offer-price">From {offer.startingPrice}</p>
-          <p>{offer.pricingNote}</p>
-        </div>
-        <TextLink to="/pricing">Explore the project calculator</TextLink>
-      </section>
       <section
         className="lead-next-steps section container"
         aria-labelledby="offer-next-heading"

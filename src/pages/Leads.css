@@ -166,7 +166,6 @@
 }
 .offer-intro h2,
 .offer-work h2,
-.offer-budget h2,
 .offer-questions h2,
 .lead-next-steps > h2,
 .local-use-cases > h2 {
@@ -177,7 +176,6 @@
 }
 .offer-intro p,
 .offer-work p,
-.offer-budget p,
 .lead-next-steps p,
 .offer-questions p {
   font-size: 17px;
@@ -236,31 +234,6 @@
 }
 .offer-work .lead-footnote {
   font-size: 12px;
-}
-.offer-budget {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 45px;
-  background: var(--butter-soft);
-  border: 2px solid var(--ink);
-  border-radius: 26px;
-  padding: 40px;
-}
-.offer-budget > div {
-  max-width: 690px;
-}
-.offer-budget .offer-price {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 43px;
-  letter-spacing: -0.05em;
-  color: var(--ink);
-  margin: 15px 0;
-}
-.offer-budget .text-link {
-  flex-shrink: 0;
-  font-size: 14px;
 }
 .lead-next-steps > div {
   display: grid;
@@ -352,10 +325,6 @@
   .lead-service-links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .offer-budget {
-    align-items: flex-start;
-    flex-direction: column;
-  }
   .offer-intro,
   .offer-work,
   .offer-questions {
@@ -419,12 +388,6 @@
     width: 150px;
     max-height: 180px;
   }
-  .offer-budget {
-    padding: 25px;
-  }
-  .offer-budget .text-link {
-    white-space: normal;
-  }
   .offer-questions {
     gap: 15px;
   }
@@ -437,4 +400,8 @@
   .contact-page > .contact-info {
     grid-row: 2;
   }
+}
+
+.contact-form .form-row:has(> label:only-child) {
+  grid-template-columns: minmax(0, 1fr);
 }

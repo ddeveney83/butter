@@ -49,7 +49,7 @@ export const designArticles: Article[] = [
         heading: "Write a brief people can challenge.",
         paragraphs: [
           "A useful output is a concise decision record: the performance gap, the evidence, the likely causes, the proposed response and what remains uncertain. Share it with the people who supplied the evidence. Give them a chance to correct an assumption before it becomes a production plan. Keep the language about tasks and conditions rather than labelling an audience as disengaged or resistant.",
-          "Finish with a named owner, a review date and a practical measure. If there is no clear learning need, say so. Improving a job aid or a handover can be a better use of the budget. The purpose of analysis is to choose a response that fits the problem, including when that response is smaller than a course.",
+          "Finish with a named owner, a review date and a practical measure. If there is no clear learning need, say so. Improving a job aid or a handover can be a more focused response. The purpose of analysis is to choose a response that fits the problem, including when that response is smaller than a course.",
         ],
       },
     ],
@@ -152,7 +152,7 @@ export const designArticles: Article[] = [
         heading: "Use disclosure to manage a task, not hide it.",
         paragraphs: [
           "Tabs and accordions can separate supporting detail, but they do not automatically make content easier. If a learner must compare three options, putting each option behind a different tab may create extra memory work. If they need one optional definition, an expandable explanation can keep the main route focused.",
-          "Try two versions of a representative screen. Ask learners to complete the same task and explain what they used. Observe missed details, repeated navigation and confusion, rather than assuming that fewer visible words must be better. Our Labs disclosure experiment uses the same information in two layouts so you can explore that trade-off.",
+          "Try two versions of a representative screen. Ask learners to complete the same task and explain what they used. Observe missed details, repeated navigation and confusion, rather than assuming that fewer visible words must be better. A representative prototype can help you explore that trade-off with learners before committing to a layout.",
         ],
       },
       {
@@ -166,8 +166,8 @@ export const designArticles: Article[] = [
     relatedSlugs: ["worked-examples", "microlearning-design"],
     resources: [sources.study, sources.udl],
     action: {
-      to: "/labs/one-idea-at-a-time",
-      label: "Explore the disclosure experiment",
+      to: "/labs/digital-accessibility-now",
+      label: "Explore Digital Accessibility Now",
     },
   },
   {
@@ -334,7 +334,7 @@ export const designArticles: Article[] = [
     ],
     relatedSlugs: ["cognitive-load-elearning", "spaced-practice"],
     resources: [sources.study, sources.media],
-    action: { to: "/pricing", label: "Scope a focused learning moment" },
+    action: { to: "/contact", label: "Scope a focused learning moment" },
   },
   {
     slug: "elearning-storyboarding",

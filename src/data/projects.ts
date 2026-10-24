@@ -201,7 +201,7 @@ const content: ProjectContent[] = [
     approach:
       "The business case came first. Essential content was prioritised with subject matter experts, then brought to life through short animations, scenarios and simulations. Completion data, quiz results and feedback shaped improvements after launch.",
     outcome:
-      "The source reports 9.91 hours saved per employee and an estimated £5.5 million saving over six years. The financial figure is a projection, rather than a realised saving.",
+      "The source reports 9.91 hours of training time saved per employee.",
     metric: { value: "9.91 hrs", label: "Training time saved per employee" },
     scenario:
       "Your team wants to make its events less wasteful. Where would you start?",

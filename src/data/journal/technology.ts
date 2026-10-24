@@ -161,7 +161,7 @@ export const technologyArticles: Article[] = [
       {
         heading: "Compare the whole arrangement, including the exit.",
         paragraphs: [
-          "Compare costs using a realistic audience and service model. Clarify how active users, storage, support, integrations and implementation are charged. Ask what you can export when you leave: course packages, learner records, authored content and media may have different arrangements. Keep the requirements and the evidence from demonstrations together so the decision remains reviewable.",
+          "Compare the service arrangement using a realistic audience and workflow. Clarify how active users, storage, support, integrations and implementation will be managed. Ask what you can export when you leave: course packages, learner records, authored content and media may have different arrangements. Keep the requirements and the evidence from demonstrations together so the decision remains reviewable.",
           "butterlearn can be explored with HTML and SCORM examples, learner dashboards and role-based workflows. Those features are a starting point for a technical conversation, not a substitute for checking your production requirements. Whichever platform you consider, a small pilot using real tasks is a useful final test before a wider commitment.",
         ],
       },

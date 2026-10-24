@@ -517,8 +517,7 @@ h1:focus {
   letter-spacing: -0.8px;
   max-width: 235px;
 }
-.work-hero-spark,
-.pricing-hero-spark {
+.work-hero-spark {
   max-width: 140px !important;
   margin-left: 70px;
   transform: rotate(8deg);
@@ -1116,156 +1115,6 @@ h1:focus {
 .next-project > a:hover .arrow {
   transform: translate(5px, -5px);
 }
-/* Pricing stays a guide, with a working project estimator. */
-.pricing-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 35px;
-  gap: 25px;
-}
-.pricing-toolbar > p {
-  font-size: 12px;
-  line-height: 1.6;
-  color: #77776c;
-  margin: 0;
-}
-.segmented-control {
-  display: inline-flex;
-  padding: 4px;
-  background: #eeeee5;
-  border-radius: 40px;
-}
-.segmented-control button {
-  background: transparent;
-  border: 0;
-  border-radius: 40px;
-  font-size: 13px;
-  padding: 13px 20px;
-  color: #66665d;
-  transition:
-    background var(--motion-fast),
-    color var(--motion-fast);
-}
-.segmented-control button[aria-pressed="true"] {
-  background: var(--ink);
-  color: var(--paper);
-}
-.pricing-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.pricing-card {
-  padding: 32px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  background: #faf9f3;
-}
-.pricing-card.featured {
-  background: var(--butter);
-  border-color: var(--ink);
-}
-.pricing-card .doodle {
-  width: 58px;
-  height: 58px;
-  margin-bottom: 25px;
-  transform: rotate(-8deg);
-}
-.pricing-card h2 {
-  font-size: 28px;
-  letter-spacing: -1px;
-  line-height: 1.2;
-}
-.package-description {
-  font-size: 14px;
-  color: #66665d;
-  line-height: 1.6;
-  min-height: 45px;
-  margin: 15px 0;
-}
-.package-price {
-  margin-top: 12px;
-}
-.package-price > span {
-  display: block;
-  font-size: 11px;
-  color: #66665d;
-  margin-bottom: 6px;
-}
-.package-price > strong {
-  display: block;
-  font-size: 45px;
-  font-weight: 650;
-  letter-spacing: -2px;
-}
-.package-price small {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-.pricing-card ul {
-  list-style: none;
-  padding: 24px 0 25px;
-  margin: 25px 0 0;
-  border-top: 1px solid #d0d0be;
-  flex: 1;
-}
-.pricing-card.featured ul {
-  border-color: #c9b65b;
-}
-.pricing-card li {
-  display: flex;
-  gap: 12px;
-  font-size: 12px;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-.pricing-card li > span {
-  font-size: 13px;
-}
-.pricing-card .pill-button {
-  width: 100%;
-  justify-content: space-between;
-  padding-inline: 19px;
-}
-.pricing-disclaimer {
-  font-size: 12px;
-  color: #77776c;
-  line-height: 1.7;
-  max-width: 780px;
-  margin: 30px 0 85px;
-}
-.estimator-section {
-  background: #f2f1e9;
-  border-block: 1px solid #e3e2d9;
-  padding-block: 90px;
-}
-.estimator-grid {
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  gap: 100px;
-}
-.estimator-grid > div:first-child > p {
-  font-size: 17px;
-  line-height: 1.7;
-  color: #66665d;
-  margin-top: 25px;
-}
-.estimator-grid > div:first-child > .doodle {
-  margin-top: 32px;
-  width: 125px;
-  height: 125px;
-  transform: rotate(-8deg);
-}
-.estimator {
-  padding: 35px;
-  border: 1px solid #ccccbf;
-  border-radius: 8px;
-  background: var(--paper);
-}
 .select-label,
 .range-label {
   display: block;
@@ -1276,7 +1125,6 @@ select {
   font: inherit;
   color: var(--ink);
 }
-.estimator select,
 .full-contact-form select {
   display: block;
   width: 100%;
@@ -1313,70 +1161,6 @@ select:focus-visible {
   font-size: 10px;
   font-weight: 400;
   color: #77776c;
-}
-.estimate-options {
-  margin-top: 28px;
-  border-top: 1px solid var(--line);
-}
-.estimate-options label {
-  display: flex;
-  gap: 14px;
-  padding-top: 20px;
-  align-items: center;
-  cursor: pointer;
-  font-size: 14px;
-}
-.estimate-options input {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--ink);
-}
-.estimate-options small {
-  display: block;
-  font-size: 11px;
-  color: #77776c;
-  margin-top: 4px;
-}
-.estimate-result {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--line);
-  margin-top: 28px;
-  padding-top: 25px;
-  gap: 15px;
-}
-.estimate-result span {
-  display: block;
-  font-size: 11px;
-  color: #77776c;
-}
-.estimate-result output {
-  font-size: 52px;
-  letter-spacing: -2px;
-  font-weight: 650;
-  margin-top: 4px;
-  display: block;
-}
-.round-link {
-  display: grid;
-  place-items: center;
-  background: var(--butter);
-  border: 1px solid var(--ink);
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  transition: background var(--motion-fast);
-}
-.round-link:hover {
-  background: var(--ink);
-  color: var(--butter);
-}
-.estimator .form-note {
-  font-size: 11px;
-  line-height: 1.6;
-  color: #77776c;
-  margin: 22px 0 0;
 }
 .faq-section {
   padding-top: 85px;
@@ -1538,26 +1322,9 @@ select:focus-visible {
   .about-story,
   .project-story,
   .demo-grid,
-  .estimator-grid,
   .faq-section,
   .contact-page {
     gap: 50px;
-  }
-  .pricing-card {
-    padding: 23px;
-  }
-  .pricing-card h2 {
-    font-size: 26px;
-  }
-  .package-price > strong {
-    font-size: 40px;
-  }
-  .package-description {
-    min-height: 65px;
-  }
-  .pricing-card .pill-button {
-    gap: 8px;
-    font-size: 13px;
   }
   .service-detail h2 {
     font-size: 34px;
@@ -1590,8 +1357,7 @@ select:focus-visible {
   .scenario-card h3 {
     font-size: 23px;
   }
-  .work-hero-spark,
-  .pricing-hero-spark {
+  .work-hero-spark {
     margin-left: 55px;
     max-width: 105px !important;
   }
@@ -1660,25 +1426,6 @@ select:focus-visible {
   .header .wordmark {
     font-size: 45px;
   }
-  .pricing-cards {
-    gap: 12px;
-  }
-  .pricing-card {
-    padding: 18px;
-  }
-  .pricing-card h2 {
-    font-size: 23px;
-  }
-  .package-price > strong {
-    font-size: 34px;
-  }
-  .package-price small {
-    font-size: 10px;
-  }
-  .pricing-card .pill-button {
-    font-size: 12px;
-    padding-inline: 13px;
-  }
 }
 @media (max-width: 760px) {
   .nav {
@@ -1717,16 +1464,13 @@ select:focus-visible {
   .page-hero-aside {
     margin-top: 28px;
   }
-  .page-hero-aside > .work-hero-spark,
-  .page-hero-aside > .pricing-hero-spark {
+  .page-hero-aside > .work-hero-spark {
     display: none;
   }
-  .work-hero-spark,
-  .pricing-hero-spark {
+  .work-hero-spark {
     margin: 0;
   }
-  .page-hero-aside:has(> .work-hero-spark),
-  .page-hero-aside:has(> .pricing-hero-spark) {
+  .page-hero-aside:has(> .work-hero-spark) {
     margin-top: 0;
   }
   .about-hero-art {
@@ -1738,7 +1482,6 @@ select:focus-visible {
   .about-story,
   .project-story,
   .demo-grid,
-  .estimator-grid,
   .faq-section,
   .contact-page {
     grid-template-columns: 1fr;
@@ -2056,56 +1799,6 @@ select:focus-visible {
     width: 30px;
     height: 30px;
   }
-  .pricing-toolbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 22px;
-  }
-  .pricing-cards {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .pricing-card {
-    padding: 30px;
-  }
-  .pricing-card h2 {
-    font-size: 30px;
-  }
-  .pricing-card .doodle {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
-  }
-  .package-description {
-    min-height: 0;
-  }
-  .package-price > strong {
-    font-size: 49px;
-  }
-  .pricing-card li {
-    font-size: 13px;
-  }
-  .pricing-card .pill-button {
-    font-size: 14px;
-  }
-  .pricing-disclaimer {
-    margin-bottom: 55px;
-  }
-  .estimator-section {
-    padding-block: 55px;
-  }
-  .estimator-grid > div:first-child > .doodle {
-    display: none;
-  }
-  .estimator-grid > div:first-child > p {
-    font-size: 15px;
-  }
-  .estimator {
-    padding: 25px 22px;
-  }
-  .estimate-result output {
-    font-size: 45px;
-  }
   .faq-section {
     padding-top: 55px;
   }
@@ -2182,14 +1875,6 @@ select:focus-visible {
     padding-inline: 4px;
     letter-spacing: -0.15px;
   }
-  .estimate-result output {
-    font-size: 39px;
-    letter-spacing: -1.5px;
-  }
-  .estimate-result .round-link {
-    width: 44px;
-    height: 44px;
-  }
   .form-row {
     grid-template-columns: 1fr;
   }
@@ -2206,32 +1891,11 @@ select:focus-visible {
   }
 }
 /* Consistent sizing for controls and their changing content. */
-.estimator-grid > *,
 .demo-grid > *,
 .contact-page > *,
 .value-content > *,
 .process-content > * {
   min-width: 0;
-}
-.estimator {
-  min-width: 0;
-}
-.round-link {
-  flex-shrink: 0;
-}
-.estimate-result {
-  gap: 12px;
-}
-.estimate-result > div {
-  min-width: 0;
-}
-.estimate-result output,
-.package-price strong {
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.package-price {
-  min-height: 90px;
 }
 .filter-list button,
 .interest-chips button {
@@ -2251,47 +1915,11 @@ select:focus-visible {
   height: 18px;
   flex: 0 0 18px;
 }
-.estimate-options label {
-  min-height: 58px;
-}
-.estimate-options input {
-  flex-shrink: 0;
-}
 .contact-email {
   overflow-wrap: anywhere;
 }
 .contact-email .arrow {
   flex-shrink: 0;
-}
-.segmented-control {
-  position: relative;
-  display: inline-grid;
-  grid-template-columns: 1fr 1fr;
-  max-width: 100%;
-  isolation: isolate;
-}
-.segmented-control:before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: calc((100% - 8px) / 2);
-  height: calc(100% - 8px);
-  background: var(--ink);
-  border-radius: 40px;
-  z-index: -1;
-  transition: transform 220ms var(--ease-butter);
-}
-.segmented-control[data-active="support"]:before {
-  transform: translateX(100%);
-}
-.segmented-control button {
-  min-height: 44px;
-  padding-inline: 18px;
-  white-space: nowrap;
-}
-.segmented-control button[aria-pressed="true"] {
-  background: transparent;
 }
 .range-label input {
   appearance: none;
@@ -2344,18 +1972,6 @@ select:focus-visible {
   }
   .accordion-trigger:hover .disclosure-icon {
     color: #8a731e;
-  }
-}
-@media (max-width: 380px) {
-  .segmented-control {
-    width: 100%;
-  }
-  .segmented-control button {
-    font-size: 12px;
-    padding-inline: 10px;
-  }
-  .package-price {
-    min-height: 94px;
   }
 }
 .feedback-messages {

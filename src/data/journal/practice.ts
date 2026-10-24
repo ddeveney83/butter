@@ -56,8 +56,8 @@ export const practiceArticles: Article[] = [
     relatedSlugs: ["spaced-practice", "formative-assessment"],
     resources: [sources.study],
     action: {
-      to: "/labs/a-little-practice",
-      label: "Explore a small practice plan",
+      to: "/services/staff-onboarding",
+      label: "Explore staff onboarding",
     },
   },
   {
@@ -107,15 +107,15 @@ export const practiceArticles: Article[] = [
         heading: "Measure the learning question, not just the clicks.",
         paragraphs: [
           "Completion tells you whether an activity was recorded as finished. A later practice response tells you something about what the learner can retrieve or apply under those conditions. A workplace observation can add another perspective. Keep these measures distinct and avoid turning one of them into a claim that the programme alone caused a business result.",
-          "Review the schedule with learners and facilitators. Look for tasks that arrive at an awkward time, prompts that repeat without adding value and useful gaps that deserve more practice. Our Labs planner illustrates a sequence of revisits; it is a way to explore a rhythm, not a retention calculator or a prescription for every course.",
+          "Review the schedule with learners and facilitators. Look for tasks that arrive at an awkward time, prompts that repeat without adding value and useful gaps that deserve more practice. Plan a sequence of revisits that fits the learning goal and the audience’s opportunities to practise.",
         ],
       },
     ],
     relatedSlugs: ["retrieval-practice", "blended-learning-design"],
     resources: [sources.study],
     action: {
-      to: "/labs/a-little-practice",
-      label: "Try the practice rhythm planner",
+      to: "/services/staff-onboarding",
+      label: "Discuss a practice sequence",
     },
   },
   {
@@ -230,8 +230,8 @@ export const practiceArticles: Article[] = [
     relatedSlugs: ["formative-assessment", "write-better-learning-scenarios"],
     resources: [sources.feedback],
     action: {
-      to: "/labs/the-better-question",
-      label: "Explore feedback in a branching conversation",
+      to: "/labs/the-journey",
+      label: "Explore The Journey",
     },
   },
   {

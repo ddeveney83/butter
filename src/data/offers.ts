@@ -8,8 +8,6 @@ export type Offer = {
   need: string;
   approach: string;
   deliverables: { title: string; copy: string }[];
-  startingPrice: string;
-  pricingNote: string;
   project: string;
   articles: string[];
   questions: { title: string; answer: string }[];
@@ -40,9 +38,6 @@ export const offers: Offer[] = [
         copy: "An agreed delivery format, accessibility review and platform testing, plus the files and guidance specified in your proposal.",
       },
     ],
-    startingPrice: "£7,500",
-    pricingNote:
-      "Illustrative starting budget for one interactive module. Research, media, length, accessibility requirements and review rounds shape the final quote.",
     project: "allergen-awareness",
     articles: ["write-learning-objectives", "elearning-storyboarding"],
     questions: [
@@ -88,9 +83,6 @@ export const offers: Offer[] = [
         copy: "A proposed sequence, manager conversation prompts and agreed completion or feedback checks to support the wider induction.",
       },
     ],
-    startingPrice: "£7,500",
-    pricingNote:
-      "Illustrative starting budget for a focused interactive onboarding module. A connected, multi-part journey starts from an indicative £15,000; scope is agreed before quoting.",
     project: "matrix-reloaded",
     articles: ["blended-learning-design", "spaced-practice"],
     questions: [
@@ -136,9 +128,6 @@ export const offers: Offer[] = [
         copy: "Agreed delivery and reporting checks, plus a handover identifying the content that will need review when guidance changes.",
       },
     ],
-    startingPrice: "£7,500",
-    pricingNote:
-      "Illustrative starting budget for an interactive module. Specialist review, branching, media and reporting requirements affect the final scope. Legal or regulatory approval remains with your appointed specialists.",
     project: "record-keeping",
     articles: ["write-better-learning-scenarios", "authentic-assessment"],
     questions: [
@@ -167,7 +156,7 @@ export const offers: Offer[] = [
     headline: "Good content. A fresh start.",
     lead: "Keep what works. Improve what gets in the way. Give an existing course clearer content, a more useful learning journey and a considered visual refresh.",
     icon: "spark",
-    need: "Perhaps the content has grown, the guidance has changed or the interface no longer fits your learners’ devices. A refresh starts by identifying the actual problem, so the budget goes to changes that matter.",
+    need: "Perhaps the content has grown, the guidance has changed or the interface no longer fits your learners’ devices. A refresh starts by identifying the actual problem, so the work focuses on changes that matter.",
     approach:
       "We review a representative section, the source files and the delivery requirements. Together, we decide whether targeted edits, a redesigned activity or a fuller rebuild is the sensible route. That decision comes before a promise to reuse every existing asset.",
     deliverables: [
@@ -184,9 +173,6 @@ export const offers: Offer[] = [
         copy: "The agreed revised content, regression checks and handover, with ownership of future content reviews made clear.",
       },
     ],
-    startingPrice: "£2,500",
-    pricingNote:
-      "Illustrative starting budget for a focused refresh. The available source files, volume of changes, media rights and technical constraints determine the final quote.",
     project: "alcohol-and-drug-awareness",
     articles: ["learning-needs-analysis", "elearning-quality-assurance"],
     questions: [
@@ -226,6 +212,6 @@ export const nextSteps = [
   },
   {
     title: "Agree the shape of the work.",
-    copy: "Before production, we agree the deliverables, review stages, timing and price in a written proposal.",
+    copy: "Before production, we agree the deliverables, review stages, timing and responsibilities in a written proposal.",
   },
 ];

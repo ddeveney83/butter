@@ -64,8 +64,7 @@
 .toon-icon {
   color: #111110;
 }
-.editorial-list,
-.labs-list {
+.editorial-list {
   padding: 0 0 90px;
 }
 .journal-search {
@@ -257,8 +256,7 @@
 .studio-back-link:hover {
   text-decoration: underline;
 }
-.journal-article h1,
-.lab-experiment h1 {
+.journal-article h1 {
   font-size: clamp(48px, 5.4vw, 80px);
   font-weight: 800;
   line-height: 1.06;
@@ -357,127 +355,6 @@
   letter-spacing: -1.5px;
   margin: 0 0 35px;
 }
-.labs-note {
-  font-size: 13px;
-  line-height: 1.8;
-  color: var(--muted);
-  max-width: 820px;
-  margin: 30px 0 0;
-}
-.lab-experiment {
-  padding: 50px 0 90px;
-}
-.lab-experiment > header {
-  display: flex;
-  gap: 50px;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 48px;
-}
-.lab-experiment > header > div {
-  max-width: 820px;
-}
-.lab-experiment > header > .doodle {
-  width: 140px;
-  height: 140px;
-  flex-shrink: 0;
-}
-.lab-experiment > header p {
-  font-size: 18px;
-  line-height: 1.7;
-  color: var(--muted);
-  max-width: 650px;
-  margin: 0;
-}
-.lab-playground {
-  border: 1px solid var(--ink);
-  border-radius: 22px;
-  background: #f5f4eb;
-  padding: clamp(24px, 5vw, 64px);
-  max-width: 1100px;
-}
-.lab-playground h2 {
-  font-size: clamp(29px, 3.4vw, 45px);
-  line-height: 1.2;
-  letter-spacing: -1.4px;
-  margin: 0 0 24px;
-}
-.lab-playground p {
-  font-size: 17px;
-  line-height: 1.75;
-  color: var(--muted);
-  max-width: 750px;
-  margin: 0 0 28px;
-}
-.lab-step {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 25px;
-  color: var(--muted);
-}
-.lab-choices {
-  display: grid;
-  gap: 14px;
-  margin: 30px 0;
-}
-.lab-choices button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 25px;
-  text-align: left;
-  color: inherit;
-  background: var(--paper);
-  border: 1px solid var(--ink);
-  padding: 22px;
-  border-radius: 13px;
-  line-height: 1.6;
-  font-size: 16px;
-  transition: background 0.3s var(--ease-butter);
-}
-.lab-choices button:hover {
-  background: var(--butter);
-}
-.lab-reflection {
-  margin-top: 32px;
-  padding-top: 30px;
-  border-top: 1px solid var(--line);
-}
-.lab-reflection h3,
-.lab-open-copy h3,
-.lab-session-prompt h3 {
-  font-size: 24px;
-  line-height: 1.25;
-  letter-spacing: -0.5px;
-  margin: 0 0 18px;
-}
-.lab-reflection p {
-  font-size: 15px;
-  line-height: 1.8;
-}
-.lab-reflection .text-link {
-  font-size: 14px;
-}
-.lab-playground .reset-link {
-  margin-top: 20px;
-  font-size: 14px;
-}
-.lab-disclosure > .filter-list {
-  margin-bottom: 35px;
-}
-.lab-disclosure > .lab-layout-note {
-  font-size: 14px;
-}
-.lab-open-copy {
-  display: grid;
-  gap: 28px;
-}
-.lab-open-copy p {
-  margin: 0;
-}
-.lab-playground .accordion {
-  margin: 24px 0;
-}
 .lab-plan-controls {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -498,47 +375,6 @@
 .lab-plan-controls input {
   width: 100%;
   accent-color: var(--ink);
-}
-.lab-plan-timeline {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 35px 0;
-}
-.lab-plan-timeline button {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1 1 105px;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid var(--ink);
-  background: var(--paper);
-  color: inherit;
-  align-items: start;
-  font-size: 15px;
-  transition: background 0.3s ease;
-}
-.lab-plan-timeline button[aria-pressed="true"] {
-  background: var(--butter);
-}
-.lab-plan-timeline span {
-  font-size: 12px;
-  color: var(--muted);
-}
-.lab-session-prompt {
-  padding: 25px;
-  border: 1px solid var(--line);
-  background: var(--butter-soft);
-  border-radius: 14px;
-}
-.lab-session-prompt p {
-  margin: 0;
-  font-size: 16px;
-}
-.lab-practice > .lab-layout-note {
-  font-size: 13px;
-  margin: 25px 0 0;
 }
 .home-studio-links {
   display: grid;
@@ -678,8 +514,7 @@
   .editorial-card-art {
     min-height: 200px;
   }
-  .editorial-list,
-  .labs-list {
+  .editorial-list {
     padding-bottom: 60px;
   }
   .journal-labs-link {
@@ -694,8 +529,7 @@
   .journal-article {
     padding: 30px 0 60px;
   }
-  .journal-article h1,
-  .lab-experiment h1 {
+  .journal-article h1 {
     font-size: clamp(40px, 10vw, 59px);
     letter-spacing: -1.8px;
   }
@@ -742,39 +576,9 @@
   .editorial-related > h2 {
     font-size: 32px;
   }
-  .lab-experiment {
-    padding: 30px 0 60px;
-  }
-  .lab-experiment > header {
-    gap: 20px;
-    align-items: start;
-  }
-  .lab-experiment > header > .doodle {
-    width: 65px;
-    height: 65px;
-  }
-  .lab-experiment > header p {
-    font-size: 15px;
-  }
-  .lab-playground p {
-    font-size: 15px;
-  }
-  .lab-choices button {
-    padding: 18px;
-    font-size: 15px;
-  }
   .lab-plan-controls {
     gap: 28px;
     grid-template-columns: 1fr;
-  }
-  .lab-playground {
-    border-radius: 16px;
-  }
-  .lab-disclosure > .filter-list {
-    gap: 10px;
-  }
-  .lab-session-prompt {
-    padding: 20px;
   }
   .home-studio-links {
     grid-template-columns: 1fr;

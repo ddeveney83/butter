@@ -69,8 +69,7 @@ function describeTarget(target: Element | null): string {
     if (control.hash && control.pathname === location.pathname) return "Scroll";
     if (control.closest("nav"))
       return control.textContent?.trim() || "View page";
-    if (control.pathname === "/contact")
-      return control.matches(".round-link") ? "Discuss estimate" : "Let’s talk";
+    if (control.pathname === "/contact") return "Let’s talk";
     if (control.pathname === "/work")
       return control.closest(".project-hero") ? "Back to work" : "View work";
     if (control.pathname === "/services") return "View services";

@@ -4,7 +4,7 @@ import { offers, offerPath } from "./offers.ts";
 export const pageMeta: Record<string, [string, string]> = {
   "/": [
     "Learning with feeling.",
-    "Bespoke eLearning, staff onboarding and training content for businesses. Explore butter’s work, indicative budgets and a clear route to your next project.",
+    "Bespoke eLearning, staff onboarding and training content for businesses. Explore butter’s work, project examples and a clear route to your next project.",
   ],
   "/about": [
     "A little more human.",
@@ -17,10 +17,6 @@ export const pageMeta: Record<string, [string, string]> = {
   "/work": [
     "A taste of our work.",
     "Explore six digital learning experiences and two learning platforms, with project imagery, film and interactive samples.",
-  ],
-  "/pricing": [
-    "Find your starting point.",
-    "Explore indicative eLearning project budgets and build a ballpark learning project estimate with butter.",
   ],
   "/contact": [
     "Good things start with hello.",
@@ -36,7 +32,7 @@ export const pageMeta: Record<string, [string, string]> = {
   ],
   "/labs": [
     "A little space for what if.",
-    "Explore butter Labs: interactive learning experiments, branching conversations and creative learning snippets.",
+    "Explore five butter Labs projects: digital accessibility, resilience, branching storytelling, community mapping and live-event management.",
   ],
   "/brand": [
     "The butter way.",
@@ -123,11 +119,13 @@ export function structuredData(path: string, siteURL: string) {
   if (lab)
     return {
       "@context": "https://schema.org",
-      "@type": "LearningResource",
+      "@type": "CreativeWork",
       name: lab.title,
       description: lab.description,
       url: siteURL + path,
-      learningResourceType: "Interactive demonstration",
+      creativeWorkStatus: lab.status,
+      image: siteURL + lab.hero.path,
+      genre: lab.category,
       creator: organization,
     };
   return { "@context": "https://schema.org", ...organization };

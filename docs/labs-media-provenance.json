@@ -1,0 +1,221 @@
+{
+  "shredmap": [
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20Hero?tr=w-1400,f-webp,q-85",
+      "path": "/labs/shredmap/hero.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20four?tr=w-1200,f-webp,q-80",
+      "path": "/labs/shredmap/screen-1.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20two?tr=w-1200,f-webp,q-80",
+      "path": "/labs/shredmap/screen-2.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20five?tr=w-1200,f-webp,q-80",
+      "path": "/labs/shredmap/screen-3.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20one?tr=w-1200,f-webp,q-80",
+      "path": "/labs/shredmap/screen-4.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20three?tr=w-1200,f-webp,q-80",
+      "path": "/labs/shredmap/screen-5.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20six?tr=w-1200,f-webp,q-80",
+      "path": "/labs/shredmap/screen-6.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20eight?tr=w-1200,f-webp,q-80",
+      "path": "/labs/shredmap/screen-7.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Skatemap%20seven?tr=w-1200,f-webp,q-80",
+      "path": "/labs/shredmap/screen-8.webp",
+      "source_page": "https://danieldeveney.com/labs/shredmap"
+    }
+  ],
+  "digital-accessibility-now": [
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Digital%20Accessibility%20Now%20Hero?tr=w-1200,f-webp,q-80",
+      "path": "/labs/digital-accessibility-now/hero.webp",
+      "source_page": "https://danieldeveney.com/labs/digital-accessibility-now"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Digital%20Accessibility%20Now%20Nine?tr=w-1200,f-webp,q-80",
+      "path": "/labs/digital-accessibility-now/screen-1.webp",
+      "source_page": "https://danieldeveney.com/labs/digital-accessibility-now"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Digital%20Accessibility%20Now%20Six?tr=w-1200,f-webp,q-80",
+      "path": "/labs/digital-accessibility-now/screen-2.webp",
+      "source_page": "https://danieldeveney.com/labs/digital-accessibility-now"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Digital%20Accessibility%20Now%20Eight?tr=w-1200,f-webp,q-80",
+      "path": "/labs/digital-accessibility-now/screen-3.webp",
+      "source_page": "https://danieldeveney.com/labs/digital-accessibility-now"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Digital%20Accessibility%20Now%20Four?tr=w-1200,f-webp,q-80",
+      "path": "/labs/digital-accessibility-now/screen-4.webp",
+      "excluded": "Contains a personal credit in the interface; omitted from the public site.",
+      "source_page": "https://danieldeveney.com/labs/digital-accessibility-now"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Digital%20Accessibility%20Now%20Five?tr=w-1200,f-webp,q-80",
+      "path": "/labs/digital-accessibility-now/screen-5.webp",
+      "excluded": "Contains a personal credit in the interface; omitted from the public site.",
+      "source_page": "https://danieldeveney.com/labs/digital-accessibility-now"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Digital%20Accessibility%20Now%20Seven?tr=w-1200,f-webp,q-80",
+      "path": "/labs/digital-accessibility-now/screen-6.webp",
+      "source_page": "https://danieldeveney.com/labs/digital-accessibility-now"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Digital%20Accessibility%20Now%20One?tr=w-1200,f-webp,q-80",
+      "path": "/labs/digital-accessibility-now/screen-7.webp",
+      "excluded": "Contains a personal credit in the interface; omitted from the public site.",
+      "source_page": "https://danieldeveney.com/labs/digital-accessibility-now"
+    }
+  ],
+  "eventhub": [
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/EventHub%20Hero?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/hero.webp",
+      "excluded": "Contains a personal credit in the interface; omitted from the public site.",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20one?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-1.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20two?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-2.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20four?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-3.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20five?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-4.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20three?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-5.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20six?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-6.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20seven?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-7.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20eight?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-8.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20nine?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-9.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Event%20hub%20ten?tr=w-1200,f-webp,q-80",
+      "path": "/labs/eventhub/screen-10.webp",
+      "source_page": "https://danieldeveney.com/labs/eventhub"
+    }
+  ],
+  "resilience-check-in": [
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Resilience%20Checkin%20hero?tr=w-1200,f-webp,q-80",
+      "path": "/labs/resilience-check-in/hero.webp",
+      "source_page": "https://danieldeveney.com/labs/resilience-check-in"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Resilience%20Checkin%20one?tr=w-1200,f-webp,q-80",
+      "path": "/labs/resilience-check-in/screen-1.webp",
+      "source_page": "https://danieldeveney.com/labs/resilience-check-in"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Resilience%20Checkin%20Two?tr=w-1200,f-webp,q-80",
+      "path": "/labs/resilience-check-in/screen-2.webp",
+      "source_page": "https://danieldeveney.com/labs/resilience-check-in"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Resilience%20Checkin%20five?tr=w-1200,f-webp,q-80",
+      "path": "/labs/resilience-check-in/screen-3.webp",
+      "source_page": "https://danieldeveney.com/labs/resilience-check-in"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Resilience%20Checkin%20three?tr=w-1200,f-webp,q-80",
+      "path": "/labs/resilience-check-in/screen-4.webp",
+      "source_page": "https://danieldeveney.com/labs/resilience-check-in"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Resilience%20Checkin%20six?tr=w-1200,f-webp,q-80",
+      "path": "/labs/resilience-check-in/screen-5.webp",
+      "source_page": "https://danieldeveney.com/labs/resilience-check-in"
+    }
+  ],
+  "the-journey": [
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Journey%20Hero?tr=w-1200,f-webp,q-80",
+      "path": "/labs/the-journey/hero.webp",
+      "source_page": "https://danieldeveney.com/labs/the-journey"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Journey%20ONEONE?tr=w-1200,f-webp,q-80",
+      "path": "/labs/the-journey/screen-1.webp",
+      "source_page": "https://danieldeveney.com/labs/the-journey"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Journey%20Six?tr=w-1200,f-webp,q-80",
+      "path": "/labs/the-journey/screen-2.webp",
+      "source_page": "https://danieldeveney.com/labs/the-journey"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Journey%20one?tr=w-1200,f-webp,q-80",
+      "path": "/labs/the-journey/screen-3.webp",
+      "source_page": "https://danieldeveney.com/labs/the-journey"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Journey%20Two?tr=w-1200,f-webp,q-80",
+      "path": "/labs/the-journey/screen-4.webp",
+      "source_page": "https://danieldeveney.com/labs/the-journey"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Journey%20five?tr=w-1200,f-webp,q-80",
+      "path": "/labs/the-journey/screen-5.webp",
+      "source_page": "https://danieldeveney.com/labs/the-journey"
+    },
+    {
+      "source": "https://ik.imagekit.io/graniteglitch/Hellodan/Journey%20Three?tr=w-1200,f-webp,q-80",
+      "path": "/labs/the-journey/screen-6.webp",
+      "source_page": "https://danieldeveney.com/labs/the-journey"
+    }
+  ]
+}

@@ -410,8 +410,7 @@ export default function Butterlearn() {
             <p>
               The first release supports learner accounts, HTML course packages,
               SCORM 1.2 and SCORM 2004 tracking, course assignments and team
-              reports. Sign in to explore your learning. Subscription pricing
-              has not been confirmed yet.
+              reports. Sign in to explore your learning.
             </p>
           </Accordion>
           <Accordion title="Will we be able to bring our own learning?">

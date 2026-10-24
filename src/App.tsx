@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
   createBrowserRouter,
+  Navigate,
   Outlet,
   RouterProvider,
   useLocation,
@@ -26,7 +27,6 @@ import Work from "./pages/Work";
 import OfferPage from "./pages/Offer";
 import Devon from "./pages/Devon";
 import Privacy from "./pages/Privacy";
-import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
 import Project from "./pages/Project";
 import NotFound from "./pages/NotFound";
@@ -53,7 +53,6 @@ const links = [
   ["/butterlearn", "butterlearn"],
   ["/journal", "Journal"],
   ["/labs", "Labs"],
-  ["/pricing", "Pricing"],
   ["/contact", "Contact"],
 ];
 
@@ -74,10 +73,12 @@ function PageContent() {
 
 function Site() {
   const location = useLocation();
+  const transitioning = useViewTransitionState(location.pathname);
   const reduced = useReducedMotion();
   const compactNavigation = useMediaQuery("(max-width: 1120px)");
   const [menuOpen, setMenuOpen] = useState(false);
   const firstRender = useRef(true);
+  const focusPending = useRef(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     setMenuOpen(false);
@@ -140,13 +141,25 @@ function Site() {
       return;
     }
     window.scrollTo({ top: 0, behavior: "instant" });
-    const frame = requestAnimationFrame(() =>
-      document
-        .querySelector<HTMLElement>("main h1")
-        ?.focus({ preventScroll: true }),
-    );
-    return () => cancelAnimationFrame(frame);
+    focusPending.current = true;
   }, [location.pathname]);
+  useEffect(() => {
+    if (transitioning || !focusPending.current) return;
+    let nextFrame = 0;
+    // Let the crossfade and browser history restore settle before moving focus.
+    const frame = requestAnimationFrame(() => {
+      nextFrame = requestAnimationFrame(() => {
+        document
+          .querySelector<HTMLElement>("main h1")
+          ?.focus({ preventScroll: true });
+        focusPending.current = false;
+      });
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      cancelAnimationFrame(nextFrame);
+    };
+  }, [location.pathname, transitioning]);
   useEffect(() => {
     function close(event: KeyboardEvent) {
       if (event.key === "Escape" && menuOpen) {
@@ -313,7 +326,13 @@ const router = createBrowserRouter([
       { path: "/work/:slug", element: <Project /> },
       { path: "/butterlearn", element: <Butterlearn /> },
 
-      { path: "/pricing", element: <Pricing /> },
+      { path: "/pricing", element: <Navigate to="/contact" replace /> },
+      {
+        path: "/journal/what-does-elearning-cost",
+        element: (
+          <Navigate to="/journal/how-to-brief-elearning-project" replace />
+        ),
+      },
       { path: "/contact", element: <Contact /> },
       { path: "/journal", element: <Journal /> },
       { path: "/journal/:slug", element: <JournalArticle /> },

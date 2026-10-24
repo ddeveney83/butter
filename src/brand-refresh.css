@@ -169,15 +169,6 @@ h3,
 .project:hover .project-open {
   background: var(--butter);
 }
-.pricing-card {
-  border: var(--outline);
-  border-radius: 24px;
-  background: var(--paper);
-}
-.pricing-card.featured {
-  background: var(--butter-soft);
-  box-shadow: 5px 5px 0 var(--butter-gold);
-}
 .editorial-card {
   border: var(--outline);
   border-radius: 24px;

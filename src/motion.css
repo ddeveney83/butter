@@ -128,12 +128,6 @@ html:active-view-transition .reveal[data-reveal] {
     translate: 0;
   }
 }
-.estimate-result output .estimate-value {
-  font: inherit;
-  color: inherit;
-  letter-spacing: inherit;
-  animation: content-arrive var(--motion-fast) var(--ease-butter);
-}
 .accordion-panel {
   transition:
     grid-template-rows var(--motion-base) var(--ease-butter),
@@ -149,19 +143,12 @@ html:active-view-transition .reveal[data-reveal] {
 .disclosure-icon {
   transition: color var(--motion-fast) var(--ease-butter);
 }
-.segmented-control:before {
-  transition: transform var(--motion-base) var(--ease-butter);
-}
-.package-description,
-.package-price,
-.pricing-card ul,
 .contact-actions > *,
 .feedback-messages p[aria-hidden="false"] {
   animation: content-arrive var(--motion-base) var(--ease-butter);
 }
 
 .pill-button,
-.round-link,
 .nav-contact,
 .project-open {
   transition:
@@ -171,7 +158,6 @@ html:active-view-transition .reveal[data-reveal] {
     transform var(--motion-base) var(--ease-butter);
 }
 .pill-button .arrow,
-.round-link .arrow,
 .text-link .arrow,
 .project-caption > .arrow,
 .scenario-choices .arrow,
@@ -197,7 +183,6 @@ select {
     background var(--motion-fast) var(--ease-butter);
 }
 .pill-button:active,
-.round-link:active,
 .filter-list button:active,
 .interest-chips button:active {
   transform: scale(0.98);
@@ -215,7 +200,6 @@ select {
 
 @media (hover: hover) {
   .pill-button:hover .arrow,
-  .round-link:hover .arrow,
   .text-link:hover .arrow,
   .project:hover .project-caption > .arrow,
   .nav-contact:hover .arrow {

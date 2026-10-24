@@ -5,8 +5,6 @@ const events = new Set([
   "page_view",
   "enquiry_click",
   "form_start",
-  "calculator_start",
-  "calculator_enquiry",
   "enquiry_success",
   "enquiry_error",
 ]);

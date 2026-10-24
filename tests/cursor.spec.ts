@@ -101,19 +101,6 @@ test("native form cursors, touch and reduced motion remain usable", async ({
     .getByRole("button", { name: "Digital learning", exact: true })
     .click();
   await expect(hint).toHaveText("Selected");
-  await page.goto("/pricing");
-  const checkbox = page.getByLabel("Branching scenarios");
-  await checkbox.hover();
-  await expect(checkbox).toHaveCSS("cursor", /butter-cursor\.svg/);
-  await expect(hint).toHaveText("Select");
-  await checkbox.click();
-  await expect(hint).toHaveText("Selected");
-  const range = page.getByRole("slider");
-  await range.hover();
-  await expect(hint).toHaveText("Adjust");
-  await page.mouse.down();
-  await expect(hint).toHaveCSS("opacity", "0");
-  await page.mouse.up();
 });
 
 test("hover hints fit within screen edges and clear on pointer exit", async ({

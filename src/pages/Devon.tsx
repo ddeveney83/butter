@@ -105,18 +105,6 @@ export default function Devon() {
           ))}
         </div>
       </section>
-      <section className="offer-budget container">
-        <div>
-          <h2>A budget with a clear scope.</h2>
-          <p>
-            Illustrative starting budgets are £2,500 for a focused refresh,
-            £7,500 for an interactive module and £15,000 for a connected
-            learning journey. Your audience, content, production and review
-            requirements shape the quote.
-          </p>
-        </div>
-        <TextLink to="/pricing">Explore the project calculator</TextLink>
-      </section>
       <section className="offer-questions section container">
         <h2>A few useful answers.</h2>
         <div>

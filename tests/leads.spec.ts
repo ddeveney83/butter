@@ -104,49 +104,13 @@ test("service enquiry carries origin context and records success only after capt
     .toBe(1);
   expect(body.get("entry_page")).toBe("/services/course-refresh");
   expect(body.get("enquiry_origin")).toBe("/services/course-refresh");
-  expect(body.get("calculator_used")).toBe("no");
+  expect(body.has("budget")).toBe(false);
+  expect(body.has("calculator_used")).toBe(false);
+  expect(body.has("estimate")).toBe(false);
   expect(events.filter((item) => item.event === "form_start")).toHaveLength(1);
   expect(JSON.stringify(events)).not.toMatch(
     /example.com|Private project|email=|Example contact/,
   );
-});
-
-test("calculator handoff includes the indicative amount and distinct conversion events", async ({
-  page,
-}) => {
-  const events: Record<string, string>[] = [];
-  let submission = new URLSearchParams();
-  await page.route("**/api/marketing/events", async (route) => {
-    events.push(route.request().postDataJSON());
-    await route.fulfill({ status: 204 });
-  });
-  await page.route("http://127.0.0.1:5173/", async (route) => {
-    if (route.request().method() !== "POST") return route.continue();
-    submission = new URLSearchParams(route.request().postData() || "");
-    await route.fulfill({ status: 200, body: "captured" });
-  });
-  await page.goto("/pricing");
-  await page.getByLabel("What are we making?").selectOption("7500");
-  await page.getByRole("link", { name: "Discuss this estimate" }).click();
-  await page.getByLabel("Your name").fill("Example contact");
-  await page.getByLabel("Your email").fill("private@example.com");
-  await page
-    .getByRole("button", { name: "Send your enquiry", exact: false })
-    .click();
-  await expect(page.getByRole("status")).toContainText(
-    "Your enquiry is with butter",
-  );
-  expect(submission.get("estimate")).toBe("7500");
-  expect(submission.get("calculator_used")).toBe("yes");
-  expect(submission.get("enquiry_origin")).toBe("/pricing");
-  await expect
-    .poll(
-      () => events.filter((item) => item.event === "calculator_start").length,
-    )
-    .toBe(1);
-  expect(
-    events.filter((item) => item.event === "calculator_enquiry"),
-  ).toHaveLength(1);
 });
 
 test("privacy signals suppress measurement without blocking enquiries", async ({

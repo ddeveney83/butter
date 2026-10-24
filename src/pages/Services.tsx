@@ -105,7 +105,7 @@ export default function Services() {
           From “where do we start?” to “that’s exactly it.” We bring clear
           thinking and playful craft to every part of your learning.
         </p>
-        <TextLink to="/pricing">Find your starting point</TextLink>
+        <TextLink to="/contact">Talk about your project</TextLink>
       </PageHero>
       <section
         className="lead-service-links container"

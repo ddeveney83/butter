@@ -29,13 +29,6 @@ export default function Contact() {
     data.set("interest", interest);
     const context = enquiryContext();
     for (const [key, value] of Object.entries(context)) data.set(key, value);
-    const amount = params.get("estimate") || "";
-    const fromCalculator =
-      /^\d{3,7}$/.test(amount) &&
-      Number(amount) >= 2500 &&
-      Number(amount) <= 500000;
-    data.set("calculator_used", fromCalculator ? "yes" : "no");
-    data.set("estimate", fromCalculator ? amount : "");
     setState("sending");
     try {
       const response = await fetch("/", {
@@ -122,13 +115,7 @@ export default function Contact() {
         >
           <input type="hidden" name="form-name" value="butter-contact" />
           <input type="hidden" name="interest" value={interest} />
-          {[
-            "entry_page",
-            "enquiry_origin",
-            "source_kind",
-            "calculator_used",
-            "estimate",
-          ].map((name) => (
+          {["entry_page", "enquiry_origin", "source_kind"].map((name) => (
             <input key={name} type="hidden" name={name} />
           ))}
           <p hidden>
@@ -209,20 +196,6 @@ export default function Contact() {
             />
           </label>
           <div className="form-row">
-            <label>
-              Budget
-              <select
-                disabled={state === "sending"}
-                name="budget"
-                defaultValue=""
-              >
-                <option value="">Let’s work it out</option>
-                <option>Under £2,500</option>
-                <option>£2,500–£7,500</option>
-                <option>£7,500–£15,000</option>
-                <option>£15,000+</option>
-              </select>
-            </label>
             <label>
               Timing
               <select

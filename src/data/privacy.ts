@@ -2,14 +2,14 @@ export const privacySections = [
   {
     heading: "Your enquiry.",
     paragraphs: [
-      "When you contact butter, the form collects your name, email address, project description and any optional company, budget or timing details you provide. It also includes the public page that led to the enquiry, a broad source category and whether you used the project calculator. Please leave out sensitive personal information and confidential learner records.",
+      "When you contact butter, the form collects your name, email address, project description and any optional company or timing details you provide. It also includes the public page that led to the enquiry and a broad source category. Please leave out sensitive personal information and confidential learner records.",
       "The information is used to reply, understand your project and manage the conversation. Netlify processes form submissions and sends a notification to the studio’s private inbox. Form details are not included in website analytics.",
     ],
   },
   {
     heading: "Anonymous website counts.",
     paragraphs: [
-      "The site counts public page views, project-enquiry clicks, calculator use and form outcomes. The measurement stores daily totals against fixed event names and public page paths. It does not store names, email addresses, IP addresses, browser identifiers, full referring URLs, query strings or the content of your enquiry.",
+      "The site counts public page views, project-enquiry clicks and form outcomes. The measurement stores daily totals against fixed event names and public page paths. It does not store names, email addresses, IP addresses, browser identifiers, full referring URLs, query strings or the content of your enquiry.",
       "These counts use no analytics cookies or persistent visitor identifiers. Browser Do Not Track and Global Privacy Control preferences suppress measurement. Daily counts older than 90 days are removed by scheduled maintenance. Hosting providers may process technical connection information separately to operate and secure the service.",
     ],
   },

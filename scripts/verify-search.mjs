@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile, readdir } from "node:fs/promises";
+import { readFile, readdir, access } from "node:fs/promises";
 import {
   articles,
   experiments,
@@ -92,8 +92,42 @@ for (const article of articles) {
 const sitemap = await readFile("dist/sitemap.xml", "utf8");
 for (const item of articles)
   assert.ok(sitemap.includes("/journal/" + item.slug));
-for (const item of experiments)
+for (const item of experiments) {
   assert.ok(sitemap.includes("/labs/" + item.slug));
+  const page = await readFile(`dist/labs/${item.slug}/index.html`, "utf8");
+  assert.ok(page.includes(`<h1>${escape(item.title)}</h1>`));
+  assert.ok(page.includes('"@type":"CreativeWork"'));
+  assert.ok(page.includes(`"creativeWorkStatus":"${item.status}"`));
+  for (const section of item.sections)
+    for (const paragraph of section.paragraphs)
+      assert.ok(
+        page.includes(`<p>${escape(paragraph)}</p>`),
+        "Labs project notes must exist before JavaScript.",
+      );
+  for (const asset of [item.hero, ...item.gallery]) {
+    await access("dist" + asset.path);
+    assert.ok(page.includes(`src="${asset.path}"`));
+  }
+}
+assert.ok(!sitemap.includes("/pricing"));
+assert.ok(!sitemap.includes("what-does-elearning-cost"));
+assert.ok(!sitemap.includes("the-better-question"));
+const publicHTML = [];
+async function inspectHTML(directory) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    if (entry.isDirectory()) await inspectHTML(directory + "/" + entry.name);
+    else if (entry.name.endsWith(".html"))
+      publicHTML.push(await readFile(directory + "/" + entry.name, "utf8"));
+  }
+}
+await inspectHTML("dist");
+for (const page of publicHTML) {
+  assert.doesNotMatch(
+    page,
+    /href="[^\"]*\/pricing|name="budget"|calculator_used|name="estimate"|£|indicative budgets|Subscription pricing/i,
+  );
+  assert.doesNotMatch(page, /daniel|deveney/i);
+}
 assert.ok(!sitemap.includes("/butterlearn/app"));
 for (const file of await readdir("dist/assets")) {
   if (!file.endsWith(".js")) continue;

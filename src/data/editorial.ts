@@ -24,10 +24,10 @@ export const articles: Article[] = [
   ...practiceArticles,
   ...technologyArticles,
   {
-    slug: "what-does-elearning-cost",
-    title: "What does eLearning actually cost?",
+    slug: "how-to-brief-elearning-project",
+    title: "How to brief an eLearning project.",
     description:
-      "A practical guide to scoping digital learning: what changes the budget, what to prepare and where a smaller start can help.",
+      "Write a useful eLearning brief: define the audience, the task, source material, review process and delivery requirements before production.",
     topic: "Practical guides",
     date: "2026-10-12",
     icon: "idea",
@@ -35,54 +35,50 @@ export const articles: Article[] = [
       {
         heading: "Start with the change you need.",
         paragraphs: [
-          "The most useful starting point for an eLearning budget is the thing you want people to do differently. A ten-minute course that helps someone make one difficult decision can need more design work than a longer resource explaining a familiar process. Duration gives you a clue about the scope; it does not tell the whole story.",
-          "Before asking for a quote, describe the audience, the situation and the action you want to support. Tell your learning partner what happens today and what a better experience would look like. That turns a request for ‘a module’ into a brief that can be estimated and tested.",
+          "A useful eLearning brief begins with what people should be able to do. Describe the task, the situation and what is difficult today. A ten-minute resource that helps someone make one important decision can need a different approach from a longer introduction to a familiar process. Duration alone does not define the learning need.",
+          "For example, a support team might need to choose the correct diagnostic route before closing a customer case. Bring a representative example of a reopened case and the guidance people currently use. That gives the project a concrete problem to investigate, rather than a request to turn every existing document into slides.",
         ],
       },
       {
-        heading: "What changes the investment?",
+        heading: "Describe the audience and their context.",
         paragraphs: [
-          "Learning design, writing, visual design, development and review all contribute to the work. The balance changes with the brief. Ready-to-use source material can make a straightforward resource quicker to shape. Research, conflicting guidance or several expert reviewers can require a longer discovery and approval process.",
-          "Production choices matter too. Custom illustration, filmed interviews, animation, branching scenarios and complex assessments bring different skills and testing needs. Accessibility, translation and the platforms the course must run on belong in the scope from the beginning.",
+          "Explain who will use the learning, what they already know and where the task happens. Include relevant differences between roles, locations, languages and access to devices. A new starter using a shared workstation may need a different route from an experienced colleague looking up an occasional exception.",
+          "Ask people who do the work to check your assumptions. What do they find difficult? When do they look for help? Which existing resources do they trust? Include accessibility needs and any constraints on time or connectivity. These details help the team design a viable experience, rather than an ideal journey that only works in a demonstration.",
+        ],
+      },
+      {
+        heading: "Bring the material you already have.",
+        paragraphs: [
+          "Gather the current policies, process guides, examples and approved media that can inform the work. Identify which sources are reliable and which are awaiting review. If two documents give conflicting guidance, name the person who can resolve the difference before it becomes part of a learning scenario.",
+          "You do not need a finished script to begin a conversation. An honest view of the available material is more useful than a polished outline that hides open decisions. Include any original source files and the permissions attached to existing imagery, video or audio. Reuse depends on both technical access and the right to use the material.",
         ],
         points: [
-          "Content readiness: is the material agreed, accurate and suitable for the audience?",
-          "Interaction: are people reading, practising a decision or navigating several possible paths?",
-          "Production: do you need supplied media, original illustration, filming or bespoke animation?",
-          "Delivery: which devices, languages, accessibility requirements and learning platforms need testing?",
-          "Review: who can approve the work, and how many rounds are included?",
+          "What is the current approved source of truth?",
+          "Who can answer subject questions and resolve conflicting guidance?",
+          "Which examples reflect the situations learners will actually face?",
+          "Which media and source files can the project team use?",
         ],
       },
       {
-        heading: "Use indicative budgets carefully.",
+        heading: "Define the experience and its delivery.",
         paragraphs: [
-          "butter’s pricing page gives illustrative GBP starting points: £2,500 for a focused learning moment, £7,500 for an interactive module and £15,000 for a connected learning journey. These help open a conversation about the scale of the work. They are not a fixed quote or a claim that every project fits the same template.",
-          "The estimate calculator lets you explore format, number of pieces, branching and motion. Use it to see how a few choices affect the starting point, then discuss your actual brief. A useful proposal should identify the deliverables, assumptions, review rounds, testing and handover, so you can compare like with like.",
+          "Describe where the learning will launch and what the platform needs to record. Completion, a quiz score and evidence of workplace performance answer different questions. Agree which matters for this project, how an unfinished attempt should resume and what should happen when the content is updated.",
+          "If the approach is uncertain, a representative prototype can help. Choose a sample that contains a meaningful decision, an accessible interaction or a technical challenge. Ask representative learners to attempt it. Their reasoning and any barriers they encounter can inform the full experience before production continues.",
         ],
       },
       {
-        heading: "A smaller start can answer a bigger question.",
+        heading: "Give the project a clear review route.",
         paragraphs: [
-          "If the approach is uncertain, you do not have to commission the whole programme at once. A discovery workshop, one representative scenario or a prototype can help you check the tone, technical fit and learning approach before committing to a larger production.",
-          "Choose a pilot that contains the difficult part. A polished introduction tells you less than a realistic decision, an accessible interaction or a course launch on the intended LMS. Agree what you want to learn from the pilot and who will help you evaluate it.",
-        ],
-      },
-      {
-        heading: "Give the quote something concrete to work with.",
-        paragraphs: [
-          "Bring a short outline of the learning need, your audience, existing content, delivery platform, timing and budget range. Include any technical or policy requirements you already know. If some decisions are still open, say so; uncertainty can be scoped rather than hidden.",
-          "Then ask how the proposed work supports the outcome. A clear budget is useful. A clear reason for spending it is better. The right starting point is the smallest coherent experience that can help people take the next step.",
-        ],
-        points: [
-          "What should learners be able to do after the experience?",
-          "What source content and media are already available?",
-          "Where will it launch, and what needs to be tracked?",
-          "Who owns content approval and platform testing?",
-          "What is included in the handover and ongoing support?",
+          "Identify the people who will review subject accuracy, learning design, brand, accessibility and technical delivery. Agree how feedback will be gathered and who makes the final decision when reviewers disagree. A single, coordinated response is easier to act on than several conflicting versions of the same document.",
+          "Finish the brief with the proposed deliverables, review stages, launch requirements and ownership after handover. State what is agreed and what still needs discovery. The purpose is a shared starting point that people can question and improve, with a clear connection between the content being made and the action it should support.",
         ],
       },
     ],
-    action: { to: "/pricing", label: "Explore the project calculator" },
+    action: {
+      to: "/contact",
+      label: "Talk through your learning brief",
+    },
+    relatedSlugs: ["learning-needs-analysis", "write-learning-objectives"],
   },
   {
     slug: "write-better-learning-scenarios",
@@ -139,13 +135,13 @@ export const articles: Article[] = [
         heading: "Test the thinking as well as the interface.",
         paragraphs: [
           "Ask representative learners to explain their choices. If they pick the expected response because it sounds more official, the writing may need another pass. If an experienced person needs a missing piece of context, the scenario may be unfair rather than challenging.",
-          "Test keyboard use, feedback announcements and the layout on small screens too. The interaction should give learners room to think without making them work out how to use it. Our Labs includes a short conversation experiment you can explore as a starting point.",
+          "Test keyboard use, feedback announcements and the layout on small screens too. The interaction should give learners room to think without making them work out how to use it. Our Labs includes The Journey, a branching storytelling project exploring how choices shape an experience.",
         ],
       },
     ],
     action: {
-      to: "/labs/the-better-question",
-      label: "Try the conversation experiment",
+      to: "/labs/the-journey",
+      label: "Explore The Journey",
     },
   },
   {
@@ -251,29 +247,4 @@ export const readMinutes = (article: Article) =>
         .split(/\s+/).length / 200,
     ),
   );
-export const experiments = [
-  {
-    slug: "the-better-question",
-    title: "The better question.",
-    description:
-      "A two-minute conversation. Explore a choice, follow its consequence and try a different route.",
-    kind: "branching",
-    icon: "heart" as const,
-  },
-  {
-    slug: "one-idea-at-a-time",
-    title: "One idea at a time.",
-    description:
-      "The same content, two ways. Play with progressive disclosure and decide what helps you focus.",
-    kind: "disclosure",
-    icon: "idea" as const,
-  },
-  {
-    slug: "a-little-practice",
-    title: "A little practice.",
-    description:
-      "Make a small practice plan. Shape the rhythm, explore its steps and take one useful question away.",
-    kind: "practice",
-    icon: "spark" as const,
-  },
-];
+export { labs as experiments } from "./labs.ts";

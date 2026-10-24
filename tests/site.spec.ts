@@ -24,7 +24,7 @@ test("all pages and eight project routes load directly without errors or overflo
     "/about",
     "/services",
     "/work",
-    "/pricing",
+    "/labs",
     "/contact",
     "/brand",
     "/butterlearn",
@@ -165,42 +165,6 @@ test("values and process tabs work with pointer and keyboard; services expand", 
   );
 });
 
-test("pricing model and calculator update real totals and carry the estimate into contact", async ({
-  page,
-}) => {
-  await page.goto("/pricing");
-  await expect(page.locator(".pricing-cards")).toContainText("£7,500");
-  await page
-    .getByRole("button", { name: "Ongoing support", exact: true })
-    .click();
-  await expect(page.locator(".pricing-cards")).toContainText("£3,500");
-  await expect(page.locator(".pricing-cards")).toContainText("/ month");
-  await page
-    .getByRole("button", { name: "One-off project", exact: true })
-    .click();
-  await expect(page.locator(".pricing-cards")).toContainText("£7,500");
-  await expect(
-    page.getByLabel("Illustrative project budget", { exact: true }),
-  ).toHaveText("£2,500");
-  await page.getByLabel("What are we making?").selectOption("7500");
-  const range = page.getByRole("slider");
-  await range.focus();
-  await page.keyboard.press("ArrowRight");
-  await page.getByLabel("Branching scenarios").check();
-  await page.getByLabel("Bespoke motion").check();
-  await expect(
-    page.getByLabel("Illustrative project budget", { exact: true }),
-  ).toHaveText("£21,300");
-  await page.getByRole("link", { name: "Discuss this estimate" }).click();
-  await expect(page).toHaveURL(/\/contact\?brief=/);
-  await expect(page.getByLabel("A little about your project")).toHaveValue(
-    /£21,300/,
-  );
-  await expect(page.getByLabel("A little about your project")).toHaveValue(
-    /2 pieces/,
-  );
-});
-
 test("contact validates fields, sends a complete enquiry and allows another after an edit", async ({
   page,
 }) => {
@@ -233,9 +197,6 @@ test("contact validates fields, sends a complete enquiry and allows another afte
     .getByLabel("A little about your project")
     .fill("An onboarding experience for our team.");
   await page
-    .getByRole("combobox", { name: "Budget", exact: true })
-    .selectOption("£7,500–£15,000");
-  await page
     .getByRole("combobox", { name: "Timing", exact: true })
     .selectOption("In 1–3 months");
   await page.getByRole("button", { name: "Send your enquiry" }).click();
@@ -247,7 +208,6 @@ test("contact validates fields, sends a complete enquiry and allows another afte
     "alex@example.com",
     "Example Team",
     "Learning strategy",
-    "£7,500–£15,000",
     "In 1–3 months",
   ])
     expect(body).toContain(content);
@@ -263,11 +223,13 @@ test("contact validates fields, sends a complete enquiry and allows another afte
 test("FAQ, reduced motion and unknown routes behave correctly", async ({
   page,
 }) => {
-  await page.goto("/pricing");
+  await page.goto("/services/course-refresh");
   await page
-    .getByRole("button", { name: "Can we start small?", exact: true })
+    .getByRole("button", { name: "Can we start with one module?", exact: true })
     .click();
-  await expect(page.getByText(/Absolutely\. A focused workshop/)).toBeVisible();
+  await expect(
+    page.getByRole("region", { name: "Can we start with one module?" }),
+  ).toContainText("representative section");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   expect(
@@ -337,7 +299,7 @@ test("accordions support keyboard activation, complete collapse and rapid toggli
 }) => {
   for (const [path, title] of [
     ["/services", "Digital experiences"],
-    ["/pricing", "Can we start small?"],
+    ["/services/course-refresh", "Can we start with one module?"],
   ]) {
     await page.goto(path);
     const trigger = page.getByRole("button", { name: title, exact: true });
@@ -385,29 +347,11 @@ test("accordions support keyboard activation, complete collapse and rapid toggli
   }
 });
 
-test("expanded controls and maximum estimates fit on narrow screens without shifting sample feedback", async ({
+test("expanded service controls fit on narrow screens without shifting sample feedback", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/pricing");
-  await page.getByLabel("What are we making?").selectOption("15000");
-  await page.getByRole("slider").fill("6");
-  await page.getByLabel("Branching scenarios").check();
-  await page.getByLabel("Bespoke motion").check();
-  await expect(
-    page.getByLabel("Illustrative project budget", { exact: true }),
-  ).toHaveText("£122,400");
-  await page
-    .getByRole("button", { name: "Ongoing support", exact: true })
-    .click();
-  for (const button of await page.locator(".faq-list .accordion-trigger").all())
-    await button.click();
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
   await page.goto("/services");
   for (const button of await page
     .locator(".service-detail .accordion-trigger")
@@ -518,9 +462,9 @@ test("page crossfades complete and interrupted navigation settles on the final p
   await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   await page.locator(".footer-nav a").evaluateAll((links) => {
     links.find((link) => link.getAttribute("href") === "/work")!.click();
-    links.find((link) => link.getAttribute("href") === "/pricing")!.click();
+    links.find((link) => link.getAttribute("href") === "/journal")!.click();
   });
-  await expect(page).toHaveURL(/\/pricing$/);
+  await expect(page).toHaveURL(/\/journal$/);
   await expect
     .poll(() =>
       page.evaluate(() =>
@@ -600,7 +544,7 @@ test("visible sections establish a hidden frame and then actually fade into view
           const visibleCards = entries.filter(
             (entry) =>
               entry.isIntersecting &&
-              entry.target.classList.contains("pricing-card"),
+              entry.target.matches(".service-list > .reveal"),
           );
           const starts = visibleCards.map((entry) =>
             Number(getComputedStyle(entry.target).opacity),
@@ -627,7 +571,7 @@ test("visible sections establish a hidden frame and then actually fade into view
       }
     };
   });
-  await page.goto("/pricing");
+  await page.goto("/services");
   await expect
     .poll(() =>
       page.evaluate(
@@ -650,7 +594,10 @@ test("visible sections establish a hidden frame and then actually fade into view
     expect(frame.during).toBeLessThan(1);
     expect(frame.duration).toBe(520);
   }
-  await expect(page.locator(".pricing-card").first()).toHaveCSS("opacity", "1");
+  await expect(page.locator(".service-list > .reveal").first()).toHaveCSS(
+    "opacity",
+    "1",
+  );
 });
 
 test("previous portfolio URLs resolve to the matching sourced work", async ({

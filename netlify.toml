@@ -22,6 +22,16 @@
     X-Robots-Tag = "noindex"
 
 [[redirects]]
+  from = "/pricing"
+  to = "/contact"
+  status = 301
+
+[[redirects]]
+  from = "/journal/what-does-elearning-cost"
+  to = "/journal/how-to-brief-elearning-project"
+  status = 301
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

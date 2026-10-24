@@ -64,7 +64,7 @@ test("articles show real dates, references, contents links and two relevant next
     .click();
   await expect(page).toHaveURL(/#section-4$/);
   await expect(page.locator("#section-4")).toBeInViewport();
-  await page.goto("/journal/what-does-elearning-cost");
+  await page.goto("/journal/how-to-brief-elearning-project");
   await expect(page.locator(".journal-byline time")).toHaveText(
     "12 October 2026",
   );
