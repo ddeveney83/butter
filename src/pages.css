@@ -440,7 +440,7 @@ h1:focus {
   line-height: 1.2;
 }
 .service-number {
-  color: #77776c;
+  color: var(--muted);
   font-size: 12px;
   width: 18px;
   flex: 0 0 18px;
@@ -562,7 +562,7 @@ h1:focus {
 }
 .project-count {
   font-size: 12px;
-  color: #77776c;
+  color: var(--muted);
   white-space: nowrap;
 }
 .work-gallery .projects {
@@ -570,7 +570,7 @@ h1:focus {
 }
 .work-footnote {
   font-size: 12px;
-  color: #77776c;
+  color: var(--muted);
   border-bottom: 1px solid var(--line);
   padding-bottom: 28px;
   margin-top: 45px;
@@ -903,12 +903,12 @@ h1:focus {
 .project-title-row > p {
   font-size: 12px;
   line-height: 1.8;
-  color: #77776c;
+  color: var(--muted);
   white-space: nowrap;
   margin: 0 0 7px;
 }
 .project-title-row > p span {
-  color: #939386;
+  color: var(--muted);
 }
 .project-intro {
   font-size: 21px;
@@ -981,7 +981,7 @@ h1:focus {
   display: block;
   margin-bottom: 9px;
   font-size: 11px;
-  color: #77776c;
+  color: var(--muted);
 }
 .project-demo {
   background: #f2f1e9;
@@ -1013,7 +1013,7 @@ h1:focus {
 }
 .scenario-label {
   font-size: 11px;
-  color: #77776c;
+  color: var(--muted);
 }
 .scenario-card h3 {
   font-size: 25px;
@@ -1094,7 +1094,7 @@ h1:focus {
 }
 .next-project > span {
   font-size: 12px;
-  color: #77776c;
+  color: var(--muted);
 }
 .next-project > a {
   display: flex;
@@ -1160,7 +1160,7 @@ select:focus-visible {
   justify-content: space-between;
   font-size: 10px;
   font-weight: 400;
-  color: #77776c;
+  color: var(--muted);
 }
 .faq-section {
   padding-top: 85px;
@@ -1219,7 +1219,7 @@ select:focus-visible {
 .contact-info-note {
   font-size: 13px;
   line-height: 1.7;
-  color: #77776c;
+  color: var(--muted);
 }
 .contact-character {
   display: flex;
@@ -1274,7 +1274,7 @@ select:focus-visible {
   padding: 14px;
 }
 .optional {
-  color: #939386;
+  color: var(--muted);
   font-weight: 400;
 }
 .contact-actions {
