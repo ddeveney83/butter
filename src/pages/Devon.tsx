@@ -16,7 +16,7 @@ export default function Devon() {
         aside={<Doodle kind="idea" className="offer-hero-icon" />}
       >
         <p>
-          Bespoke digital learning, staff onboarding and practical training
+          Bespoke digital learning, LMS development and practical training
           content for teams across Devon and the South West.
         </p>
         <div className="lead-actions">
@@ -60,11 +60,11 @@ export default function Devon() {
         <div className="offer-deliverables">
           <Reveal>
             <Doodle kind="heart" />
-            <h3>Welcome a seasonal team.</h3>
+            <h3>Connect a distributed team.</h3>
             <p>
-              A focused induction for hospitality, leisure or visitor-facing
-              roles could connect customer care, key procedures and the right
-              route to help.
+              A shared learning platform can connect courses, role-based
+              pathways and useful resources for a business working across
+              several sites.
             </p>
           </Reveal>
           <Reveal>

@@ -22,6 +22,11 @@
     X-Robots-Tag = "noindex"
 
 [[redirects]]
+  from = "/services/staff-onboarding"
+  to = "/services"
+  status = 301
+
+[[redirects]]
   from = "/pricing"
   to = "/contact"
   status = 301

@@ -7,7 +7,7 @@ test("commercial pages are discoverable, indexed and fit narrow layouts", async 
   test.setTimeout(60000);
   await page.goto("/");
   await expect(page.locator(".hero-copy")).toContainText(
-    "Bespoke eLearning, onboarding and training content for businesses.",
+    "Bespoke eLearning, LMS development and training content for businesses.",
   );
   await expect(page.locator(".hero-copy .pill-button")).toHaveAttribute(
     "href",
@@ -19,6 +19,17 @@ test("commercial pages are discoverable, indexed and fit narrow layouts", async 
       .getByRole("link"),
   ).toHaveCount(3);
   const links = page.locator(".lead-services");
+  await expect(links.locator(".service-cards > a")).toHaveCount(8);
+  if (page.viewportSize()!.width >= 1200) {
+    const rows = await links
+      .locator(".service-cards > a")
+      .evaluateAll((cards) =>
+        cards.map((card) => Math.round(card.getBoundingClientRect().top)),
+      );
+    expect(new Set(rows.slice(0, 4)).size).toBe(1);
+    expect(new Set(rows.slice(4)).size).toBe(1);
+    expect(rows[4]).toBeGreaterThan(rows[0]);
+  }
   for (const slug of offerPaths)
     await expect(links.locator(`a[href="/services/${slug}"]`)).toBeVisible();
   for (const path of [
@@ -50,13 +61,19 @@ test("commercial pages are discoverable, indexed and fit narrow layouts", async 
   await page.goto("/services/bespoke-elearning");
   await page.getByRole("link", { name: "See a related project" }).click();
   await expect(page.locator("#offer-work")).toBeInViewport();
+  await page.goto("/services/staff-onboarding");
+  await expect(page).toHaveURL("/services");
+  await expect(page.locator(".lead-service-links > a")).toHaveCount(8);
+  await expect(
+    page.getByRole("link", { name: "Staff onboarding", exact: true }),
+  ).toHaveCount(0);
   await page.goto("/elearning-devon");
   await expect(page.locator("body")).not.toContainText(
     /Devon.based|our Devon office|testimonial/i,
   );
 });
 
-test("strategy, team development and animation connect evidence, reading and contextual enquiries", async ({
+test("specialist services connect evidence, reading and contextual enquiries", async ({
   page,
 }) => {
   test.setTimeout(90000);
@@ -79,6 +96,18 @@ test("strategy, team development and animation connect evidence, reading and con
       "ai-enabled-scenario-learning",
       "elearning-storyboarding",
     ],
+    [
+      "lms-development",
+      "LMS architecture & development",
+      "humankind-educatorhub",
+      "lms-vs-lxp-vs-lrs",
+    ],
+    [
+      "lms-project-management",
+      "LMS project management",
+      "your-learning-platform",
+      "choosing-lms",
+    ],
   ]) {
     await page.goto("/services");
     await page
@@ -89,7 +118,13 @@ test("strategy, team development and animation connect evidence, reading and con
     await expect(page.getByRole("heading", { level: 1 })).toContainText(title);
     const projects = page.locator(".offer-work, .offer-related-work");
     await expect(projects.locator(".project")).toHaveCount(
-      slug === "learning-animation" ? 3 : 1,
+      [
+        "learning-animation",
+        "lms-development",
+        "lms-project-management",
+      ].includes(slug)
+        ? 3
+        : 1,
     );
     await projects.locator(`a[href="/work/${project}"]`).click();
     await page

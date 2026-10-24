@@ -29,6 +29,8 @@ const services = [
       "Interactive eLearning & scenarios",
       "Mobile-first microlearning",
       "Learning platform-ready packages, scoped together",
+      "LMS architecture & development",
+      "Platform delivery & migration planning",
     ],
   },
   {

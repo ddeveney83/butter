@@ -56,8 +56,8 @@ export const practiceArticles: Article[] = [
     relatedSlugs: ["spaced-practice", "formative-assessment"],
     resources: [sources.study],
     action: {
-      to: "/services/staff-onboarding",
-      label: "Explore staff onboarding",
+      to: "/services/bespoke-elearning",
+      label: "Explore bespoke eLearning",
     },
   },
   {
@@ -114,7 +114,7 @@ export const practiceArticles: Article[] = [
     relatedSlugs: ["retrieval-practice", "blended-learning-design"],
     resources: [sources.study],
     action: {
-      to: "/services/staff-onboarding",
+      to: "/services/bespoke-elearning",
       label: "Discuss a practice sequence",
     },
   },

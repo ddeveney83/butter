@@ -318,6 +318,10 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
       { path: "/services", element: <Services /> },
+      {
+        path: "/services/staff-onboarding",
+        element: <Navigate to="/services" replace />,
+      },
       { path: "/services/:slug", element: <OfferPage /> },
       { path: "/elearning-devon", element: <Devon /> },
       { path: "/privacy", element: <Privacy /> },

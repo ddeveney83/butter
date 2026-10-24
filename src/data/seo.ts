@@ -9,7 +9,7 @@ import { offers, offerPath } from "./offers.ts";
 const pageMeta: Record<string, [string, string]> = {
   "/": [
     "Learning with feeling.",
-    "Bespoke eLearning, staff onboarding and training content for businesses. Explore butter’s work, project examples and a clear route to your next project.",
+    "Bespoke eLearning, LMS architecture, development and project management for businesses. Explore butter’s work and discuss your next learning project.",
   ],
   "/about": [
     "A little more human.",
@@ -17,7 +17,7 @@ const pageMeta: Record<string, [string, string]> = {
   ],
   "/services": [
     "Big ideas. A little butter.",
-    "Learning strategy, digital experiences, story and design, and ongoing creative support from butter.",
+    "Explore eLearning, LMS architecture and development, platform project management, learning strategy and creative support from butter.",
   ],
   "/work": [
     "A taste of our work.",
@@ -45,7 +45,7 @@ const pageMeta: Record<string, [string, string]> = {
   ],
   "/elearning-devon": [
     "eLearning for Devon businesses.",
-    "Bespoke eLearning, staff onboarding, compliance training and course refreshes for Devon and South West businesses. Discuss your project with butter.",
+    "eLearning, LMS development and learning platform project management for Devon and South West businesses. Discuss your project with butter.",
   ],
   "/privacy": [
     "A little clarity about your data.",

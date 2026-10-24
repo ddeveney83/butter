@@ -59,47 +59,51 @@ export const offers: Offer[] = [
     ],
   },
   {
-    slug: "staff-onboarding",
-    title: "Staff onboarding",
+    slug: "lms-development",
+    title: "LMS architecture & development",
     description:
-      "Design practical staff onboarding with butter: role-based digital learning, useful job aids and a connected journey from first day to confident practice.",
-    headline: "A better start for your people.",
-    lead: "Give new starters a clear path into the work. Practical onboarding that connects the essentials, useful practice and support from their team.",
-    icon: "heart",
-    need: "A welcome presentation can introduce the organisation. New starters also need to know what to do, where to find help and how to handle the situations their role will bring. We shape the journey around those moments.",
+      "LMS architecture and development from butter: Moodle customisation, learner journeys, platform configuration and integration planning, shaped around your organisation.",
+    headline: "LMS architecture & development. Built for learning.",
+    lead: "Build a learning platform around the people using it. From system architecture and Moodle development to learner journeys, integrations and a considered technical handover.",
+    icon: "play",
+    need: "Your learning platform connects people, content and the systems around them. A useful build needs a clear structure for audiences, permissions, learning pathways and reporting, alongside an interface that helps learners and administrators get things done.",
     approach:
-      "Together, we separate first-day essentials from what people will need later. Role-based pathways, short activities and job aids give each part a purpose. Manager prompts can connect the digital experience to supported practice at work.",
+      "We map the learner and administrator journeys, content model, access roles and required data flows before defining the build. Work can include Moodle customisation, bespoke academy interfaces or configuration within an existing LMS. Representative prototypes and integration checks help establish the technical approach before wider development.",
     deliverables: [
       {
-        title: "A clear first route.",
-        copy: "An onboarding map that identifies the audience, essential tasks, existing resources and the people who can help.",
+        title: "An architecture with a purpose.",
+        copy: "An agreed system design covering audiences, access roles, content structure, learning pathways and required connections, with responsibilities shared with your IT and platform teams.",
       },
       {
-        title: "Useful digital moments.",
-        copy: "Focused modules, realistic examples and accessible reference material for the moments that new starters need support.",
+        title: "A platform shaped for the work.",
+        copy: "An agreed configuration or development scope, from branded learner interfaces and Moodle experiences to course discovery, enrolment and administration workflows.",
       },
       {
-        title: "A connected handover.",
-        copy: "A proposed sequence, manager conversation prompts and agreed completion or feedback checks to support the wider induction.",
+        title: "A build you can take forward.",
+        copy: "Role and journey checks, agreed integration tests, release guidance and technical documentation. Hosting, maintenance, source access and operational ownership are settled as part of the handover.",
       },
     ],
-    projects: ["matrix-reloaded"],
-    articles: ["blended-learning-design", "spaced-practice"],
+    projects: [
+      "humankind-educatorhub",
+      "nansen-learning-academy",
+      "your-learning-platform",
+    ],
+    articles: ["lms-vs-lxp-vs-lrs", "open-source-vs-managed-lms"],
     questions: [
       {
-        title: "Can different roles follow different routes?",
+        title: "Can you develop within our existing LMS?",
         answer:
-          "Yes. We can map shared essentials and role-specific activities. The number of pathways, content differences and delivery platform affect the scope.",
+          "Yes. We first review the platform, hosting arrangement, available permissions and supported extension points. The scope distinguishes configuration from custom development, with the platform owner involved in approving changes and release arrangements.",
       },
       {
-        title: "Can we keep our existing induction materials?",
+        title: "Can identity, courses and reporting connect to other systems?",
         answer:
-          "Yes. We review what already works and identify what needs rewriting, connecting or replacing. A focused refresh can be a useful starting point.",
+          "We can scope single sign-on, APIs and reporting connections with your technical teams where the intended platforms support them. HTML or SCORM course delivery is tested against agreed launch, completion and resume rules. We validate the important connections before committing to a wider rollout.",
       },
       {
-        title: "How will we know whether it helps?",
+        title: "Who will own and maintain the build?",
         answer:
-          "We agree useful checks during design. These might include a practice task, manager feedback and completion information, with a clear distinction between attendance and the ability to do the work.",
+          "We agree source access, third-party licences, hosting, maintenance and support responsibilities before delivery. The handover includes the documentation and operational guidance in scope, so your team understands what it can manage and where specialist support is needed.",
       },
     ],
   },
@@ -329,6 +333,55 @@ export const offers: Offer[] = [
         title: "Can you make a series or adapt an existing film?",
         answer:
           "Yes. We can scope a connected series, shorter campaign versions or updates to existing material. Access to editable files, asset permissions, the required formats and the review process determine what can be reused.",
+      },
+    ],
+  },
+  {
+    slug: "lms-project-management",
+    title: "LMS project management",
+    description:
+      "LMS project management from discovery to rollout. Coordinate requirements, suppliers, migration, user acceptance testing and handover with butter.",
+    headline: "LMS project management. A clearer route to launch.",
+    lead: "Keep your platform project moving with a clear plan and shared decisions. Practical delivery support across discovery, suppliers, migration, testing and rollout.",
+    icon: "heart",
+    need: "A platform project brings learning, technology, content and organisational change together. Your team needs a clear view of who is doing what, which decisions are needed and how the work will be accepted before learners depend on it.",
+    approach:
+      "We establish the scope, stakeholders, delivery milestones and decision process with your project sponsor. A shared plan connects requirements, supplier activity, content readiness and technical dependencies. Risk reviews, change control and user acceptance testing support an agreed route into rollout and operational ownership.",
+    deliverables: [
+      {
+        title: "A shared delivery plan.",
+        copy: "A project brief, milestones, responsibilities and decision points, with dependencies and risks visible to the people who need to act on them.",
+      },
+      {
+        title: "Coordination that keeps things moving.",
+        copy: "Agreed stakeholder reviews, supplier coordination, decision and change records, and a connected view of configuration, content preparation and migration activity.",
+      },
+      {
+        title: "A considered launch and handover.",
+        copy: "A user acceptance plan, readiness checks, an agreed rollout approach and operational handover. Support, communications and outstanding actions have named owners before the project closes.",
+      },
+    ],
+    projects: [
+      "your-learning-platform",
+      "humankind-educatorhub",
+      "nansen-learning-academy",
+    ],
+    articles: ["choosing-lms", "elearning-tool-pilot-checklist"],
+    questions: [
+      {
+        title: "Can you work with our existing platform supplier?",
+        answer:
+          "Yes. We can coordinate delivery alongside your internal team and chosen supplier. Responsibilities, access, escalation routes and acceptance decisions are agreed at the start so project management supports the people doing the work.",
+      },
+      {
+        title: "How do you manage a platform migration?",
+        answer:
+          "We agree the content inventory, data mapping, transfer responsibilities and validation process with the platform owners. Learner record transfer depends on system capabilities, export access and retention requirements. Pilot transfers, acceptance checks and an agreed recovery approach inform the rollout plan.",
+      },
+      {
+        title: "How do you keep stakeholders aligned?",
+        answer:
+          "We use an agreed review rhythm, clear responsibilities and visible decision, risk and change records. Milestones connect to acceptance criteria, so progress is discussed in terms of what is ready and what needs attention, with sign-off responsibilities established before launch.",
       },
     ],
   },

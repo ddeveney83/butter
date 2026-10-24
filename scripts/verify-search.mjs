@@ -28,7 +28,7 @@ for (const field of ["slug", "title", "description"]) {
 const journalIndex = await readFile("dist/journal/index.html", "utf8");
 const workIndex = await readFile("dist/work/index.html", "utf8");
 const servicesIndex = await readFile("dist/services/index.html", "utf8");
-assert.equal(offers.length, 7);
+assert.equal(offers.length, 8);
 assert.equal(new Set(offers.map((offer) => offer.slug)).size, offers.length);
 for (const offer of offers) {
   const path = offerPath(offer);
@@ -205,6 +205,7 @@ for (const article of articles) {
   );
 }
 const sitemap = await readFile("dist/sitemap.xml", "utf8");
+assert.ok(!sitemap.includes("/services/staff-onboarding"));
 assert.equal(
   new Set(publicPaths).size,
   publicPaths.length,
@@ -258,6 +259,11 @@ for (const page of publicHTML) {
     /href="[^\"]*\/pricing|name="budget"|calculator_used|name="estimate"|£|indicative budgets|Subscription pricing/i,
   );
   assert.doesNotMatch(page, /daniel|deveney/i);
+  assert.doesNotMatch(
+    page,
+    /href="[^\"]*\/services\/staff-onboarding/,
+    "Retired services must not remain in public links.",
+  );
 }
 assert.ok(!sitemap.includes("/butterlearn/app"));
 for (const file of await readdir("dist/assets")) {

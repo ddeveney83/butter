@@ -32,9 +32,9 @@ export default function Home() {
             .
           </h1>
           <p>
-            Bespoke eLearning, onboarding and training content for businesses.
-            We turn complex know-how into clear, practical learning for your
-            team.
+            Bespoke eLearning, LMS development and training content for
+            businesses. We turn complex know-how into clear, practical learning
+            for your team.
           </p>
           <div className="lead-actions">
             <Link
