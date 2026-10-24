@@ -141,7 +141,9 @@ export function structuredData(path: string, siteURL: string) {
       publisher: organization,
       image:
         siteURL +
-        (project.caseStudy ? "/brand/butter-social.png" : project.hero.path),
+        (project.mediaKind === "placeholder"
+          ? "/brand/butter-social.png"
+          : project.hero.path),
       inLanguage: "en-GB",
     };
   return { "@context": "https://schema.org", ...organization };

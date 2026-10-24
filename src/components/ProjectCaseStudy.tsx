@@ -4,7 +4,6 @@ import ProjectCardArtwork from "./ProjectCardArtwork";
 import "./ProjectCaseStudy.css";
 
 export default function ProjectCaseStudy({ project }: { project: Project }) {
-  if (!project.caseStudy) return null;
   return (
     <div className="case-study-sections container">
       {project.caseStudy.sections.map((section, index) => (
@@ -25,8 +24,13 @@ export default function ProjectCaseStudy({ project }: { project: Project }) {
                 project={project}
                 image={project.gallery[index]}
               />
-              <figcaption>Image placeholder · {section.visualTitle}</figcaption>
-              <p className="case-study-image-brief">{section.visualBrief}</p>
+              <figcaption>
+                {project.mediaKind === "placeholder" && "Image placeholder · "}
+                {section.visualTitle}
+              </figcaption>
+              {project.mediaKind === "placeholder" && section.visualBrief && (
+                <p className="case-study-image-brief">{section.visualBrief}</p>
+              )}
             </figure>
           </Reveal>
         </section>

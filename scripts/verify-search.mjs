@@ -65,22 +65,42 @@ for (const project of projects) {
   const html = await readFile(`dist/work/${project.id}/index.html`, "utf8");
   assert.ok(html.includes(`<h1>${escape(project.title)}</h1>`));
   assert.ok(html.includes(escape(project.outcome)));
-  if (!project.caseStudy) continue;
-  assert.ok(html.includes(escape(project.caseStudy.heroBrief)));
+  assert.equal(project.caseStudy.sections.length, 3);
+  assert.equal(project.gallery.length, project.caseStudy.sections.length);
+  if (project.mediaKind === "placeholder") {
+    assert.ok(project.caseStudy.heroBrief);
+    assert.ok(html.includes(escape(project.caseStudy.heroBrief)));
+  }
   assert.ok(
     html.includes(`service=${encodeURIComponent(project.caseStudy.service)}`),
   );
-  assert.equal((html.match(/<figcaption>Image placeholder/g) || []).length, 4);
+  assert.equal(
+    (html.match(/<figcaption>Image placeholder/g) || []).length,
+    project.mediaKind === "placeholder" ? 4 : 0,
+  );
   for (const section of project.caseStudy.sections) {
     assert.ok(html.includes(`<h2>${escape(section.heading)}</h2>`));
     for (const paragraph of section.paragraphs)
       assert.ok(html.includes(escape(paragraph)));
-    assert.ok(html.includes(escape(section.visualBrief)));
+    if (project.mediaKind === "placeholder") {
+      assert.ok(section.visualBrief);
+      assert.ok(html.includes(escape(section.visualBrief)));
+    }
   }
   for (const image of [project.hero, ...project.gallery]) {
     await access(`public${image.path}`);
     assert.ok(html.includes(image.path));
   }
+  const gallery = html.match(
+    /<section class="project-gallery container".*?<\/section>/s,
+  )?.[0];
+  assert.ok(gallery, "All projects need a static image gallery.");
+  assert.doesNotMatch(
+    gallery,
+    /<(?:h[1-6]|p|figcaption)\b/,
+    "The gallery must have no visible copy.",
+  );
+  for (const image of project.gallery) assert.ok(gallery.includes(image.path));
 }
 for (const article of articles) {
   const html = await readFile(

@@ -1,5 +1,6 @@
 import media from "./projectMedia.json" with { type: "json" };
 import { caseStudies } from "./projectCaseStudies.ts";
+import { projectStories } from "./projectStories.ts";
 
 export const workFilters = [
   "All work",
@@ -11,12 +12,12 @@ export const workFilters = [
 export type WorkFilter = (typeof workFilters)[number];
 export type CaseStudy = {
   service: string;
-  heroBrief: string;
+  heroBrief?: string;
   sections: {
     heading: string;
     paragraphs: string[];
     visualTitle: string;
-    visualBrief: string;
+    visualBrief?: string;
   }[];
 };
 export type Project = {
@@ -39,9 +40,14 @@ export type Project = {
   videoIds: string[];
   scenario: string;
   choices: { label: string; feedback: string }[];
-  caseStudy?: CaseStudy;
+  caseStudy: CaseStudy;
+  mediaKind: "original" | "placeholder";
+  preview?: "course" | "platform";
 };
-type ProjectContent = Omit<Project, "hero" | "gallery" | "videoIds">;
+type ProjectContent = Omit<
+  Project,
+  "hero" | "gallery" | "videoIds" | "caseStudy" | "mediaKind" | "preview"
+>;
 const content: ProjectContent[] = [
   {
     id: "allergen-awareness",
@@ -340,6 +346,10 @@ export const projects: Project[] = [
   ...content.map((project) => ({
     ...project,
     ...media[project.id as keyof typeof media],
+    caseStudy: projectStories[project.id],
+    mediaKind: "original" as const,
+    preview:
+      project.filter === "LMS" ? ("platform" as const) : ("course" as const),
   })),
   ...caseStudies,
 ];

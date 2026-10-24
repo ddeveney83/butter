@@ -2,7 +2,8 @@ import { useRef, useState } from "react";
 import { Navigate, useLocation, useParams } from "react-router-dom";
 import { MotionLink as Link } from "../components/Motion";
 import { Arrow, ControlIcon, Doodle } from "../components/Artwork";
-import { CourseGallery, CourseShowcase } from "../components/CourseShowcase";
+import { CourseShowcase } from "../components/CourseShowcase";
+import ProjectGallery from "../components/ProjectGallery";
 import { ContactCTA, Reveal, TextLink } from "../components/UI";
 import { projects, projectAliases } from "../data/projects";
 import NotFound from "./NotFound";
@@ -29,6 +30,7 @@ export default function ProjectPage() {
   const services = offers.filter((offer) =>
     offer.projects.includes(project.id),
   );
+  const enquiryPath = `/contact?service=${encodeURIComponent(project.caseStudy.service)}`;
   return (
     <>
       <section className="project-hero container">
@@ -86,35 +88,27 @@ export default function ProjectPage() {
                 Explore {offer.title}
               </TextLink>
             ))}
-            <TextLink
-              to={`/contact?service=${encodeURIComponent(services[0]?.title ?? project.caseStudy?.service ?? `A project like ${project.title}`)}`}
-            >
-              Talk about your project
-            </TextLink>
+            <TextLink to={enquiryPath}>Talk about your project</TextLink>
           </div>
         </Reveal>
       </section>
-      {project.caseStudy ? (
-        <ProjectCaseStudy project={project} />
-      ) : (
-        <>
-          <section className="project-sample container">
-            <h2>Get a feel for it.</h2>
-            {project.filter === "LMS" ? (
-              <PlatformShowcase key={project.id} project={project} />
-            ) : (
-              <CourseShowcase key={project.id} project={project} />
-            )}
-            <p className="project-sample-note">
-              Recreated interactive sample inspired by the project.{" "}
-              {project.id === "matrix-reloaded"
-                ? "The original programme combined digital modules, live sessions and workplace practice. "
-                : ""}
-              Sample selections and notes stay on this page.
-            </p>
-          </section>
-          <CourseGallery key={`gallery-${project.id}`} project={project} />
-        </>
+      <ProjectCaseStudy project={project} />
+      {project.preview && (
+        <section className="project-sample container">
+          <h2>Get a feel for it.</h2>
+          {project.preview === "platform" ? (
+            <PlatformShowcase key={project.id} project={project} />
+          ) : (
+            <CourseShowcase key={project.id} project={project} />
+          )}
+          <p className="project-sample-note">
+            Recreated interactive sample inspired by the project.{" "}
+            {project.id === "matrix-reloaded"
+              ? "The original programme combined digital modules, live sessions and workplace practice. "
+              : ""}
+            Sample selections and notes stay on this page.
+          </p>
+        </section>
       )}
       {project.filter === "eLearning" && (
         <section className={`project-demo demo-${project.theme}`}>
@@ -187,6 +181,7 @@ export default function ProjectPage() {
           </div>
         </section>
       )}
+      <ProjectGallery key={`gallery-${project.id}`} project={project} />
       <section className="next-project container">
         <span>Up next</span>
         <Link to={`/work/${next.id}`}>
@@ -195,7 +190,7 @@ export default function ProjectPage() {
         </Link>
       </section>
       <ContactCTA
-        to={`/contact?service=${encodeURIComponent(project.caseStudy?.service ?? `A project like ${project.title}`)}`}
+        to={enquiryPath}
         title={
           <>
             Something like this.

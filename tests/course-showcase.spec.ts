@@ -170,21 +170,23 @@ test("all six course previews support distinct interactions, screen navigation, 
   expect(errors).toEqual([]);
 });
 
-test("original project image galleries expand, navigate, trap focus and restore it on close", async ({
+test("all project image galleries contain no copy, expand, navigate, trap focus and restore it on close", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const project of projects.filter((item) => !item.caseStudy)) {
+  test.setTimeout(90000);
+  for (const project of projects) {
     await page.goto(`/work/${project.id}`);
-    const gallery = page.getByRole("region", { name: "Course image gallery" });
-    const images = gallery.locator(".course-gallery-grid .course-image-open");
+    const gallery = page.getByRole("region", { name: "Project image gallery" });
+    const images = gallery.locator(".project-gallery-grid .project-image-open");
     await expect(images).toHaveCount(3);
-    await expect(gallery.locator(".course-gallery-note")).toContainText(
-      "Project screens. Select an image to explore.",
+    await expect(gallery.locator("h2, p, figcaption")).toHaveCount(0);
+    await expect(page.locator(".project-gallery + .next-project")).toHaveCount(
+      1,
     );
     await images.first().click();
     const dialog = page.getByRole("dialog", {
-      name: "Course image preview",
+      name: `${project.title} image gallery`,
       exact: true,
     });
     await expect(dialog).toBeVisible();
@@ -201,20 +203,22 @@ test("original project image galleries expand, navigate, trap focus and restore 
     expect(
       await page.evaluate(() => getComputedStyle(document.body).overflow),
     ).toBe("hidden");
-    await dialog.getByRole("button", { name: "Next course image" }).click();
-    await expect(dialog.locator("figcaption > span")).toHaveText(
+    await dialog.getByRole("button", { name: "Next project image" }).click();
+    await expect(dialog.getByRole("status")).toHaveText(
       `${project.gallery[1].alt} — 2 of 3`,
     );
     await page.keyboard.press("ArrowRight");
-    await expect(dialog.locator("figcaption > span")).toHaveText(
+    await expect(dialog.getByRole("status")).toHaveText(
       `${project.gallery[2].alt} — 3 of 3`,
     );
     await page.keyboard.press("ArrowRight");
-    await expect(dialog.locator("figcaption > span")).toHaveText(
+    await expect(dialog.getByRole("status")).toHaveText(
       `${project.gallery[0].alt} — 1 of 3`,
     );
-    await dialog.getByRole("button", { name: "Previous course image" }).click();
-    await expect(dialog.locator("figcaption > span")).toHaveText(
+    await dialog
+      .getByRole("button", { name: "Previous project image" })
+      .click();
+    await expect(dialog.getByRole("status")).toHaveText(
       `${project.gallery[2].alt} — 3 of 3`,
     );
     for (let i = 0; i < 4; i++) {
@@ -223,6 +227,14 @@ test("original project image galleries expand, navigate, trap focus and restore 
         await dialog.evaluate((node) => node.contains(document.activeElement)),
       ).toBe(true);
     }
+    await page.keyboard.press("Home");
+    await expect(dialog.getByRole("status")).toHaveText(
+      `${project.gallery[0].alt} — 1 of 3`,
+    );
+    await page.keyboard.press("End");
+    await expect(dialog.getByRole("status")).toHaveText(
+      `${project.gallery[2].alt} — 3 of 3`,
+    );
     await page.keyboard.press("Escape");
     await expect(dialog).not.toBeVisible();
     await expect(images.first()).toBeFocused();
@@ -230,11 +242,11 @@ test("original project image galleries expand, navigate, trap focus and restore 
       await page.evaluate(() => getComputedStyle(document.body).overflow),
     ).toBe("visible");
     await images.last().click();
-    await expect(dialog.locator("figcaption > span")).toHaveText(
+    await expect(dialog.getByRole("status")).toHaveText(
       `${project.gallery[2].alt} — 3 of 3`,
     );
     await dialog
-      .getByRole("button", { name: "Close course image preview" })
+      .getByRole("button", { name: "Close project image preview" })
       .click();
     await expect(images.last()).toBeFocused();
   }
